@@ -286,27 +286,208 @@ backend:
         comment: "7 banners successfully seeded on startup as confirmed by backend logs and GET /api/banners endpoint. Test passed."
 
 frontend:
-  - task: "Frontend testing"
-    implemented: false
-    working: "NA"
-    file: "N/A"
+  - task: "Age overlay (18+ verification)"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/AgeOverlay.jsx"
     stuck_count: 0
-    priority: "low"
+    priority: "high"
     needs_retesting: false
     status_history:
-      - working: "NA"
+      - working: true
         agent: "testing"
-        comment: "Frontend testing not performed as per testing agent instructions (backend-only testing)."
+        comment: "Age overlay works perfectly. Appears on initial load with LUX.SEX logo and two buttons ('Tenho 18+ anos — Entrar' and 'Sair do site'). Clicking 'Entrar' dismisses overlay and sets localStorage 'luxsex_age_ok' to '1'. Overlay does NOT reappear on reload (localStorage persistence working). Clearing localStorage causes overlay to reappear as expected. Test passed."
+
+  - task: "Lifestyle page - Header with navigation"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/Header.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Header renders correctly with LUX.SEX logo, Iaiii image, music player, and all 6 navigation links (Início, Canais, Lifestyle, Shop, L.S Models, Sobre). Navigation highlighting works (Shop link shows gold when on /shop page). Hamburger menu opens drawer with all nav links and closes properly. Test passed."
+
+  - task: "Lifestyle page - Hero section"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/Hero.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Hero section renders with tagline 'A estética do desejo em forma de palavra.' and featured cover article with image, title, author, date, and read time. All content displays correctly. Test passed."
+
+  - task: "Lifestyle page - Featured Articles section"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/FeaturedArticles.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "'Matérias da semana' section renders with 3 article cards. Each card shows image, category badge, title, excerpt, author, date, and read time. Hover effects work. Test passed."
+
+  - task: "Lifestyle page - Video section"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/VideoSection.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "'Vídeos & Ensaios' section is visible with video thumbnails. Test passed."
+
+  - task: "Lifestyle page - Recent Articles section"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/RecentArticles.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "'Últimas publicações' section renders with 4 articles and sidebar showing editorial categories. Test passed."
+
+  - task: "Lifestyle page - Newsletter section"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/Newsletter.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Newsletter section renders with 'Boletim privado' label, heading 'O melhor do Lifestyle, uma vez por semana', email input field, and subscribe button. All elements present and functional. Test passed."
+
+  - task: "Lifestyle page - Footer and Cookie Banner"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/Footer.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Footer and cookie banner ('Cookies essenciais' with 'ENTENDI' button) render correctly. Test passed."
+
+  - task: "Lifestyle page - Dynamic API banners"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/Lifestyle.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Dynamic banners load from backend API. Found 4 sponsored banners on Lifestyle page (premium, inline, footer slots). Banners display with 'Patrocinado' label, sponsor name, headline, description, and CTA. API integration working correctly. Test passed."
+
+  - task: "Music player in header"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/components/MusicPlayer.jsx"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "Music player component renders in header with 'Lux Radio' label and play button. However, SoundCloud integration returns 404 errors. The private SoundCloud playlist URL (https://soundcloud.com/massivejackmusic/sets/unreleased/s-xH8mqZ5tU1d) is invalid, expired, or not publicly accessible. Player appears but cannot play music. This is an external resource issue, not a code bug. The SoundCloud URL in /app/frontend/src/mock/mockData.js needs to be updated with a valid, publicly accessible playlist URL."
+
+  - task: "Shop page - Hero and top banner"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/Shop.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Shop hero section renders with 'Boutiques que entendem de desejo.' heading and sponsored banner (shop_top slot) from API. Banner shows 'Velvet Noire — Lingerie Couture' with image, description, and CTA. Test passed."
+
+  - task: "Shop page - Category filters"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/Shop.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "All 9 category filter pills render correctly (Todos, Lingerie, Brinquedos, Cosméticos & Óleos, Fetiche & BDSM, Casal, Bem-estar Íntimo, Acessórios, Fragrâncias). Clicking 'Lingerie' shows 2 stores (Velvet Noire, Sereia Sleepwear). Clicking 'Brinquedos' shows 2 stores (Obsidian Toys, Nôctua Concept). Clicking 'Todos' shows all 12 stores. Counter updates correctly. Test passed."
+
+  - task: "Shop page - Search functionality"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/Shop.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Search input 'Buscar parceiro...' works correctly. Search is case-insensitive and matches against store name, tagline, and description. Searching 'champagne' returns 1 result (Domaine Privé). Searching 'domaine' returns 1 result. Searching 'Sentidos' returns 1 result. Counter updates correctly. Test passed."
+
+  - task: "Shop page - Store cards and grid"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/Shop.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "12 partner store cards render in grid. Each card shows: badge, rating, cover image, tagline, name, description, 'Parceiro Verificado' label, and 'Visitar' link. Sponsored banner cards (shop_grid slot) are interspersed every 4 stores. Found 5 sponsored banners on Shop page. All cards have target='_blank' for external links. Test passed."
+
+  - task: "Shop page - CTA section"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/Shop.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "'Sua boutique no marketplace Lux' CTA section renders with heading, description, and 'Solicitar Parceria' button linking to mailto:parceiros@lux.sex. Test passed."
+
+  - task: "Responsive design - Mobile viewport"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/Lifestyle.jsx, /app/frontend/src/pages/Shop.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Tested on mobile viewport (390x844). Header, music player, and hamburger menu all visible and functional on mobile. Lifestyle and Shop pages render correctly with responsive layout. Test passed."
 
 metadata:
   created_by: "testing_agent"
-  version: "1.0"
-  test_sequence: 1
-  run_ui: false
+  version: "1.1"
+  test_sequence: 2
+  run_ui: true
 
 test_plan:
   current_focus:
-    - "All backend API endpoints tested and validated"
+    - "Frontend UI testing completed"
+    - "SoundCloud integration issue identified"
   stuck_tasks: []
   test_all: true
   test_priority: "high_first"
@@ -314,3 +495,5 @@ test_plan:
 agent_communication:
   - agent: "testing"
     message: "Comprehensive backend API testing completed. All 14 test cases passed (100% success rate). Tested: root endpoint, banner CRUD operations, slot filtering, active_only filtering, error handling (404, 400), legacy status endpoints, and banner seeding. Backend is fully functional with no errors in logs. Base URL: https://premium-space-2.preview.emergentagent.com/api. All endpoints return correct status codes and data structures. No authentication implemented yet (as expected)."
+  - agent: "testing"
+    message: "Frontend UI testing completed. Tested all scenarios from review_request: age overlay, lifestyle page sections, music player, navigation, shop page features, and responsive design. Results: 15/16 features working correctly. Only issue: SoundCloud music player returns 404 errors due to invalid/expired private playlist URL. This is an external resource issue, not a code bug. The URL in mockData.js needs to be updated with a valid SoundCloud playlist. All core functionality (age verification, navigation, content rendering, API banner integration, shop filters/search, responsive design) works perfectly. No console errors except SoundCloud 404s. App is production-ready except for music player URL update."
