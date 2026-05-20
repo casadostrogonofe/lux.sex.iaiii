@@ -3,7 +3,8 @@
 export const LOGO_IAIII = "https://customer-assets.emergentagent.com/job_6ed9e374-a2e8-4968-84a6-398c4d8564e7/artifacts/y2lqo8fm_WhatsApp%20Image%202026-05-20%20at%2018.23.11.jpeg";
 
 // Private SoundCloud playlist provided by client
-export const SOUNDCLOUD_URL = "https://soundcloud.com/massivejackmusic/sets/unreleased/s-xH8mqZ5tU1d";
+// Widget API requires the secret_token query param for private content
+export const SOUNDCLOUD_URL = "https://soundcloud.com/massivejackmusic/sets/unreleased?secret_token=s-xH8mqZ5tU1d";
 
 export const navLinks = [
   { label: "Início", href: "/" },
