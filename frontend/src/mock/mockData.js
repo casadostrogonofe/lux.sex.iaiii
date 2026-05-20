@@ -1,11 +1,15 @@
-// Mock data for Lifestyle page - all content is fictional
+// Mock data for Lifestyle + Shop - all content is fictional
 
 export const LOGO_IAIII = "https://customer-assets.emergentagent.com/job_6ed9e374-a2e8-4968-84a6-398c4d8564e7/artifacts/y2lqo8fm_WhatsApp%20Image%202026-05-20%20at%2018.23.11.jpeg";
+
+// Private SoundCloud playlist provided by client
+export const SOUNDCLOUD_URL = "https://soundcloud.com/massivejackmusic/sets/unreleased/s-xH8mqZ5tU1d";
 
 export const navLinks = [
   { label: "Início", href: "/" },
   { label: "Canais", href: "/canais" },
-  { label: "Lifestyle", href: "/lifestyle", active: true },
+  { label: "Lifestyle", href: "/lifestyle" },
+  { label: "Shop", href: "/shop" },
   { label: "L.S Models", href: "/models" },
   { label: "Sobre", href: "/sobre" },
 ];
@@ -141,24 +145,152 @@ export const recentArticles = [
   },
 ];
 
-export const adSlots = {
-  premium: {
-    sponsor: "L.S Maison",
-    headline: "Fragrâncias Exclusivas para o Boudoir",
-    description: "Coleção primavera-verão MMXXVI — distribuição limitada a 200 frascos numerados.",
-    cta: "Reservar Agora",
-    image: "https://images.pexels.com/photos/3818315/pexels-photo-3818315.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+// ============================================================
+// SHOP - Marketplace de parceiros
+// ============================================================
+export const shopCategories = [
+  { id: "todos", name: "Todos" },
+  { id: "lingerie", name: "Lingerie" },
+  { id: "brinquedos", name: "Brinquedos" },
+  { id: "cosmeticos", name: "Cosméticos & Óleos" },
+  { id: "fetiche", name: "Fetiche & BDSM" },
+  { id: "casal", name: "Casal" },
+  { id: "bem-estar-intimo", name: "Bem-estar Íntimo" },
+  { id: "acessorios", name: "Acessórios" },
+  { id: "fragrancias", name: "Fragrâncias" },
+];
+
+export const partnerStores = [
+  {
+    id: "s1",
+    name: "Velvet Noire",
+    category: "lingerie",
+    tagline: "Lingerie Couture",
+    description: "Peças numeradas, feitas à mão em São Paulo. Selo L.S Premium.",
+    cover: "https://images.pexels.com/photos/7567725/pexels-photo-7567725.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    link: "https://example.com/velvet-noire",
+    badge: "Editor's Pick",
+    rating: 4.9,
   },
-  inline: {
-    sponsor: "Quinta do Vale Real",
-    headline: "Reserva Particular — Safra de 2018",
-    description: "Apenas 1.200 garrafas. Selo L.S Premium.",
-    cta: "Explorar a Adega",
+  {
+    id: "s2",
+    name: "Obsidian Toys",
+    category: "brinquedos",
+    tagline: "Design Erótico de Autor",
+    description: "Objetos de luxo em vidro borossilicato e obsidiana negra.",
+    cover: "https://images.pexels.com/photos/3818315/pexels-photo-3818315.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    link: "https://example.com/obsidian",
+    badge: "Premium",
+    rating: 4.8,
   },
-  footer: {
-    sponsor: "L.S Concierge",
-    headline: "Sua noite, desenhada por especialistas.",
-    description: "Concierge 24h para hóspedes verificados da plataforma.",
-    cta: "Solicitar Atendimento",
+  {
+    id: "s3",
+    name: "Maison Aurélia",
+    category: "fragrancias",
+    tagline: "Perfumaria do Boudoir",
+    description: "Coleção oud, almiscar e baunilha — frascos numerados a mão.",
+    cover: "https://images.pexels.com/photos/1066171/pexels-photo-1066171.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    link: "https://example.com/maison-aurelia",
+    badge: "Edição Limitada",
+    rating: 5.0,
   },
-};
+  {
+    id: "s4",
+    name: "Domaine Privé",
+    category: "casal",
+    tagline: "Champagne & Sentidos",
+    description: "Kits boudoir com champagne, taluna e essências afrodisíacas.",
+    cover: "https://images.unsplash.com/photo-1778548646491-8afb9849e1df?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTV8MHwxfHNlYXJjaHw0fHx3aW5lJTIwY2lnYXJ8ZW58MHx8fHwxNzc5MzEzMzEyfDA&ixlib=rb-4.1.0&q=85",
+    link: "https://example.com/domaine-prive",
+    badge: "Curadoria L.S",
+    rating: 4.9,
+  },
+  {
+    id: "s5",
+    name: "Tabu Atelier",
+    category: "fetiche",
+    tagline: "Couro & Sob Medida",
+    description: "Ateliê carioca de peças em couro vegetal sob encomenda.",
+    cover: "https://images.pexels.com/photos/32628115/pexels-photo-32628115.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    link: "https://example.com/tabu-atelier",
+    badge: "Sob Encomenda",
+    rating: 4.7,
+  },
+  {
+    id: "s6",
+    name: "Izílda Botanicals",
+    category: "cosmeticos",
+    tagline: "Óleos Sensoriais",
+    description: "Botânica brasileira convertida em rituais de pele e prazer.",
+    cover: "https://images.pexels.com/photos/3868895/pexels-photo-3868895.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    link: "https://example.com/izilda",
+    badge: "Orgânico",
+    rating: 4.8,
+  },
+  {
+    id: "s7",
+    name: "Clinique Volupté",
+    category: "bem-estar-intimo",
+    tagline: "Saúde Íntima Premium",
+    description: "Suplementos, terapias hormonais e protocolos de longevidade sexual.",
+    cover: "https://images.unsplash.com/photo-1561501900-3701fa6a0864?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbHxlbnwwfHx8fDE3NzkyOTI1MDJ8MA&ixlib=rb-4.1.0&q=85",
+    link: "https://example.com/clinique-volupte",
+    badge: "Clínica Verificada",
+    rating: 4.9,
+  },
+  {
+    id: "s8",
+    name: "Corallium Jewels",
+    category: "acessorios",
+    tagline: "Joias para a Pele Nua",
+    description: "Correntes finas, anelets e piercings em ouro 18k para uso íntimo.",
+    cover: "https://images.unsplash.com/photo-1645996830739-8fe3df27c33f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwzfHxmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc3OTMxMzMyMHww&ixlib=rb-4.1.0&q=85",
+    link: "https://example.com/corallium",
+    badge: "Ouro 18k",
+    rating: 4.9,
+  },
+  {
+    id: "s9",
+    name: "Sereia Sleepwear",
+    category: "lingerie",
+    tagline: "Seda & Dormir Bem",
+    description: "Camisolas e robes em seda Mulberry. Bordados sob encomenda.",
+    cover: "https://images.unsplash.com/photo-1603189343302-e603f7add05a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHw0fHxmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc3OTMxMzMyMHww&ixlib=rb-4.1.0&q=85",
+    link: "https://example.com/sereia",
+    badge: "Seda Mulberry",
+    rating: 4.8,
+  },
+  {
+    id: "s10",
+    name: "Nôctua Concept",
+    category: "brinquedos",
+    tagline: "Tecnologia & Prazer",
+    description: "Dispositivos discretos com app criptografado e bateria de 8h.",
+    cover: "https://images.pexels.com/photos/7403/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    link: "https://example.com/noctua",
+    badge: "Tech",
+    rating: 4.7,
+  },
+  {
+    id: "s11",
+    name: "Casa do Charuto",
+    category: "casal",
+    tagline: "Adega & Charutaria",
+    description: "Cubanos, dominicanos e portugueses — entrega refrigerada.",
+    cover: "https://images.pexels.com/photos/25189157/pexels-photo-25189157.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    link: "https://example.com/casa-charuto",
+    badge: "Tradição",
+    rating: 4.9,
+  },
+  {
+    id: "s12",
+    name: "Órion Privacy",
+    category: "acessorios",
+    tagline: "Embalagens Discretas",
+    description: "Caixas, malas e dispositivos para transportar com discrição absoluta.",
+    cover: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwxfHxsdXh1cnl8ZW58MHx8fHwxNzc5MzEzMzIwfDA&ixlib=rb-4.1.0&q=85",
+    link: "https://example.com/orion",
+    badge: "Discrição",
+    rating: 4.8,
+  },
+];

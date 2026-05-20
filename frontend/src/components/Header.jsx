@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, Globe } from "lucide-react";
 import { LOGO_IAIII, navLinks } from "../mock/mockData";
+import MusicPlayer from "./MusicPlayer";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -12,34 +13,43 @@ const Header = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const isActive = (href) => {
+    if (typeof window === "undefined") return false;
+    const path = window.location.pathname;
+    if (href === "/" || href === "/lifestyle") {
+      return path === "/" || path === "/lifestyle";
+    }
+    return path.startsWith(href);
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${
         scrolled ? "bg-black/85 backdrop-blur-lg border-b border-[#2b2b2b]" : "bg-transparent"
       }`}
     >
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex items-center justify-between py-5">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-10 flex items-center justify-between py-4 md:py-5 gap-3">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-3 group">
+        <a href="/" className="flex items-center gap-2 md:gap-3 group shrink-0">
           <img
             src={LOGO_IAIII}
             alt="lux"
-            className="h-10 w-10 md:h-11 md:w-11 object-contain transition-transform duration-500 group-hover:rotate-6"
+            className="h-9 w-9 md:h-11 md:w-11 object-contain transition-transform duration-500 group-hover:rotate-6"
           />
-          <span className="font-serif text-2xl md:text-[28px] tracking-[0.2em]">
+          <span className="font-serif text-xl md:text-[28px] tracking-[0.2em]">
             <span className="text-[#f5f0e6]">LUX</span>
             <span className="text-[#d4af37]">.SEX</span>
           </span>
         </a>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-10">
+        <nav className="hidden xl:flex items-center gap-8 flex-1 justify-center">
           {navLinks.map((l) => (
             <a
               key={l.label}
               href={l.href}
               className={`text-xs tracking-[0.3em] uppercase transition-colors duration-300 ${
-                l.active ? "text-[#d4af37]" : "text-[#f5f0e6] hover:text-[#d4af37]"
+                isActive(l.href) ? "text-[#d4af37]" : "text-[#f5f0e6] hover:text-[#d4af37]"
               }`}
             >
               {l.label}
@@ -48,24 +58,18 @@ const Header = () => {
         </nav>
 
         {/* Right */}
-        <div className="flex items-center gap-4">
-          <button className="hidden md:flex items-center gap-2 text-[#a0998a] hover:text-[#d4af37] transition-colors">
+        <div className="flex items-center gap-2 md:gap-3 shrink-0">
+          <MusicPlayer />
+          <button className="hidden md:flex items-center gap-1.5 text-[#a0998a] hover:text-[#d4af37] transition-colors">
             <Globe className="w-4 h-4" />
-            <span className="text-xl leading-none">🇧🇷</span>
+            <span className="text-lg leading-none">🇧🇷</span>
           </button>
           <button
             onClick={() => setOpen(true)}
-            className="lg:hidden text-[#f5f0e6] hover:text-[#d4af37] transition-colors"
+            className="text-[#f5f0e6] hover:text-[#d4af37] transition-colors"
             aria-label="Abrir menu"
           >
-            <Menu className="w-7 h-7" />
-          </button>
-          <button
-            onClick={() => setOpen(true)}
-            className="hidden lg:block text-[#f5f0e6] hover:text-[#d4af37] transition-colors"
-            aria-label="Abrir menu"
-          >
-            <Menu className="w-6 h-6" />
+            <Menu className="w-6 h-6 md:w-7 md:h-7" />
           </button>
         </div>
       </div>
@@ -91,14 +95,14 @@ const Header = () => {
             <X className="w-7 h-7" />
           </button>
         </div>
-        <nav className="flex flex-col items-center justify-center gap-8 h-[calc(100vh-92px)]">
+        <nav className="flex flex-col items-center justify-center gap-6 md:gap-8 h-[calc(100vh-92px)]">
           {navLinks.map((l, i) => (
             <a
               key={l.label}
               href={l.href}
               onClick={() => setOpen(false)}
               className={`font-serif text-3xl md:text-5xl tracking-[0.1em] transition-colors duration-300 ${
-                l.active ? "text-[#d4af37]" : "text-[#f5f0e6] hover:text-[#d4af37]"
+                isActive(l.href) ? "text-[#d4af37]" : "text-[#f5f0e6] hover:text-[#d4af37]"
               }`}
               style={{ animation: open ? `fadeUp 0.5s ${i * 0.08}s both` : "none" }}
             >

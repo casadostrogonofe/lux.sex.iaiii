@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -6,7 +6,7 @@ import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 import uuid
 from datetime import datetime, timezone
 
@@ -19,54 +19,272 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# Create the main app without a prefix
-app = FastAPI()
-
-# Create a router with the /api prefix
+app = FastAPI(title="LUX.SEX Lifestyle API")
 api_router = APIRouter(prefix="/api")
 
 
-# Define Models
+# =============================================================
+# Models
+# =============================================================
 class StatusCheck(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore MongoDB's _id field
-    
+    model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     client_name: str
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+
 class StatusCheckCreate(BaseModel):
     client_name: str
 
-# Add your routes to the router instead of directly to app
+
+# Banner slots:
+# - lifestyle_premium  : big visual banner on lifestyle page
+# - lifestyle_inline   : horizontal text banner between sections
+# - lifestyle_footer   : CTA banner before newsletter
+# - lifestyle_sidebar  : small banner in articles sidebar
+# - shop_top           : marketplace hero banner
+# - shop_grid          : banner injected inside store grid
+class Banner(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    slot: str
+    sponsor: str
+    headline: str
+    description: str
+    cta: str = "Saiba mais"
+    link: str = "#"
+    image: Optional[str] = None
+    active: bool = True
+    priority: int = 0
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+class BannerCreate(BaseModel):
+    slot: str
+    sponsor: str
+    headline: str
+    description: str
+    cta: str = "Saiba mais"
+    link: str = "#"
+    image: Optional[str] = None
+    active: bool = True
+    priority: int = 0
+
+
+class BannerUpdate(BaseModel):
+    slot: Optional[str] = None
+    sponsor: Optional[str] = None
+    headline: Optional[str] = None
+    description: Optional[str] = None
+    cta: Optional[str] = None
+    link: Optional[str] = None
+    image: Optional[str] = None
+    active: Optional[bool] = None
+    priority: Optional[int] = None
+
+
+# =============================================================
+# Helpers
+# =============================================================
+def _serialize_doc(doc: Dict[str, Any]) -> Dict[str, Any]:
+    if doc is None:
+        return doc
+    doc.pop("_id", None)
+    if "created_at" in doc and isinstance(doc["created_at"], datetime):
+        doc["created_at"] = doc["created_at"].isoformat()
+    return doc
+
+
+# =============================================================
+# Status routes (legacy)
+# =============================================================
 @api_router.get("/")
 async def root() -> Dict[str, str]:
-    return {"message": "Hello World"}
+    return {"message": "LUX.SEX Lifestyle API"}
+
 
 @api_router.post("/status", response_model=StatusCheck)
-async def create_status_check(input: StatusCheckCreate) -> StatusCheck:
-    status_dict = input.model_dump()
-    status_obj = StatusCheck(**status_dict)
-    
-    # Convert to dict and serialize datetime to ISO string for MongoDB
-    doc: Dict[str, Any] = status_obj.model_dump()
-    doc['timestamp'] = doc['timestamp'].isoformat()
-    
-    _ = await db.status_checks.insert_one(doc)
-    return status_obj
+async def create_status_check(payload: StatusCheckCreate) -> StatusCheck:
+    obj = StatusCheck(**payload.model_dump())
+    doc: Dict[str, Any] = obj.model_dump()
+    doc["timestamp"] = doc["timestamp"].isoformat()
+    await db.status_checks.insert_one(doc)
+    return obj
+
 
 @api_router.get("/status", response_model=List[StatusCheck])
 async def get_status_checks() -> List[Dict[str, Any]]:
-    # Exclude MongoDB's _id field from the query results
-    status_checks: List[Dict[str, Any]] = await db.status_checks.find({}, {"_id": 0}).to_list(1000)
-    
-    # Convert ISO string timestamps back to datetime objects
-    for check in status_checks:
-        if isinstance(check['timestamp'], str):
-            check['timestamp'] = datetime.fromisoformat(check['timestamp'])
-    
-    return status_checks
+    rows: List[Dict[str, Any]] = await db.status_checks.find({}, {"_id": 0}).to_list(1000)
+    for r in rows:
+        if isinstance(r.get("timestamp"), str):
+            r["timestamp"] = datetime.fromisoformat(r["timestamp"])
+    return rows
 
-# Include the router in the main app
+
+# =============================================================
+# Banner routes
+# =============================================================
+@api_router.get("/banners", response_model=List[Banner])
+async def list_banners(
+    slot: Optional[str] = None,
+    active_only: bool = True,
+) -> List[Dict[str, Any]]:
+    query: Dict[str, Any] = {}
+    if slot:
+        query["slot"] = slot
+    if active_only:
+        query["active"] = True
+    rows: List[Dict[str, Any]] = (
+        await db.banners.find(query, {"_id": 0}).sort("priority", -1).to_list(500)
+    )
+    for r in rows:
+        if isinstance(r.get("created_at"), str):
+            try:
+                r["created_at"] = datetime.fromisoformat(r["created_at"])
+            except ValueError:
+                pass
+    return rows
+
+
+@api_router.get("/banners/{banner_id}", response_model=Banner)
+async def get_banner(banner_id: str) -> Dict[str, Any]:
+    doc = await db.banners.find_one({"id": banner_id}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Banner not found")
+    if isinstance(doc.get("created_at"), str):
+        try:
+            doc["created_at"] = datetime.fromisoformat(doc["created_at"])
+        except ValueError:
+            pass
+    return doc
+
+
+@api_router.post("/banners", response_model=Banner, status_code=201)
+async def create_banner(payload: BannerCreate) -> Banner:
+    obj = Banner(**payload.model_dump())
+    doc: Dict[str, Any] = obj.model_dump()
+    doc["created_at"] = doc["created_at"].isoformat()
+    await db.banners.insert_one(doc)
+    return obj
+
+
+@api_router.put("/banners/{banner_id}", response_model=Banner)
+async def update_banner(banner_id: str, payload: BannerUpdate) -> Dict[str, Any]:
+    update_data = {k: v for k, v in payload.model_dump().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    result = await db.banners.update_one({"id": banner_id}, {"$set": update_data})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Banner not found")
+    doc = await db.banners.find_one({"id": banner_id}, {"_id": 0})
+    if isinstance(doc.get("created_at"), str):
+        try:
+            doc["created_at"] = datetime.fromisoformat(doc["created_at"])
+        except ValueError:
+            pass
+    return doc
+
+
+@api_router.delete("/banners/{banner_id}")
+async def delete_banner(banner_id: str) -> Dict[str, str]:
+    result = await db.banners.delete_one({"id": banner_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Banner not found")
+    return {"status": "deleted", "id": banner_id}
+
+
+# =============================================================
+# Seed banners on startup
+# =============================================================
+SEED_BANNERS: List[Dict[str, Any]] = [
+    {
+        "slot": "lifestyle_premium",
+        "sponsor": "L.S Maison",
+        "headline": "Fragrâncias Exclusivas para o Boudoir",
+        "description": "Coleção primavera-verão MMXXVI — distribuição limitada a 200 frascos numerados.",
+        "cta": "Reservar Agora",
+        "link": "#l-s-maison",
+        "image": "https://images.pexels.com/photos/3818315/pexels-photo-3818315.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "priority": 100,
+    },
+    {
+        "slot": "lifestyle_inline",
+        "sponsor": "Quinta do Vale Real",
+        "headline": "Reserva Particular — Safra de 2018",
+        "description": "Apenas 1.200 garrafas. Selo L.S Premium.",
+        "cta": "Explorar a Adega",
+        "link": "#vale-real",
+        "priority": 80,
+    },
+    {
+        "slot": "lifestyle_footer",
+        "sponsor": "L.S Concierge",
+        "headline": "Sua noite, desenhada por especialistas.",
+        "description": "Concierge 24h para hóspedes verificados da plataforma.",
+        "cta": "Solicitar Atendimento",
+        "link": "#concierge",
+        "priority": 70,
+    },
+    {
+        "slot": "lifestyle_sidebar",
+        "sponsor": "L.S Atelier",
+        "headline": "L.S Atelier",
+        "description": "Peças exclusivas sob encomenda. Curadoria fechada.",
+        "cta": "Conhecer",
+        "link": "#atelier",
+        "priority": 60,
+    },
+    {
+        "slot": "shop_top",
+        "sponsor": "Velvet Noire",
+        "headline": "Lingerie Couture — Coleção Maison MMXXVI",
+        "description": "Peças numeradas, feitas à mão em São Paulo. Frete privado em todo o país.",
+        "cta": "Visitar Boutique",
+        "link": "https://example.com/velvet-noire",
+        "image": "https://images.pexels.com/photos/7567725/pexels-photo-7567725.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "priority": 100,
+    },
+    {
+        "slot": "shop_grid",
+        "sponsor": "Domaine Privé",
+        "headline": "Champagne & Acessórios Sensoriais",
+        "description": "Kit boudoir edição limitada — entrega refrigerada e discreta.",
+        "cta": "Explorar Kit",
+        "link": "https://example.com/domaine-prive",
+        "priority": 90,
+    },
+    {
+        "slot": "shop_grid",
+        "sponsor": "Obsidian Toys",
+        "headline": "Design Erótico de Autor",
+        "description": "Objetos de luxo em vidro borossilicato e obsidiana negra.",
+        "cta": "Ver Coleção",
+        "link": "https://example.com/obsidian",
+        "priority": 85,
+    },
+]
+
+
+@app.on_event("startup")
+async def seed_banners() -> None:
+    try:
+        count = await db.banners.count_documents({})
+        if count == 0:
+            now_iso = datetime.now(timezone.utc).isoformat()
+            docs: List[Dict[str, Any]] = []
+            for b in SEED_BANNERS:
+                obj = Banner(**b)
+                d = obj.model_dump()
+                d["created_at"] = now_iso
+                docs.append(d)
+            if docs:
+                await db.banners.insert_many(docs)
+                logging.info("Seeded %d banners", len(docs))
+    except Exception as exc:  # pragma: no cover
+        logging.warning("Banner seed failed: %s", exc)
+
+
+# Include router
 app.include_router(api_router)
 
 app.add_middleware(
@@ -77,12 +295,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 )
 logger = logging.getLogger(__name__)
+
 
 @app.on_event("shutdown")
 async def shutdown_db_client() -> None:
