@@ -1,9 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { ExternalLink, Star, Search, ShieldCheck } from "lucide-react";
-import AgeOverlay from "../components/AgeOverlay";
-import Header from "../components/Header";
 import AdBanner from "../components/AdBanner";
-import Footer, { CookieBanner } from "../components/Footer";
 import { partnerStores, shopCategories } from "../mock/mockData";
 import { fetchBannerBySlot, fetchBanners } from "../api/banners";
 
@@ -195,100 +192,92 @@ const Shop = () => {
   }, [filtered, gridBanners]);
 
   return (
-    <div className="min-h-screen bg-[#0b0b0b] text-[#f5f0e6] font-sans antialiased overflow-x-hidden">
-      <AgeOverlay />
-      <Header />
+    <>
+      <ShopHero banner={topBanner} />
 
-      <main>
-        <ShopHero banner={topBanner} />
-
-        {/* Filters + search */}
-        <section className="max-w-[1400px] mx-auto px-6 md:px-10 pb-8">
-          <div className="border-y border-[#2b2b2b] py-6 flex flex-col lg:flex-row lg:items-center gap-5 lg:justify-between">
-            <div className="flex flex-wrap gap-2">
-              {shopCategories.map((c) => (
-                <button
-                  key={c.id}
-                  onClick={() => setActive(c.id)}
-                  className={`text-[10px] tracking-[0.3em] uppercase px-4 py-2.5 border transition-colors duration-300 ${
-                    active === c.id
-                      ? "border-[#d4af37] text-[#d4af37] bg-[#d4af37]/5"
-                      : "border-[#2b2b2b] text-[#a0998a] hover:border-[#d4af37]/50 hover:text-[#f5f0e6]"
-                  }`}
-                >
-                  {c.name}
-                </button>
-              ))}
-            </div>
-
-            <div className="relative flex items-center min-w-[260px]">
-              <Search className="w-4 h-4 text-[#6b6356] absolute left-4" />
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Buscar parceiro..."
-                className="w-full bg-transparent border border-[#2b2b2b] focus:border-[#d4af37] text-[#f5f0e6] placeholder:text-[#6b6356] pl-11 pr-4 py-3 text-sm outline-none transition-colors"
-              />
-            </div>
+      {/* Filters + search */}
+      <section className="max-w-[1400px] mx-auto px-6 md:px-10 pb-8">
+        <div className="border-y border-[#2b2b2b] py-6 flex flex-col lg:flex-row lg:items-center gap-5 lg:justify-between">
+          <div className="flex flex-wrap gap-2">
+            {shopCategories.map((c) => (
+              <button
+                key={c.id}
+                onClick={() => setActive(c.id)}
+                className={`text-[10px] tracking-[0.3em] uppercase px-4 py-2.5 border transition-colors duration-300 ${
+                  active === c.id
+                    ? "border-[#d4af37] text-[#d4af37] bg-[#d4af37]/5"
+                    : "border-[#2b2b2b] text-[#a0998a] hover:border-[#d4af37]/50 hover:text-[#f5f0e6]"
+                }`}
+              >
+                {c.name}
+              </button>
+            ))}
           </div>
 
-          <div className="mt-4 text-[10px] tracking-[0.4em] text-[#6b6356] uppercase">
-            {filtered.length} parceiro{filtered.length !== 1 ? "s" : ""} encontrado
-            {filtered.length !== 1 ? "s" : ""}
+          <div className="relative flex items-center min-w-[260px]">
+            <Search className="w-4 h-4 text-[#6b6356] absolute left-4" />
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Buscar parceiro..."
+              className="w-full bg-transparent border border-[#2b2b2b] focus:border-[#d4af37] text-[#f5f0e6] placeholder:text-[#6b6356] pl-11 pr-4 py-3 text-sm outline-none transition-colors"
+            />
           </div>
-        </section>
+        </div>
 
-        {/* Grid */}
-        <section className="max-w-[1400px] mx-auto px-6 md:px-10 pb-20">
-          {filtered.length === 0 ? (
-            <div className="text-center py-24">
-              <p className="font-serif text-2xl text-[#a0998a] mb-3">
-                Nenhum parceiro encontrado.
-              </p>
-              <p className="text-[#6b6356] text-sm">Tente outra categoria ou termo de busca.</p>
-            </div>
-          ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {grid.map((item, i) =>
-                item.type === "store" ? (
-                  <StoreCard key={`store-${item.data.id}`} store={item.data} />
-                ) : (
-                  <InlineAdCard key={`ad-${i}`} banner={item.data} />
-                )
-              )}
-            </div>
-          )}
-        </section>
+        <div className="mt-4 text-[10px] tracking-[0.4em] text-[#6b6356] uppercase">
+          {filtered.length} parceiro{filtered.length !== 1 ? "s" : ""} encontrado
+          {filtered.length !== 1 ? "s" : ""}
+        </div>
+      </section>
 
-        {/* Become a partner CTA */}
-        <section className="border-t border-[#2b2b2b]">
-          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-20 text-center">
-            <span className="text-[10px] tracking-[0.5em] text-[#d4af37] uppercase block mb-5">
-              Para marcas
-            </span>
-            <h2 className="font-serif text-4xl md:text-5xl text-[#f5f0e6] leading-tight mb-6">
-              Sua boutique no <span className="italic text-[#d4af37]">marketplace</span> Lux.
-            </h2>
-            <p className="text-[#a0998a] max-w-xl mx-auto text-base md:text-lg leading-relaxed mb-10 font-light">
-              Acesso a uma audiência verificada, alto poder aquisitivo e curadoria editorial
-              exclusiva. Apenas marcas aprovadas pelo conselho Lux Society.
+      {/* Grid */}
+      <section className="max-w-[1400px] mx-auto px-6 md:px-10 pb-20">
+        {filtered.length === 0 ? (
+          <div className="text-center py-24">
+            <p className="font-serif text-2xl text-[#a0998a] mb-3">
+              Nenhum parceiro encontrado.
             </p>
-            <a
-              href="mailto:parceiros@lux.sex"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-[#d4af37] hover:bg-[#e6c25a] text-black text-xs tracking-[0.3em] uppercase font-medium transition-colors duration-500"
-            >
-              Solicitar Parceria
-              <ExternalLink className="w-4 h-4" />
-            </a>
+            <p className="text-[#6b6356] text-sm">Tente outra categoria ou termo de busca.</p>
           </div>
-        </section>
+        ) : (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {grid.map((item, i) =>
+              item.type === "store" ? (
+                <StoreCard key={`store-${item.data.id}`} store={item.data} />
+              ) : (
+                <InlineAdCard key={`ad-${i}`} banner={item.data} />
+              )
+            )}
+          </div>
+        )}
+      </section>
 
-        {footerBanner && <AdBanner variant="footer" data={footerBanner} />}
-      </main>
+      {/* Become a partner CTA */}
+      <section className="border-t border-[#2b2b2b]">
+        <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-20 text-center">
+          <span className="text-[10px] tracking-[0.5em] text-[#d4af37] uppercase block mb-5">
+            Para marcas
+          </span>
+          <h2 className="font-serif text-4xl md:text-5xl text-[#f5f0e6] leading-tight mb-6">
+            Sua boutique no <span className="italic text-[#d4af37]">marketplace</span> Lux.
+          </h2>
+          <p className="text-[#a0998a] max-w-xl mx-auto text-base md:text-lg leading-relaxed mb-10 font-light">
+            Acesso a uma audiência verificada, alto poder aquisitivo e curadoria editorial
+            exclusiva. Apenas marcas aprovadas pelo conselho Lux Society.
+          </p>
+          <a
+            href="mailto:parceiros@lux.sex"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-[#d4af37] hover:bg-[#e6c25a] text-black text-xs tracking-[0.3em] uppercase font-medium transition-colors duration-500"
+          >
+            Solicitar Parceria
+            <ExternalLink className="w-4 h-4" />
+          </a>
+        </div>
+      </section>
 
-      <Footer />
-      <CookieBanner />
-    </div>
+      {footerBanner && <AdBanner variant="footer" data={footerBanner} />}
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { ArrowRight, Clock } from "lucide-react";
-import { categories, recentArticles } from "../mock/mockData";
+import { categories, recentArticles, lifestyleCategories } from "../mock/mockData";
 
 const RecentArticles = () => {
   return (
@@ -33,7 +34,7 @@ const RecentArticles = () => {
                 </div>
                 <div className="flex flex-col justify-center">
                   <span className="text-[10px] tracking-[0.4em] text-[#d4af37] uppercase mb-3">
-                    {a.category}
+                    {a.categoryLabel || a.category}
                   </span>
                   <h3 className="font-serif text-2xl md:text-[28px] text-[#f5f0e6] leading-[1.2] mb-4 group-hover:text-[#d4af37] transition-colors duration-500">
                     {a.title}
@@ -70,21 +71,24 @@ const RecentArticles = () => {
               Editorias
             </span>
             <ul className="space-y-1">
-              {categories.map((c) => (
-                <li key={c.id}>
-                  <a
-                    href={`#cat-${c.id}`}
-                    className="group flex items-center justify-between py-3 border-b border-[#2b2b2b] last:border-0 hover:border-[#d4af37]/40 transition-colors"
-                  >
-                    <span className="font-serif text-lg text-[#f5f0e6] group-hover:text-[#d4af37] transition-colors">
-                      {c.name}
-                    </span>
-                    <span className="text-[10px] tracking-widest text-[#6b6356]">
-                      {c.count.toString().padStart(3, "0")}
-                    </span>
-                  </a>
-                </li>
-              ))}
+              {lifestyleCategories.map((c, idx) => {
+                const meta = categories.find((x) => x.id === c.id) || categories[idx];
+                return (
+                  <li key={c.id}>
+                    <Link
+                      to={c.href}
+                      className="group flex items-center justify-between py-3 border-b border-[#2b2b2b] last:border-0 hover:border-[#d4af37]/40 transition-colors"
+                    >
+                      <span className="font-serif text-lg text-[#f5f0e6] group-hover:text-[#d4af37] transition-colors">
+                        {c.label}
+                      </span>
+                      <span className="text-[10px] tracking-widest text-[#6b6356]">
+                        {(meta?.count || 0).toString().padStart(3, "0")}
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
