@@ -1,6 +1,6 @@
 // Mock data for LUX.SEX — Dynamic menu, blog posts and partner stores
 
-export const LOGO_IAIII = "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/y4qmuo0n_iaiiilogo.png";
+export const LOGO_IAIII = "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/ldcghd33_luxsex.png";
 
 export const SOUNDCLOUD_URL = "https://soundcloud.com/massivejackmusic/sets/unreleased?secret_token=s-xH8mqZ5tU1d";
 

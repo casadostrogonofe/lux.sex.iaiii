@@ -3,12 +3,12 @@ import { Outlet } from "react-router-dom";
 import AgeOverlay from "./AgeOverlay";
 import Header from "./Header";
 import Footer, { CookieBanner } from "./Footer";
+import FloatingMusicPlayer from "./FloatingMusicPlayer";
 
-// Layout wraps every page so Header (with MusicPlayer) and Footer
-// stay mounted across route changes — the radio keeps playing.
+// Persistent layout — MusicPlayer + Header stay mounted across routes
 const Layout = () => {
   return (
-    <div className="min-h-screen bg-[#0b0b0b] text-[#f5f0e6] font-sans antialiased overflow-x-hidden flex flex-col">
+    <div className="min-h-screen bg-[#050208] text-[#f5f0ff] font-sans antialiased overflow-x-hidden flex flex-col">
       <AgeOverlay />
       <Header />
       <main className="flex-1">
@@ -16,6 +16,7 @@ const Layout = () => {
       </main>
       <Footer />
       <CookieBanner />
+      <FloatingMusicPlayer />
     </div>
   );
 };

@@ -2,10 +2,11 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import { Clock, User, ChevronRight, ArrowRight } from "lucide-react";
 import PostInteractions from "../components/PostInteractions";
+import TimelinePostCard, { TimelineAdCard } from "../components/TimelinePostCard";
 import AdBanner from "../components/AdBanner";
 import Newsletter from "../components/Newsletter";
 import { blogPosts, sectionMeta, menuConfig } from "../mock/mockData";
-import { fetchBannerBySlot } from "../api/banners";
+import { fetchBannerBySlot, fetchBanners } from "../api/banners";
 
 const BlogPage = () => {
   const { section, sub } = useParams();
@@ -27,13 +28,16 @@ const BlogPage = () => {
   }, [section, sub]);
 
   const [banners, setBanners] = useState({ inline: null, footer: null });
+  const [gridAds, setGridAds] = useState([]);
   useEffect(() => {
     (async () => {
-      const [inline, footer] = await Promise.all([
+      const [inline, footer, ads] = await Promise.all([
         fetchBannerBySlot("lifestyle_inline"),
         fetchBannerBySlot("lifestyle_footer"),
+        fetchBanners("shop_grid"),
       ]);
       setBanners({ inline, footer });
+      setGridAds(ads || []);
     })();
   }, []);
 
@@ -168,54 +172,22 @@ const BlogPage = () => {
 
           {banners.inline && <AdBanner variant="inline" data={banners.inline} />}
 
-          {/* Grid */}
+          {/* Timeline feed */}
           {rest.length > 0 && (
-            <section className="max-w-[1400px] mx-auto px-6 md:px-10 py-12">
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {rest.map((p) => (
-                  <article
-                    key={p.id}
-                    className="group flex flex-col bg-[#0b0812] border border-[#1a1526] hover:border-[#9b30ff]/40 transition-colors duration-500"
-                  >
-                    <div className="relative h-[260px] md:h-[300px] overflow-hidden">
-                      <img
-                        src={p.image}
-                        alt={p.title}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                      {p.sign && (
-                        <div className="absolute top-4 right-4 font-serif text-4xl text-[#9b30ff]">
-                          {p.sign}
-                        </div>
+            <section className="py-12">
+              <div className="max-w-[760px] mx-auto px-4 md:px-6">
+                <div className="space-y-6">
+                  {rest.map((p, idx) => (
+                    <React.Fragment key={p.id}>
+                      <TimelinePostCard post={p} />
+                      {(idx + 1) % 4 === 0 && gridAds.length > 0 && (
+                        <TimelineAdCard
+                          banner={gridAds[Math.floor(idx / 4) % gridAds.length]}
+                        />
                       )}
-                    </div>
-                    <div className="flex-1 flex flex-col p-6">
-                      <h3 className="font-serif text-2xl text-[#f5f0ff] leading-[1.25] mb-3 group-hover:text-[#9b30ff] transition-colors duration-500">
-                        {p.title}
-                      </h3>
-                      <p className="text-[#7c7893] text-sm leading-relaxed mb-4 font-light flex-1">
-                        {p.excerpt}
-                      </p>
-                      <div className="flex flex-wrap items-center gap-3 text-[10px] tracking-[0.3em] text-[#5a5470] uppercase mb-4">
-                        <span>{p.author}</span>
-                        <span className="w-1 h-1 rounded-full bg-[#5a5470]" />
-                        <span>{p.date}</span>
-                        <span className="w-1 h-1 rounded-full bg-[#5a5470]" />
-                        <span className="flex items-center gap-1.5">
-                          <Clock className="w-3 h-3" /> {p.readTime}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between border-t border-[#1a1526] pt-3 -mx-3">
-                        <PostInteractions postId={p.id} postTitle={p.title} compact />
-                        <span className="text-[10px] tracking-[0.3em] text-[#9b30ff] uppercase flex items-center gap-1 pr-3">
-                          Ler
-                          <ArrowRight className="w-3 h-3" />
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                ))}
+                    </React.Fragment>
+                  ))}
+                </div>
               </div>
             </section>
           )}

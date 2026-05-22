@@ -48,16 +48,12 @@ const Header = () => {
         }`}
       >
         <div className="max-w-[1400px] mx-auto px-4 md:px-10 flex items-center justify-between py-4 md:py-5 gap-3">
-          <Link to="/" className="flex items-center gap-2 md:gap-3 group shrink-0">
+          <Link to="/" className="flex items-center gap-3 group shrink-0">
             <img
               src={LOGO_IAIII}
-              alt="lux"
-              className="h-10 w-10 md:h-12 md:w-12 object-contain transition-transform duration-500 group-hover:rotate-6 drop-shadow-[0_0_8px_rgba(155,48,255,0.4)]"
+              alt="Lux.Sex Iaiii"
+              className="h-12 md:h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
             />
-            <span className="font-serif text-xl md:text-[26px] tracking-[0.2em]">
-              <span className="text-[#f5f0ff]">LUX</span>
-              <span className="text-[#d4af37]">.SEX</span>
-            </span>
           </Link>
 
           {/* Desktop nav */}
@@ -133,7 +129,6 @@ const Header = () => {
           </nav>
 
           <div className="flex items-center gap-2 md:gap-3 shrink-0">
-            <MusicPlayer />
             <button className="hidden md:flex items-center gap-1.5 text-[#7c7893] hover:text-[#9b30ff] transition-colors">
               <Globe className="w-4 h-4" />
               <span className="text-[10px] tracking-[0.2em] uppercase">PT</span>
@@ -157,11 +152,7 @@ const Header = () => {
       >
         <div className="flex items-center justify-between px-6 md:px-10 py-5 border-b border-[#1a1526]">
           <div className="flex items-center gap-3">
-            <img src={LOGO_IAIII} alt="lux" className="h-10 w-10 object-contain" />
-            <span className="font-serif text-2xl tracking-[0.2em]">
-              <span className="text-[#f5f0ff]">LUX</span>
-              <span className="text-[#9b30ff]">.SEX</span>
-            </span>
+            <img src={LOGO_IAIII} alt="Lux.Sex Iaiii" className="h-12 w-auto object-contain" />
           </div>
           <button
             onClick={() => setOpen(false)}
