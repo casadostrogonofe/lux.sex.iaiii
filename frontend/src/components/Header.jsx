@@ -134,21 +134,6 @@ const Header = () => {
 
           <div className="flex items-center gap-2 md:gap-3 shrink-0">
             <MusicPlayer />
-            {/* Auth buttons - desktop */}
-            <div className="hidden lg:flex items-center gap-2">
-              <Link
-                to="/sobre"
-                className="text-[11px] tracking-[0.25em] uppercase px-3 py-2 text-[#f5f0ff] hover:text-[#d4af37] transition-colors"
-              >
-                Entrar
-              </Link>
-              <Link
-                to="/sobre"
-                className="text-[11px] tracking-[0.25em] uppercase px-4 py-2.5 bg-[#f5f0ff] hover:bg-white text-[#050208] font-medium transition-colors rounded"
-              >
-                Criar conta
-              </Link>
-            </div>
             <button className="hidden md:flex items-center gap-1.5 text-[#7c7893] hover:text-[#9b30ff] transition-colors">
               <Globe className="w-4 h-4" />
               <span className="text-[10px] tracking-[0.2em] uppercase">PT</span>

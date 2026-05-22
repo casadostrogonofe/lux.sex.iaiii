@@ -5,29 +5,52 @@ export const LOGO_IAIII = "https://customer-assets.emergentagent.com/job_premium
 export const SOUNDCLOUD_URL = "https://soundcloud.com/massivejackmusic/sets/unreleased?secret_token=s-xH8mqZ5tU1d";
 
 // =============================================================
-// DYNAMIC MENU CONFIG (mirrors sister page lux-novo.lux.sex)
+// DYNAMIC MENU CONFIG
 // =============================================================
 export const menuConfig = [
   { label: "Início", href: "https://lux-novo.lux.sex/", external: true },
-  { label: "Sobre nós", href: "/sobre" },
   {
-    label: "Comunidade LUX",
-    href: "/comunidade",
+    label: "Turismo",
+    href: "/turismo",
     children: [
-      { label: "Canais", href: "/comunidade/canais" },
-      { label: "L.S Models", href: "/comunidade/models" },
-      { label: "Eventos", href: "/comunidade/eventos" },
+      { label: "Motéis", href: "/turismo/moteis" },
+      { label: "Hotéis", href: "/turismo/hoteis" },
+      { label: "Pousadas", href: "/turismo/pousadas" },
     ],
   },
   {
-    label: "Lifestyle",
-    href: "/turismo",
+    label: "Bem Estar",
+    href: "/bem-estar",
     children: [
-      { label: "Turismo", href: "/turismo" },
-      { label: "Bem Estar", href: "/bem-estar" },
-      { label: "Vida Noturna", href: "/vida-noturna" },
-      { label: "Gastronomia", href: "/gastronomia" },
-      { label: "Mais (Horóscopo · Contos)", href: "/mais" },
+      { label: "Beleza", href: "/bem-estar/beleza" },
+      { label: "Cultura", href: "/bem-estar/cultura" },
+      { label: "Saúde", href: "/bem-estar/saude" },
+    ],
+  },
+  {
+    label: "Vida Noturna",
+    href: "/vida-noturna",
+    children: [
+      { label: "Locais", href: "/vida-noturna/locais" },
+      { label: "Vinhos", href: "/vida-noturna/vinhos" },
+      { label: "Charutos", href: "/vida-noturna/charutos" },
+    ],
+  },
+  {
+    label: "Gastronomia",
+    href: "/gastronomia",
+    children: [
+      { label: "Culinária", href: "/gastronomia/culinaria" },
+      { label: "Arte", href: "/gastronomia/arte" },
+      { label: "Sabor", href: "/gastronomia/sabor" },
+    ],
+  },
+  {
+    label: "Mais",
+    href: "/mais",
+    children: [
+      { label: "Horóscopo", href: "/mais/horoscopo" },
+      { label: "Contos Eróticos", href: "/mais/contos" },
     ],
   },
   {
