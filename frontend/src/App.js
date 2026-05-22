@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
+import HomePage from "./pages/HomePage";
 import BlogPage from "./pages/BlogPage";
 import Shop from "./pages/Shop";
 import Marketplace from "./pages/Marketplace";
@@ -14,7 +15,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Navigate to="/turismo" replace />} />
+          <Route index element={<HomePage />} />
+          <Route path="sobre" element={<HomePage />} />
 
             {/* Shop hub + sub-pages */}
             <Route path="shop" element={<ShopHub />} />

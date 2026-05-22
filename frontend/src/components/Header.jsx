@@ -48,15 +48,15 @@ const Header = () => {
         }`}
       >
         <div className="max-w-[1400px] mx-auto px-4 md:px-10 flex items-center justify-between py-4 md:py-5 gap-3">
-          <Link to="/turismo" className="flex items-center gap-2 md:gap-3 group shrink-0">
+          <Link to="/" className="flex items-center gap-2 md:gap-3 group shrink-0">
             <img
               src={LOGO_IAIII}
               alt="lux"
-              className="h-9 w-9 md:h-11 md:w-11 object-contain transition-transform duration-500 group-hover:rotate-6"
+              className="h-10 w-10 md:h-12 md:w-12 object-contain transition-transform duration-500 group-hover:rotate-6 drop-shadow-[0_0_8px_rgba(155,48,255,0.4)]"
             />
             <span className="font-serif text-xl md:text-[26px] tracking-[0.2em]">
               <span className="text-[#f5f0ff]">LUX</span>
-              <span className="text-[#9b30ff]">.SEX</span>
+              <span className="text-[#d4af37]">.SEX</span>
             </span>
           </Link>
 
@@ -134,9 +134,24 @@ const Header = () => {
 
           <div className="flex items-center gap-2 md:gap-3 shrink-0">
             <MusicPlayer />
+            {/* Auth buttons - desktop */}
+            <div className="hidden lg:flex items-center gap-2">
+              <Link
+                to="/sobre"
+                className="text-[11px] tracking-[0.25em] uppercase px-3 py-2 text-[#f5f0ff] hover:text-[#d4af37] transition-colors"
+              >
+                Entrar
+              </Link>
+              <Link
+                to="/sobre"
+                className="text-[11px] tracking-[0.25em] uppercase px-4 py-2.5 bg-[#f5f0ff] hover:bg-white text-[#050208] font-medium transition-colors rounded"
+              >
+                Criar conta
+              </Link>
+            </div>
             <button className="hidden md:flex items-center gap-1.5 text-[#7c7893] hover:text-[#9b30ff] transition-colors">
               <Globe className="w-4 h-4" />
-              <span className="text-lg leading-none">🇧🇷</span>
+              <span className="text-[10px] tracking-[0.2em] uppercase">PT</span>
             </button>
             <button
               onClick={() => setOpen(true)}
