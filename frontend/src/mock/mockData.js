@@ -1,473 +1,276 @@
-// Mock data for Lifestyle + Shop - all content is fictional
+// Mock data for LUX.SEX — Dynamic menu, blog posts and partner stores
 
 export const LOGO_IAIII = "https://customer-assets.emergentagent.com/job_6ed9e374-a2e8-4968-84a6-398c4d8564e7/artifacts/y2lqo8fm_WhatsApp%20Image%202026-05-20%20at%2018.23.11.jpeg";
 
-// Private SoundCloud playlist provided by client
-// Widget API requires the secret_token query param for private content
 export const SOUNDCLOUD_URL = "https://soundcloud.com/massivejackmusic/sets/unreleased?secret_token=s-xH8mqZ5tU1d";
 
-export const navLinks = [
+// =============================================================
+// DYNAMIC MENU CONFIG
+// =============================================================
+export const menuConfig = [
   { label: "Início", href: "https://lux-novo.lux.sex/", external: true },
-  { label: "Lifestyle", href: "/lifestyle" },
-  { label: "Shop", href: "/shop" },
-  { label: "L.S Models", href: "/models" },
-  { label: "Sobre", href: "/sobre" },
-];
-
-// Secondary nav shown on Lifestyle pages
-export const lifestyleCategories = [
-  { id: "sensualidade", label: "Sensualidade", href: "/lifestyle/sensualidade" },
-  { id: "bem-estar", label: "Bem-estar", href: "/lifestyle/bem-estar" },
-  { id: "vinhos", label: "Vinhos & Charutos", href: "/lifestyle/vinhos" },
-  { id: "viagens", label: "Viagens", href: "/lifestyle/viagens" },
-  { id: "moda", label: "Moda", href: "/lifestyle/moda" },
-  { id: "cultura", label: "Cultura", href: "/lifestyle/cultura" },
-  { id: "relacionamentos", label: "Relacionamentos", href: "/lifestyle/relacionamentos" },
-];
-
-export const featuredHero = {
-  category: "Editorial · Capa",
-  title: "A Arte do Desejo Contemporâneo",
-  subtitle: "Como a nova geração brasileira está reescrevendo as regras do luxo, da intimidade e da estética sensorial.",
-  author: "Camila Vasconcelos",
-  date: "18 Maio, MMXXVI",
-  readTime: "12 min de leitura",
-  image: "https://images.pexels.com/photos/34769660/pexels-photo-34769660.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-};
-
-export const featuredArticles = [
   {
-    id: 1,
-    category: "Sensualidade",
-    title: "O Vocabulário Silencioso da Sedução",
-    excerpt: "Os gestos, as pausas, o olhar prolongado — um ensaio sobre a comunicação que dispensa palavras.",
-    author: "Rafaela Mont'Serrat",
-    date: "15 Maio",
-    readTime: "8 min",
-    image: "https://images.pexels.com/photos/32628115/pexels-photo-32628115.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    label: "Turismo",
+    href: "/turismo",
+    children: [
+      { label: "Motéis", href: "/turismo/moteis" },
+      { label: "Hotéis", href: "/turismo/hoteis" },
+      { label: "Pousadas", href: "/turismo/pousadas" },
+    ],
   },
   {
-    id: 2,
-    category: "Vinhos & Charutos",
-    title: "Cohiba e Bordeaux: A Geometria do Prazer Lento",
-    excerpt: "O ritual masculino que atravessa séculos — e por que ele segue intacto em pleno MMXXVI.",
-    author: "Eduardo Setúbal",
-    date: "12 Maio",
-    readTime: "10 min",
-    image: "https://images.unsplash.com/photo-1778548646491-8afb9849e1df?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTV8MHwxfHNlYXJjaHw0fHx3aW5lJTIwY2lnYXJ8ZW58MHx8fHwxNzc5MzEzMzEyfDA&ixlib=rb-4.1.0&q=85",
+    label: "Bem Estar",
+    href: "/bem-estar",
+    children: [
+      { label: "Beleza", href: "/bem-estar/beleza" },
+      { label: "Cultura", href: "/bem-estar/cultura" },
+      { label: "Saúde", href: "/bem-estar/saude" },
+    ],
   },
   {
-    id: 3,
-    category: "Moda",
-    title: "Lingerie Couture: O Renascimento do Feito à Mão",
-    excerpt: "Ateliês paulistanos resgatam técnicas centenárias e elevam a peça íntima ao status de objeto de arte.",
-    author: "Beatriz Aboumrad",
-    date: "10 Maio",
-    readTime: "7 min",
-    image: "https://images.unsplash.com/photo-1603189343302-e603f7add05a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHw0fHxmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc3OTMxMzMyMHww&ixlib=rb-4.1.0&q=85",
+    label: "Vida Noturna",
+    href: "/vida-noturna",
+    children: [
+      { label: "Locais", href: "/vida-noturna/locais" },
+      { label: "Vinhos", href: "/vida-noturna/vinhos" },
+      { label: "Charutos", href: "/vida-noturna/charutos" },
+    ],
+  },
+  {
+    label: "Gastronomia",
+    href: "/gastronomia",
+    children: [
+      { label: "Culinária", href: "/gastronomia/culinaria" },
+      { label: "Arte", href: "/gastronomia/arte" },
+      { label: "Sabor", href: "/gastronomia/sabor" },
+    ],
+  },
+  {
+    label: "Mais",
+    href: "/mais",
+    children: [
+      { label: "Horóscopo", href: "/mais/horoscopo" },
+      { label: "Contos Eróticos", href: "/mais/contos" },
+    ],
+  },
+  {
+    label: "Shop",
+    href: "/shop",
+    children: [
+      { label: "Sex Shop", href: "/shop/sex-shop" },
+      { label: "Marketplace", href: "/shop/marketplace" },
+      { label: "Apostas & Bets", href: "/shop/apostas" },
+    ],
   },
 ];
 
-export const videoContent = [
-  {
-    id: "v1",
-    title: "O Ritual do Jantar Privado",
-    category: "Gastronomia Sensorial",
-    duration: "14:22",
-    thumbnail: "https://images.pexels.com/photos/7403/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    youtubeId: "dQw4w9WgXcQ",
+// =============================================================
+// SECTION METADATA (for hero of each category/subcategory page)
+// =============================================================
+export const sectionMeta = {
+  turismo: {
+    title: "Turismo",
+    tagline: "Refúgios para quem sabe viajar",
+    description: "Endereços discretos, suítes editoriais e mapas que nenhum guia revela.",
   },
-  {
-    id: "v2",
-    title: "Lisboa Depois da Meia-Noite",
-    category: "Viagem",
-    duration: "22:08",
-    thumbnail: "https://images.unsplash.com/photo-1561501900-3701fa6a0864?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbHxlbnwwfHx8fDE3NzkyOTI1MDJ8MA&ixlib=rb-4.1.0&q=85",
-    youtubeId: "jfKfPfyJRdk",
+  "turismo/moteis": {
+    title: "Motéis",
+    tagline: "A arquitetura do encontro",
+    description: "Suítes temáticas, hidromassagens privativas e o renascimento do motel-conceito.",
   },
-  {
-    id: "v3",
-    title: "O Corpo Como Templo",
-    category: "Bem-estar",
-    duration: "09:47",
-    thumbnail: "https://images.pexels.com/photos/3818315/pexels-photo-3818315.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    youtubeId: "5qap5aO4i9A",
+  "turismo/hoteis": {
+    title: "Hotéis",
+    tagline: "Hospedagem com assinatura",
+    description: "Boutique hotels, retiros urbanos e endereços que sabem o significado de privacidade.",
   },
-  {
-    id: "v4",
-    title: "Conversas Sobre Desejo",
-    category: "Entrevista",
-    duration: "31:15",
-    thumbnail: "https://images.pexels.com/photos/7567725/pexels-photo-7567725.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    youtubeId: "lTRiuFIWV54",
-  },
-];
-
-export const categories = [
-  { id: "sensualidade", name: "Sensualidade", count: 84 },
-  { id: "bem-estar", name: "Bem-estar", count: 62 },
-  { id: "vinhos", name: "Vinhos & Charutos", count: 41 },
-  { id: "viagens", name: "Viagens", count: 73 },
-  { id: "moda", name: "Moda", count: 58 },
-  { id: "cultura", name: "Cultura", count: 49 },
-  { id: "relacionamentos", name: "Relacionamentos", count: 67 },
-];
-
-export const recentArticles = [
-  {
-    id: 11,
-    category: "relacionamentos",
-    categoryLabel: "Relacionamentos",
-    title: "A Geografia Íntima dos Casais Modernos",
-    excerpt: "Estudo conduzido pela L.S Research revela como casais brasileiros estão reinventando a noção de fidelidade, espaço pessoal e desejo a partir dos 35 anos.",
-    author: "Dra. Helena Brizola",
-    date: "08 Maio, MMXXVI",
-    readTime: "11 min",
-    image: "https://images.unsplash.com/photo-1645996830739-8fe3df27c33f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwzfHxmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc3OTMxMzMyMHww&ixlib=rb-4.1.0&q=85",
-  },
-  {
-    id: 12,
-    category: "bem-estar",
-    categoryLabel: "Bem-estar",
-    title: "O Spa Privado: Tendência ou Necessidade?",
-    excerpt: "Residências de alto padrão em São Paulo e Rio incorporam terapias sensoriais como item indispensável do projeto arquitetônico.",
-    author: "Marina Rezende",
-    date: "05 Maio, MMXXVI",
-    readTime: "6 min",
-    image: "https://images.pexels.com/photos/3868895/pexels-photo-3868895.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  },
-  {
-    id: 13,
-    category: "cultura",
-    categoryLabel: "Cultura",
-    title: "O Erotismo na Literatura Brasileira Contemporânea",
-    excerpt: "Cinco autores que estão devolvendo ao desejo seu lugar legítimo na narrativa nacional — sem panfletagem, sem pudor.",
-    author: "Pedro Antunes",
-    date: "02 Maio, MMXXVI",
-    readTime: "9 min",
-    image: "https://images.pexels.com/photos/1066171/pexels-photo-1066171.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  },
-  {
-    id: 14,
-    category: "viagens",
-    categoryLabel: "Viagens",
-    title: "Suítes Discretas: O Mapa Secreto da Costa Brasileira",
-    excerpt: "De Trancoso a Búzios — onze refúgios que cultivam o luxo do anonimato e a arquitetura da intimidade.",
-    author: "Felipe Castel",
-    date: "28 Abril, MMXXVI",
-    readTime: "14 min",
-    image: "https://images.pexels.com/photos/25189157/pexels-photo-25189157.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  },
-];
-
-// Articles by category - dedicated pages
-export const articlesByCategory = {
-  sensualidade: [
-    {
-      id: 101,
-      category: "sensualidade",
-      categoryLabel: "Sensualidade",
-      title: "O Vocabulário Silencioso da Sedução",
-      excerpt: "Os gestos, as pausas, o olhar prolongado — um ensaio sobre a comunicação que dispensa palavras.",
-      author: "Rafaela Mont'Serrat",
-      date: "15 Maio, MMXXVI",
-      readTime: "8 min",
-      image: "https://images.pexels.com/photos/32628115/pexels-photo-32628115.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      featured: true,
-    },
-    {
-      id: 102,
-      category: "sensualidade",
-      categoryLabel: "Sensualidade",
-      title: "A Estética do Toque: Por Que Tocamos Como Tocamos",
-      excerpt: "Da neurociência à filosofia: a pele como o maior órgão erótico do corpo humano.",
-      author: "Dr. Vinícius Aragão",
-      date: "11 Maio, MMXXVI",
-      readTime: "9 min",
-      image: "https://images.pexels.com/photos/7567725/pexels-photo-7567725.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    },
-    {
-      id: 103,
-      category: "sensualidade",
-      categoryLabel: "Sensualidade",
-      title: "Perfume Como Linguagem do Desejo",
-      excerpt: "Como aromas constroem memórias afetivas e ativam zonas do cérebro ligadas à libido.",
-      author: "Beatriz Aboumrad",
-      date: "07 Maio, MMXXVI",
-      readTime: "6 min",
-      image: "https://images.pexels.com/photos/3818315/pexels-photo-3818315.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    },
-    {
-      id: 104,
-      category: "sensualidade",
-      categoryLabel: "Sensualidade",
-      title: "O Olhar: A Primeira Forma de Intimidade",
-      excerpt: "Estudo da L.S Research mostra que 73% dos brasileiros decidem atração nos primeiros 4 segundos.",
-      author: "Camila Vasconcelos",
-      date: "03 Maio, MMXXVI",
-      readTime: "5 min",
-      image: "https://images.pexels.com/photos/34769660/pexels-photo-34769660.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    },
-  ],
-  "bem-estar": [
-    {
-      id: 201,
-      category: "bem-estar",
-      categoryLabel: "Bem-estar",
-      title: "O Spa Privado: Tendência ou Necessidade?",
-      excerpt: "Residências de alto padrão incorporam terapias sensoriais como item indispensável do projeto arquitetônico.",
-      author: "Marina Rezende",
-      date: "05 Maio, MMXXVI",
-      readTime: "6 min",
-      image: "https://images.pexels.com/photos/3868895/pexels-photo-3868895.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      featured: true,
-    },
-    {
-      id: 202,
-      category: "bem-estar",
-      categoryLabel: "Bem-estar",
-      title: "Sono, Sexo e Performance: A Trindade da Vitalidade",
-      excerpt: "Por que dormir 8 horas é o afrodisíaco mais subestimado do século XXI.",
-      author: "Dra. Helena Brizola",
-      date: "01 Maio, MMXXVI",
-      readTime: "10 min",
-      image: "https://images.unsplash.com/photo-1561501900-3701fa6a0864?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbHxlbnwwfHx8fDE3NzkyOTI1MDJ8MA&ixlib=rb-4.1.0&q=85",
-    },
-    {
-      id: 203,
-      category: "bem-estar",
-      categoryLabel: "Bem-estar",
-      title: "Pilates Aéreo, Sauna Finlandesa e Imersão Gélida",
-      excerpt: "O novo ritual matinal dos executivos paulistanos que entendem o corpo como ativo de longo prazo.",
-      author: "Felipe Castel",
-      date: "26 Abril, MMXXVI",
-      readTime: "7 min",
-      image: "https://images.pexels.com/photos/3818315/pexels-photo-3818315.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    },
-  ],
-  vinhos: [
-    {
-      id: 301,
-      category: "vinhos",
-      categoryLabel: "Vinhos & Charutos",
-      title: "Cohiba e Bordeaux: A Geometria do Prazer Lento",
-      excerpt: "O ritual masculino que atravessa séculos — e por que ele segue intacto em pleno MMXXVI.",
-      author: "Eduardo Setúbal",
-      date: "12 Maio, MMXXVI",
-      readTime: "10 min",
-      image: "https://images.unsplash.com/photo-1778548646491-8afb9849e1df?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTV8MHwxfHNlYXJjaHw0fHx3aW5lJTIwY2lnYXJ8ZW58MHx8fHwxNzc5MzEzMzEyfDA&ixlib=rb-4.1.0&q=85",
-      featured: true,
-    },
-    {
-      id: 302,
-      category: "vinhos",
-      categoryLabel: "Vinhos & Charutos",
-      title: "A Volta dos Brancos Naturais",
-      excerpt: "Vinhos de baixa intervenção conquistam adegas privadas e cartas dos restaurantes de autor.",
-      author: "Eduardo Setúbal",
-      date: "06 Maio, MMXXVI",
-      readTime: "8 min",
-      image: "https://images.pexels.com/photos/25189157/pexels-photo-25189157.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    },
-    {
-      id: 303,
-      category: "vinhos",
-      categoryLabel: "Vinhos & Charutos",
-      title: "Whiskies Japoneses: O Novo Status do Decanter",
-      excerpt: "Yamazaki, Hibiki e a obsessão dos colecionadores brasileiros pela destilaria nipônica.",
-      author: "Pedro Antunes",
-      date: "30 Abril, MMXXVI",
-      readTime: "11 min",
-      image: "https://images.pexels.com/photos/7403/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    },
-  ],
-  viagens: [
-    {
-      id: 401,
-      category: "viagens",
-      categoryLabel: "Viagens",
-      title: "Suítes Discretas: O Mapa Secreto da Costa Brasileira",
-      excerpt: "De Trancoso a Búzios — onze refúgios que cultivam o luxo do anonimato e a arquitetura da intimidade.",
-      author: "Felipe Castel",
-      date: "28 Abril, MMXXVI",
-      readTime: "14 min",
-      image: "https://images.pexels.com/photos/25189157/pexels-photo-25189157.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      featured: true,
-    },
-    {
-      id: 402,
-      category: "viagens",
-      categoryLabel: "Viagens",
-      title: "Lisboa Depois da Meia-Noite",
-      excerpt: "Bares clandestinos, fado contemporâneo e o renascimento sensual da capital portuguesa.",
-      author: "Camila Vasconcelos",
-      date: "22 Abril, MMXXVI",
-      readTime: "12 min",
-      image: "https://images.unsplash.com/photo-1561501900-3701fa6a0864?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbHxlbnwwfHx8fDE3NzkyOTI1MDJ8MA&ixlib=rb-4.1.0&q=85",
-    },
-    {
-      id: 403,
-      category: "viagens",
-      categoryLabel: "Viagens",
-      title: "Tóquio em Trânsito: O Guia das Madrugadas",
-      excerpt: "Karaokês discretos, omakases noturnos e o protocolo de Shinjuku para quem viaja sem agenda.",
-      author: "Marina Rezende",
-      date: "17 Abril, MMXXVI",
-      readTime: "13 min",
-      image: "https://images.pexels.com/photos/3868895/pexels-photo-3868895.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    },
-  ],
-  moda: [
-    {
-      id: 501,
-      category: "moda",
-      categoryLabel: "Moda",
-      title: "Lingerie Couture: O Renascimento do Feito à Mão",
-      excerpt: "Ateliês paulistanos resgatam técnicas centenárias e elevam a peça íntima ao status de objeto de arte.",
-      author: "Beatriz Aboumrad",
-      date: "10 Maio, MMXXVI",
-      readTime: "7 min",
-      image: "https://images.unsplash.com/photo-1603189343302-e603f7add05a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHw0fHxmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc3OTMxMzMyMHww&ixlib=rb-4.1.0&q=85",
-      featured: true,
-    },
-    {
-      id: 502,
-      category: "moda",
-      categoryLabel: "Moda",
-      title: "Seda, Veludo, Couro: A Trindade Sensorial do Inverno",
-      excerpt: "Como os tecidos nobres voltaram a dominar o guarda-roupa do alto luxo brasileiro.",
-      author: "Rafaela Mont'Serrat",
-      date: "04 Maio, MMXXVI",
-      readTime: "8 min",
-      image: "https://images.unsplash.com/photo-1645996830739-8fe3df27c33f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwzfHxmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc3OTMxMzMyMHww&ixlib=rb-4.1.0&q=85",
-    },
-    {
-      id: 503,
-      category: "moda",
-      categoryLabel: "Moda",
-      title: "Joalheria para o Corpo Nu",
-      excerpt: "Correntes para o ventre, anelets e adornos íntimos voltam às coleções de inverno em SP e Milão.",
-      author: "Beatriz Aboumrad",
-      date: "29 Abril, MMXXVI",
-      readTime: "6 min",
-      image: "https://images.pexels.com/photos/1066171/pexels-photo-1066171.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    },
-  ],
-  cultura: [
-    {
-      id: 601,
-      category: "cultura",
-      categoryLabel: "Cultura",
-      title: "O Erotismo na Literatura Brasileira Contemporânea",
-      excerpt: "Cinco autores que estão devolvendo ao desejo seu lugar legítimo na narrativa nacional — sem panfletagem, sem pudor.",
-      author: "Pedro Antunes",
-      date: "02 Maio, MMXXVI",
-      readTime: "9 min",
-      image: "https://images.pexels.com/photos/1066171/pexels-photo-1066171.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      featured: true,
-    },
-    {
-      id: 602,
-      category: "cultura",
-      categoryLabel: "Cultura",
-      title: "Cinema do Desejo: A Nova Onda Brasileira",
-      excerpt: "Quatro diretores que estão filmando o sexo como linguagem, não como tabu.",
-      author: "Pedro Antunes",
-      date: "25 Abril, MMXXVI",
-      readTime: "12 min",
-      image: "https://images.pexels.com/photos/7567725/pexels-photo-7567725.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    },
-    {
-      id: 603,
-      category: "cultura",
-      categoryLabel: "Cultura",
-      title: "Curadoria Privada: A Arte que Vive em Quartos",
-      excerpt: "Colecionadores que escolhem obras pelo poder evocativo — e não pelo valor de leilão.",
-      author: "Camila Vasconcelos",
-      date: "19 Abril, MMXXVI",
-      readTime: "10 min",
-      image: "https://images.unsplash.com/photo-1603189343302-e603f7add05a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHw0fHxmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc3OTMxMzMyMHww&ixlib=rb-4.1.0&q=85",
-    },
-  ],
-  relacionamentos: [
-    {
-      id: 701,
-      category: "relacionamentos",
-      categoryLabel: "Relacionamentos",
-      title: "A Geografia Íntima dos Casais Modernos",
-      excerpt: "Estudo conduzido pela L.S Research revela como casais brasileiros estão reinventando fidelidade, espaço pessoal e desejo a partir dos 35 anos.",
-      author: "Dra. Helena Brizola",
-      date: "08 Maio, MMXXVI",
-      readTime: "11 min",
-      image: "https://images.unsplash.com/photo-1645996830739-8fe3df27c33f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwzfHxmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc3OTMxMzMyMHww&ixlib=rb-4.1.0&q=85",
-      featured: true,
-    },
-    {
-      id: 702,
-      category: "relacionamentos",
-      categoryLabel: "Relacionamentos",
-      title: "Casamento Aberto: Da Vanguarda ao Cotidiano",
-      excerpt: "O que mudou na conversa sobre não-monogamia ética entre casais brasileiros bem-sucedidos.",
-      author: "Dra. Helena Brizola",
-      date: "30 Abril, MMXXVI",
-      readTime: "13 min",
-      image: "https://images.pexels.com/photos/32628115/pexels-photo-32628115.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    },
-    {
-      id: 703,
-      category: "relacionamentos",
-      categoryLabel: "Relacionamentos",
-      title: "A Linguagem dos Afetos no Século da Velocidade",
-      excerpt: "Por que a paciência voltou a ser o atributo mais sedutor em tempos de algoritmo e match imediato.",
-      author: "Marina Rezende",
-      date: "23 Abril, MMXXVI",
-      readTime: "9 min",
-      image: "https://images.pexels.com/photos/34769660/pexels-photo-34769660.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    },
-  ],
-};
-
-export const categoryMeta = {
-  sensualidade: {
-    title: "Sensualidade",
-    tagline: "O Vocabulário do Desejo",
-    description: "Ensaios sobre estética, comunicação não-verbal e a inteligência sensorial.",
+  "turismo/pousadas": {
+    title: "Pousadas",
+    tagline: "O charme do interior",
+    description: "Refúgios em Trancoso, Búzios, Petrópolis — onde a paisagem ainda é programa.",
   },
   "bem-estar": {
-    title: "Bem-estar",
-    tagline: "O Corpo Como Templo",
-    description: "Longevidade sexual, terapias sensoriais e a nova ciência do prazer sustentável.",
+    title: "Bem Estar",
+    tagline: "O corpo como templo",
+    description: "Beleza, cultura e saúde — três pilares do estilo de vida contemporâneo.",
   },
-  vinhos: {
-    title: "Vinhos & Charutos",
-    tagline: "A Geometria do Prazer Lento",
-    description: "Adegas privadas, charutarias e o ritual contemporâneo do degustar com tempo.",
+  "bem-estar/beleza": {
+    title: "Beleza",
+    tagline: "A estética do cuidado",
+    description: "Skincare de autor, rituais de beleza e o renascimento da cosmética artesanal.",
   },
-  viagens: {
-    title: "Viagens",
-    tagline: "Refúgios para Quem Sabe Viajar",
-    description: "Suítes discretas, madrugadas internacionais e mapas que nenhum guia revela.",
-  },
-  moda: {
-    title: "Moda",
-    tagline: "A Pele Como Tecido",
-    description: "Lingerie couture, alfaiataria de autor e o renascimento dos materiais nobres.",
-  },
-  cultura: {
+  "bem-estar/cultura": {
     title: "Cultura",
-    tagline: "Arte, Literatura e Desejo",
-    description: "Cinema, livros, exposições e curadorias que tratam o erotismo como linguagem séria.",
+    tagline: "Arte, literatura e desejo",
+    description: "Cinema, livros, exposições e curadorias que tratam o erotismo como linguagem.",
   },
-  relacionamentos: {
-    title: "Relacionamentos",
-    tagline: "Os Novos Pactos do Afeto",
-    description: "Pesquisas, ensaios e relatos sobre as estruturas afetivas do MMXXVI.",
+  "bem-estar/saude": {
+    title: "Saúde",
+    tagline: "Longevidade sexual e vitalidade",
+    description: "Hormônios, suplementação e os protocolos da nova ciência do prazer sustentável.",
+  },
+  "vida-noturna": {
+    title: "Vida Noturna",
+    tagline: "A geometria da madrugada",
+    description: "Locais, vinhos e charutos — o tripé da noite contemporânea brasileira.",
+  },
+  "vida-noturna/locais": {
+    title: "Locais",
+    tagline: "Bares, clubes e endereços de fim de noite",
+    description: "Speakeasies, jazz clubs e os bastidores da noite paulistana e carioca.",
+  },
+  "vida-noturna/vinhos": {
+    title: "Vinhos",
+    tagline: "Adegas privadas e safras raras",
+    description: "Brancos naturais, Bordeaux históricos e os novos rótulos brasileiros premiados.",
+  },
+  "vida-noturna/charutos": {
+    title: "Charutos",
+    tagline: "O ritual lento",
+    description: "Cohibas, dominicanos e o renascimento da charutaria de autor em São Paulo.",
+  },
+  gastronomia: {
+    title: "Gastronomia",
+    tagline: "Da cozinha ao desejo",
+    description: "Culinária autoral, performance artística e o sabor como linguagem sensorial.",
+  },
+  "gastronomia/culinaria": {
+    title: "Culinária",
+    tagline: "Cozinhar é seduzir",
+    description: "Chefs, receitas e a nova cozinha brasileira contemporânea.",
+  },
+  "gastronomia/arte": {
+    title: "Arte",
+    tagline: "Quando a mesa vira palco",
+    description: "Dining experiences, performances gastronômicas e jantares-instalação.",
+  },
+  "gastronomia/sabor": {
+    title: "Sabor",
+    tagline: "A inteligência do paladar",
+    description: "Degustações às cegas, harmonizações ousadas e o mapa dos novos ingredientes.",
+  },
+  mais: {
+    title: "Mais",
+    tagline: "Além do editorial",
+    description: "Horóscopo, contos eróticos e o que vier a inspirar uma noite diferente.",
+  },
+  "mais/horoscopo": {
+    title: "Horóscopo",
+    tagline: "Os astros e o desejo",
+    description: "Previsões diárias com curadoria astrológica — afetiva, sensual, sem filtros.",
+  },
+  "mais/contos": {
+    title: "Contos Eróticos",
+    tagline: "Literatura para a madrugada",
+    description: "Ficções breves de autores convidados. Leitura adulta, sem pressa.",
+    adult: true,
   },
 };
 
-// ============================================================
-// SHOP - Marketplace de parceiros
-// ============================================================
+// =============================================================
+// BLOG POSTS (lean mock — 2-3 per subcategory)
+// =============================================================
+const IMG = {
+  motel: "https://images.pexels.com/photos/7567725/pexels-photo-7567725.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  hotel: "https://images.unsplash.com/photo-1561501900-3701fa6a0864?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbHxlbnwwfHx8fDE3NzkyOTI1MDJ8MA&ixlib=rb-4.1.0&q=85",
+  pousada: "https://images.pexels.com/photos/25189157/pexels-photo-25189157.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  beleza: "https://images.pexels.com/photos/3818315/pexels-photo-3818315.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  cultura: "https://images.pexels.com/photos/1066171/pexels-photo-1066171.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  saude: "https://images.pexels.com/photos/3868895/pexels-photo-3868895.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  noite: "https://images.pexels.com/photos/32628115/pexels-photo-32628115.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  vinho: "https://images.unsplash.com/photo-1778548646491-8afb9849e1df?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTV8MHwxfHNlYXJjaHw0fHx3aW5lJTIwY2lnYXJ8ZW58MHx8fHwxNzc5MzEzMzEyfDA&ixlib=rb-4.1.0&q=85",
+  charuto: "https://images.pexels.com/photos/7403/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  gastro: "https://images.pexels.com/photos/34769660/pexels-photo-34769660.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  fashion: "https://images.unsplash.com/photo-1603189343302-e603f7add05a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHw0fHxmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc3OTMxMzMyMHww&ixlib=rb-4.1.0&q=85",
+  editorial: "https://images.unsplash.com/photo-1645996830739-8fe3df27c33f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwzfHxmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc3OTMxMzMyMHww&ixlib=rb-4.1.0&q=85",
+};
+
+export const blogPosts = [
+  // TURISMO / MOTÉIS
+  { id: "m-1", path: "turismo/moteis", title: "O Renascimento do Motel-Conceito", excerpt: "Como os novos motéis paulistanos abandonaram o kitsch e abraçaram o design autoral.", author: "Felipe Castel", date: "18 Maio, MMXXVI", readTime: "9 min", image: IMG.motel, featured: true },
+  { id: "m-2", path: "turismo/moteis", title: "Suítes Temáticas: Da Provocação ao Sofisticado", excerpt: "Hidromassagem, fogo de chão e arquitetura cinematográfica — o motel virou destino editorial.", author: "Marina Rezende", date: "12 Maio, MMXXVI", readTime: "7 min", image: IMG.noite },
+  { id: "m-3", path: "turismo/moteis", title: "Mapa dos Motéis Premium do Brasil", excerpt: "De São Paulo a Brasília — onze endereços que entendem o luxo da intimidade.", author: "Camila Vasconcelos", date: "06 Maio, MMXXVI", readTime: "11 min", image: IMG.motel },
+
+  // TURISMO / HOTÉIS
+  { id: "h-1", path: "turismo/hoteis", title: "Boutique Hotels: A Nova Geração Brasileira", excerpt: "Pequenos hotéis-galeria estão reescrevendo o conceito de hospitalidade no país.", author: "Felipe Castel", date: "15 Maio, MMXXVI", readTime: "10 min", image: IMG.hotel, featured: true },
+  { id: "h-2", path: "turismo/hoteis", title: "Retiros Urbanos: Hospedagem com NDA", excerpt: "Por que executivos preferem hotéis com check-in discreto e sem registro público de hóspedes.", author: "Eduardo Setúbal", date: "09 Maio, MMXXVI", readTime: "8 min", image: IMG.pousada },
+  { id: "h-3", path: "turismo/hoteis", title: "Lisboa, Tóquio, Trancoso: 9 Endereços", excerpt: "Os hotéis preferidos da curadoria Lux Society — e por que cada um deles importa.", author: "Camila Vasconcelos", date: "03 Maio, MMXXVI", readTime: "13 min", image: IMG.hotel },
+
+  // TURISMO / POUSADAS
+  { id: "p-1", path: "turismo/pousadas", title: "Trancoso Depois da Lua Nova", excerpt: "A vila baiana segue ditando o tom — e suas pousadas seguem sendo as mais cobiçadas.", author: "Marina Rezende", date: "14 Maio, MMXXVI", readTime: "11 min", image: IMG.pousada, featured: true },
+  { id: "p-2", path: "turismo/pousadas", title: "Petrópolis: O Interior do Desejo", excerpt: "Quatro pousadas serra-acima onde o tempo passa em outra cadência.", author: "Felipe Castel", date: "08 Maio, MMXXVI", readTime: "9 min", image: IMG.pousada },
+  { id: "p-3", path: "turismo/pousadas", title: "Búzios: As Casas Privadas de Fim de Tarde", excerpt: "Refúgios discretos em ruelas que poucos turistas conhecem.", author: "Camila Vasconcelos", date: "02 Maio, MMXXVI", readTime: "8 min", image: IMG.hotel },
+
+  // BEM ESTAR / BELEZA
+  { id: "b-1", path: "bem-estar/beleza", title: "Skincare de Autor: O Novo Luxo Brasileiro", excerpt: "Pequenos laboratórios resgatam fórmulas centenárias e elevam a cosmética ao status de joalheria.", author: "Rafaela Mont'Serrat", date: "16 Maio, MMXXVI", readTime: "8 min", image: IMG.beleza, featured: true },
+  { id: "b-2", path: "bem-estar/beleza", title: "Cabelo, Pele, Aroma: A Trindade Sensorial", excerpt: "Como os três cuidados básicos podem virar ritual erótico individual.", author: "Beatriz Aboumrad", date: "10 Maio, MMXXVI", readTime: "7 min", image: IMG.fashion },
+  { id: "b-3", path: "bem-estar/beleza", title: "O Renascimento da Manicure Discreta", excerpt: "Tons nude profundos, formato amêndoa e o adeus às extensões agressivas.", author: "Rafaela Mont'Serrat", date: "04 Maio, MMXXVI", readTime: "5 min", image: IMG.editorial },
+
+  // BEM ESTAR / CULTURA
+  { id: "c-1", path: "bem-estar/cultura", title: "Erotismo na Literatura Brasileira Contemporânea", excerpt: "Cinco autores que devolvem ao desejo seu lugar legítimo na narrativa nacional.", author: "Pedro Antunes", date: "13 Maio, MMXXVI", readTime: "9 min", image: IMG.cultura, featured: true },
+  { id: "c-2", path: "bem-estar/cultura", title: "Cinema do Desejo: A Nova Onda", excerpt: "Quatro diretores brasileiros filmando o sexo como linguagem, não como tabu.", author: "Pedro Antunes", date: "07 Maio, MMXXVI", readTime: "12 min", image: IMG.editorial },
+  { id: "c-3", path: "bem-estar/cultura", title: "Arte Privada: Obras que Vivem em Quartos", excerpt: "Colecionadores escolhem peças pelo poder evocativo, não pelo valor de leilão.", author: "Camila Vasconcelos", date: "01 Maio, MMXXVI", readTime: "10 min", image: IMG.cultura },
+
+  // BEM ESTAR / SAÚDE
+  { id: "s-1", path: "bem-estar/saude", title: "Longevidade Sexual: A Nova Fronteira", excerpt: "Hormônios bioidênticos, suplementação personalizada e o protocolo dos 40+.", author: "Dra. Helena Brizola", date: "17 Maio, MMXXVI", readTime: "11 min", image: IMG.saude, featured: true },
+  { id: "s-2", path: "bem-estar/saude", title: "Sono, Sexo e Performance", excerpt: "Por que dormir 8 horas é o afrodisíaco mais subestimado do século XXI.", author: "Dra. Helena Brizola", date: "11 Maio, MMXXVI", readTime: "10 min", image: IMG.saude },
+  { id: "s-3", path: "bem-estar/saude", title: "Imersão Gélida & Sauna Finlandesa", excerpt: "O novo ritual matinal dos executivos que entendem o corpo como ativo de longo prazo.", author: "Felipe Castel", date: "05 Maio, MMXXVI", readTime: "7 min", image: IMG.beleza },
+
+  // VIDA NOTURNA / LOCAIS
+  { id: "vn-1", path: "vida-noturna/locais", title: "Speakeasies de São Paulo: Mapa Atualizado", excerpt: "Onze bares clandestinos onde a senha ainda importa e a coquetelaria é arte.", author: "Eduardo Setúbal", date: "16 Maio, MMXXVI", readTime: "9 min", image: IMG.noite, featured: true },
+  { id: "vn-2", path: "vida-noturna/locais", title: "Rio: Os Clubes Após as 2h", excerpt: "Lapa, Botafogo e os endereços que só ganham vida quando os outros fecham.", author: "Pedro Antunes", date: "09 Maio, MMXXVI", readTime: "8 min", image: IMG.noite },
+  { id: "vn-3", path: "vida-noturna/locais", title: "Jazz Clubs: O Retorno do Charme Discreto", excerpt: "Casas com 30 lugares e couvert artístico voltam ao centro da cena noturna.", author: "Marina Rezende", date: "02 Maio, MMXXVI", readTime: "7 min", image: IMG.editorial },
+
+  // VIDA NOTURNA / VINHOS
+  { id: "vw-1", path: "vida-noturna/vinhos", title: "Brancos Naturais: A Revolução Silenciosa", excerpt: "Vinhos de baixa intervenção conquistam adegas privadas e cartas de autor.", author: "Eduardo Setúbal", date: "15 Maio, MMXXVI", readTime: "8 min", image: IMG.vinho, featured: true },
+  { id: "vw-2", path: "vida-noturna/vinhos", title: "Bordeaux 2015: A Safra para Esperar", excerpt: "Por que esta colheita pode ser a mais elegante da década.", author: "Eduardo Setúbal", date: "08 Maio, MMXXVI", readTime: "10 min", image: IMG.vinho },
+  { id: "vw-3", path: "vida-noturna/vinhos", title: "Rótulos Brasileiros que Surpreendem", excerpt: "Da Serra Gaúcha ao Vale do São Francisco — sete vinhos para colocar na cabeceira.", author: "Pedro Antunes", date: "01 Maio, MMXXVI", readTime: "9 min", image: IMG.charuto },
+
+  // VIDA NOTURNA / CHARUTOS
+  { id: "ch-1", path: "vida-noturna/charutos", title: "Cohiba e Bordeaux: Geometria do Prazer Lento", excerpt: "O ritual masculino que atravessa séculos — e segue intacto em MMXXVI.", author: "Eduardo Setúbal", date: "14 Maio, MMXXVI", readTime: "10 min", image: IMG.charuto, featured: true },
+  { id: "ch-2", path: "vida-noturna/charutos", title: "Dominicanos vs. Cubanos: O Debate Eterno", excerpt: "Características, terroir e por que a resposta nunca é definitiva.", author: "Eduardo Setúbal", date: "07 Maio, MMXXVI", readTime: "11 min", image: IMG.charuto },
+  { id: "ch-3", path: "vida-noturna/charutos", title: "Charutarias de Autor em São Paulo", excerpt: "Três endereços com humidor próprio, lounge e curadoria de whisky japonês.", author: "Pedro Antunes", date: "30 Abril, MMXXVI", readTime: "8 min", image: IMG.vinho },
+
+  // GASTRONOMIA / CULINÁRIA
+  { id: "g-1", path: "gastronomia/culinaria", title: "A Nova Cozinha Brasileira Contemporânea", excerpt: "Quatro chefs reinventando o que significa cozinhar com identidade nacional.", author: "Marina Rezende", date: "16 Maio, MMXXVI", readTime: "12 min", image: IMG.gastro, featured: true },
+  { id: "g-2", path: "gastronomia/culinaria", title: "Receitas Que Seduzem", excerpt: "Três pratos curtos pensados para a madrugada — preparo de até 30 minutos.", author: "Beatriz Aboumrad", date: "10 Maio, MMXXVI", readTime: "8 min", image: IMG.beleza },
+  { id: "g-3", path: "gastronomia/culinaria", title: "Cozinhar a Dois: O Ritual Esquecido", excerpt: "Por que a cozinha voltou a ser o lugar mais sensual da casa.", author: "Camila Vasconcelos", date: "04 Maio, MMXXVI", readTime: "7 min", image: IMG.gastro },
+
+  // GASTRONOMIA / ARTE
+  { id: "ga-1", path: "gastronomia/arte", title: "Dining Experiences: Quando a Mesa Vira Palco", excerpt: "Jantares-instalação que cruzam performance, gastronomia e provocação.", author: "Pedro Antunes", date: "15 Maio, MMXXVI", readTime: "10 min", image: IMG.editorial, featured: true },
+  { id: "ga-2", path: "gastronomia/arte", title: "A Arte do Empratamento Sensorial", excerpt: "Pratos que invocam memórias afetivas — e por que isso virou tendência.", author: "Marina Rezende", date: "09 Maio, MMXXVI", readTime: "8 min", image: IMG.gastro },
+  { id: "ga-3", path: "gastronomia/arte", title: "Jantares Secretos em Apartamentos Privados", excerpt: "O novo formato dos chefs que recusam restaurante e cozinham para 12.", author: "Eduardo Setúbal", date: "03 Maio, MMXXVI", readTime: "9 min", image: IMG.noite },
+
+  // GASTRONOMIA / SABOR
+  { id: "sa-1", path: "gastronomia/sabor", title: "Degustações às Cegas: O Treino do Paladar", excerpt: "Por que tirar a visão é o atalho para reaprender a sentir.", author: "Eduardo Setúbal", date: "14 Maio, MMXXVI", readTime: "9 min", image: IMG.vinho, featured: true },
+  { id: "sa-2", path: "gastronomia/sabor", title: "Harmonizações Ousadas Que Funcionam", excerpt: "Chocolate amargo com mezcal, ostra com sake — combinações para mesa íntima.", author: "Marina Rezende", date: "08 Maio, MMXXVI", readTime: "7 min", image: IMG.gastro },
+  { id: "sa-3", path: "gastronomia/sabor", title: "O Mapa dos Novos Ingredientes Brasileiros", excerpt: "Frutos amazônicos, ervas do cerrado e por que eles estão no centro da alta gastronomia.", author: "Camila Vasconcelos", date: "01 Maio, MMXXVI", readTime: "11 min", image: IMG.beleza },
+
+  // MAIS / HORÓSCOPO (12 signs as posts)
+  { id: "ho-aries", path: "mais/horoscopo", title: "Áries — A Semana do Impulso", excerpt: "Marte favorece encontros breves e decisões instintivas. Cuidado com promessas feitas na madrugada.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.editorial, featured: true, sign: "♈" },
+  { id: "ho-touro", path: "mais/horoscopo", title: "Touro — Sensorial e Estratégico", excerpt: "Vênus em casa: aproveite para investir no boudoir, na adega e no descanso.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.beleza, sign: "♉" },
+  { id: "ho-gemeos", path: "mais/horoscopo", title: "Gêmeos — Conversas Longas", excerpt: "Mercúrio direto traz clareza. Diálogos íntimos rendem mais que encontros físicos esta semana.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.cultura, sign: "♊" },
+  { id: "ho-cancer", path: "mais/horoscopo", title: "Câncer — A Lua e o Lar", excerpt: "Convide para casa. A intimidade neste ciclo se constrói no doméstico, não no público.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.pousada, sign: "♋" },
+  { id: "ho-leao", path: "mais/horoscopo", title: "Leão — A Atenção do Mundo", excerpt: "Sol em casa 5: visibilidade total. Use a luz com elegância — não com excesso.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.fashion, sign: "♌" },
+  { id: "ho-virgem", path: "mais/horoscopo", title: "Virgem — Detalhes que Importam", excerpt: "Refinamento estético em alta. É o momento de redecorar o quarto e refinar o guarda-roupa.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.editorial, sign: "♍" },
+  { id: "ho-libra", path: "mais/horoscopo", title: "Libra — Equilíbrio Voluptuoso", excerpt: "Vênus rege: jantares a dois, perfumes e roupa íntima de seda. Sem moderação.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.gastro, sign: "♎" },
+  { id: "ho-escorpiao", path: "mais/horoscopo", title: "Escorpião — Intensidade Sem Pedir Licença", excerpt: "Plutão favorece ligações profundas. Evite o flerte superficial — não é seu jogo agora.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.noite, sign: "♏" },
+  { id: "ho-sagitario", path: "mais/horoscopo", title: "Sagitário — A Aventura Necessária", excerpt: "Júpiter pede viagem. Reserve um motel-conceito, um hotel discreto ou um voo curto.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.hotel, sign: "♐" },
+  { id: "ho-capricornio", path: "mais/horoscopo", title: "Capricórnio — Disciplina Sensual", excerpt: "Saturno cobra rotina, inclusive a íntima. Marque o encontro no calendário.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.charuto, sign: "♑" },
+  { id: "ho-aquario", path: "mais/horoscopo", title: "Aquário — O Imprevisto Provocador", excerpt: "Urano traz alguém inesperado. Diga sim ao convite estranho — com discernimento.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.vinho, sign: "♒" },
+  { id: "ho-peixes", path: "mais/horoscopo", title: "Peixes — A Magia do Difuso", excerpt: "Netuno em fase poética. Música, banho longo e uma carta escrita à mão são afrodisíacos.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.saude, sign: "♓" },
+
+  // MAIS / CONTOS ERÓTICOS
+  { id: "co-1", path: "mais/contos", title: "A Carta que Nunca Foi Enviada", excerpt: "Ela escrevia toda quinta-feira. Nunca colocava no correio. Até a quinta em que ele apareceu na porta.", author: "Helena V.", date: "Maio MMXXVI", readTime: "9 min", image: IMG.editorial, featured: true, adult: true },
+  { id: "co-2", path: "mais/contos", title: "Três Notas no Atelier", excerpt: "Bergamota, fumo e algo de almíscar — assim ela definia o cheiro dele. Mas faltava uma quarta nota.", author: "Bruno Tellini", date: "Maio MMXXVI", readTime: "11 min", image: IMG.fashion, adult: true },
+  { id: "co-3", path: "mais/contos", title: "Quinta-feira Depois das 23h", excerpt: "Era o único horário que combinavam. Não por necessidade, mas por estética. Tudo neles era cuidado.", author: "Helena V.", date: "Abril MMXXVI", readTime: "8 min", image: IMG.noite, adult: true },
+  { id: "co-4", path: "mais/contos", title: "O Vinho que Eles Não Beberam", excerpt: "A garrafa ficou na mesa. Eles disseram que abririam depois. Nenhum dos dois pensava em vinho.", author: "Bruno Tellini", date: "Abril MMXXVI", readTime: "10 min", image: IMG.vinho, adult: true },
+  { id: "co-5", path: "mais/contos", title: "A Coleira de Veludo", excerpt: "Foi presente. Não falaram sobre o que significava. Mas ela usou no jantar de aniversário dele.", author: "Helena V.", date: "Abril MMXXVI", readTime: "12 min", image: IMG.beleza, adult: true },
+  { id: "co-6", path: "mais/contos", title: "Suíte 1407", excerpt: "Não havia nome de hóspede. Não havia câmera. Havia apenas uma chave magnética e um intervalo de 4 horas.", author: "Bruno Tellini", date: "Março MMXXVI", readTime: "9 min", image: IMG.motel, adult: true },
+];
+
+// =============================================================
+// SHOP — Partner stores (used in /shop/sex-shop)
+// =============================================================
 export const shopCategories = [
   { id: "todos", name: "Todos" },
   { id: "lingerie", name: "Lingerie" },
@@ -481,136 +284,49 @@ export const shopCategories = [
 ];
 
 export const partnerStores = [
-  {
-    id: "s1",
-    name: "Velvet Noire",
-    category: "lingerie",
-    tagline: "Lingerie Couture",
-    description: "Peças numeradas, feitas à mão em São Paulo. Selo L.S Premium.",
-    cover: "https://images.pexels.com/photos/7567725/pexels-photo-7567725.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    link: "https://example.com/velvet-noire",
-    badge: "Editor's Pick",
-    rating: 4.9,
-  },
-  {
-    id: "s2",
-    name: "Obsidian Toys",
-    category: "brinquedos",
-    tagline: "Design Erótico de Autor",
-    description: "Objetos de luxo em vidro borossilicato e obsidiana negra.",
-    cover: "https://images.pexels.com/photos/3818315/pexels-photo-3818315.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    link: "https://example.com/obsidian",
-    badge: "Premium",
-    rating: 4.8,
-  },
-  {
-    id: "s3",
-    name: "Maison Aurélia",
-    category: "fragrancias",
-    tagline: "Perfumaria do Boudoir",
-    description: "Coleção oud, almiscar e baunilha — frascos numerados a mão.",
-    cover: "https://images.pexels.com/photos/1066171/pexels-photo-1066171.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    link: "https://example.com/maison-aurelia",
-    badge: "Edição Limitada",
-    rating: 5.0,
-  },
-  {
-    id: "s4",
-    name: "Domaine Privé",
-    category: "casal",
-    tagline: "Champagne & Sentidos",
-    description: "Kits boudoir com champagne, taluna e essências afrodisíacas.",
-    cover: "https://images.unsplash.com/photo-1778548646491-8afb9849e1df?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTV8MHwxfHNlYXJjaHw0fHx3aW5lJTIwY2lnYXJ8ZW58MHx8fHwxNzc5MzEzMzEyfDA&ixlib=rb-4.1.0&q=85",
-    link: "https://example.com/domaine-prive",
-    badge: "Curadoria L.S",
-    rating: 4.9,
-  },
-  {
-    id: "s5",
-    name: "Tabu Atelier",
-    category: "fetiche",
-    tagline: "Couro & Sob Medida",
-    description: "Ateliê carioca de peças em couro vegetal sob encomenda.",
-    cover: "https://images.pexels.com/photos/32628115/pexels-photo-32628115.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    link: "https://example.com/tabu-atelier",
-    badge: "Sob Encomenda",
-    rating: 4.7,
-  },
-  {
-    id: "s6",
-    name: "Izílda Botanicals",
-    category: "cosmeticos",
-    tagline: "Óleos Sensoriais",
-    description: "Botânica brasileira convertida em rituais de pele e prazer.",
-    cover: "https://images.pexels.com/photos/3868895/pexels-photo-3868895.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    link: "https://example.com/izilda",
-    badge: "Orgânico",
-    rating: 4.8,
-  },
-  {
-    id: "s7",
-    name: "Clinique Volupté",
-    category: "bem-estar-intimo",
-    tagline: "Saúde Íntima Premium",
-    description: "Suplementos, terapias hormonais e protocolos de longevidade sexual.",
-    cover: "https://images.unsplash.com/photo-1561501900-3701fa6a0864?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3RlbHxlbnwwfHx8fDE3NzkyOTI1MDJ8MA&ixlib=rb-4.1.0&q=85",
-    link: "https://example.com/clinique-volupte",
-    badge: "Clínica Verificada",
-    rating: 4.9,
-  },
-  {
-    id: "s8",
-    name: "Corallium Jewels",
-    category: "acessorios",
-    tagline: "Joias para a Pele Nua",
-    description: "Correntes finas, anelets e piercings em ouro 18k para uso íntimo.",
-    cover: "https://images.unsplash.com/photo-1645996830739-8fe3df27c33f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwzfHxmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc3OTMxMzMyMHww&ixlib=rb-4.1.0&q=85",
-    link: "https://example.com/corallium",
-    badge: "Ouro 18k",
-    rating: 4.9,
-  },
-  {
-    id: "s9",
-    name: "Sereia Sleepwear",
-    category: "lingerie",
-    tagline: "Seda & Dormir Bem",
-    description: "Camisolas e robes em seda Mulberry. Bordados sob encomenda.",
-    cover: "https://images.unsplash.com/photo-1603189343302-e603f7add05a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHw0fHxmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDB8fHx8MTc3OTMxMzMyMHww&ixlib=rb-4.1.0&q=85",
-    link: "https://example.com/sereia",
-    badge: "Seda Mulberry",
-    rating: 4.8,
-  },
-  {
-    id: "s10",
-    name: "Nôctua Concept",
-    category: "brinquedos",
-    tagline: "Tecnologia & Prazer",
-    description: "Dispositivos discretos com app criptografado e bateria de 8h.",
-    cover: "https://images.pexels.com/photos/7403/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    link: "https://example.com/noctua",
-    badge: "Tech",
-    rating: 4.7,
-  },
-  {
-    id: "s11",
-    name: "Casa do Charuto",
-    category: "casal",
-    tagline: "Adega & Charutaria",
-    description: "Cubanos, dominicanos e portugueses — entrega refrigerada.",
-    cover: "https://images.pexels.com/photos/25189157/pexels-photo-25189157.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    link: "https://example.com/casa-charuto",
-    badge: "Tradição",
-    rating: 4.9,
-  },
-  {
-    id: "s12",
-    name: "Órion Privacy",
-    category: "acessorios",
-    tagline: "Embalagens Discretas",
-    description: "Caixas, malas e dispositivos para transportar com discrição absoluta.",
-    cover: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwxfHxsdXh1cnl8ZW58MHx8fHwxNzc5MzEzMzIwfDA&ixlib=rb-4.1.0&q=85",
-    link: "https://example.com/orion",
-    badge: "Discrição",
-    rating: 4.8,
-  },
+  { id: "s1", name: "Velvet Noire", category: "lingerie", tagline: "Lingerie Couture", description: "Peças numeradas, feitas à mão em São Paulo. Selo L.S Premium.", cover: IMG.fashion, link: "https://example.com/velvet-noire", badge: "Editor's Pick", rating: 4.9 },
+  { id: "s2", name: "Obsidian Toys", category: "brinquedos", tagline: "Design Erótico de Autor", description: "Objetos de luxo em vidro borossilicato e obsidiana negra.", cover: IMG.beleza, link: "https://example.com/obsidian", badge: "Premium", rating: 4.8 },
+  { id: "s3", name: "Maison Aurélia", category: "fragrancias", tagline: "Perfumaria do Boudoir", description: "Coleção oud, almiscar e baunilha — frascos numerados a mão.", cover: IMG.cultura, link: "https://example.com/maison-aurelia", badge: "Edição Limitada", rating: 5.0 },
+  { id: "s4", name: "Domaine Privé", category: "casal", tagline: "Champagne & Sentidos", description: "Kits boudoir com champagne, taluna e essências afrodisíacas.", cover: IMG.vinho, link: "https://example.com/domaine-prive", badge: "Curadoria L.S", rating: 4.9 },
+  { id: "s5", name: "Tabu Atelier", category: "fetiche", tagline: "Couro & Sob Medida", description: "Ateliê carioca de peças em couro vegetal sob encomenda.", cover: IMG.noite, link: "https://example.com/tabu-atelier", badge: "Sob Encomenda", rating: 4.7 },
+  { id: "s6", name: "Izílda Botanicals", category: "cosmeticos", tagline: "Óleos Sensoriais", description: "Botânica brasileira convertida em rituais de pele e prazer.", cover: IMG.saude, link: "https://example.com/izilda", badge: "Orgânico", rating: 4.8 },
+  { id: "s7", name: "Clinique Volupté", category: "bem-estar-intimo", tagline: "Saúde Íntima Premium", description: "Suplementos, terapias hormonais e protocolos de longevidade sexual.", cover: IMG.hotel, link: "https://example.com/clinique-volupte", badge: "Clínica Verificada", rating: 4.9 },
+  { id: "s8", name: "Corallium Jewels", category: "acessorios", tagline: "Joias para a Pele Nua", description: "Correntes finas, anelets e piercings em ouro 18k para uso íntimo.", cover: IMG.editorial, link: "https://example.com/corallium", badge: "Ouro 18k", rating: 4.9 },
+  { id: "s9", name: "Sereia Sleepwear", category: "lingerie", tagline: "Seda & Dormir Bem", description: "Camisolas e robes em seda Mulberry. Bordados sob encomenda.", cover: IMG.fashion, link: "https://example.com/sereia", badge: "Seda Mulberry", rating: 4.8 },
+  { id: "s10", name: "Nôctua Concept", category: "brinquedos", tagline: "Tecnologia & Prazer", description: "Dispositivos discretos com app criptografado e bateria de 8h.", cover: IMG.charuto, link: "https://example.com/noctua", badge: "Tech", rating: 4.7 },
+  { id: "s11", name: "Casa do Charuto", category: "casal", tagline: "Adega & Charutaria", description: "Cubanos, dominicanos e portugueses — entrega refrigerada.", cover: IMG.pousada, link: "https://example.com/casa-charuto", badge: "Tradição", rating: 4.9 },
+  { id: "s12", name: "Órion Privacy", category: "acessorios", tagline: "Embalagens Discretas", description: "Caixas, malas e dispositivos para transportar com discrição absoluta.", cover: IMG.gastro, link: "https://example.com/orion", badge: "Discrição", rating: 4.8 },
 ];
+
+// =============================================================
+// MARKETPLACE — Lux's own products (Stripe checkout placeholder)
+// =============================================================
+export const marketplaceProducts = [
+  { id: "p-1", name: "Kit Boudoir Aurélia", category: "Fragrâncias", price: 1490, image: IMG.cultura, description: "Eau de parfum 100ml + sabonete artesanal + difusor de varetas. Edição numerada MMXXVI.", stock: 12 },
+  { id: "p-2", name: "Robe de Seda Mulberry", category: "Lingerie", price: 2890, image: IMG.fashion, description: "Seda 19mm Mulberry. Bordado personalizado opcional. 6 cores disponíveis.", stock: 6 },
+  { id: "p-3", name: "Caixa Noite Lux — 6 Vinhos", category: "Vinhos", price: 3450, image: IMG.vinho, description: "Curadoria fechada com 6 rótulos de pequenas vinícolas. Inclui caderno de degustação.", stock: 24 },
+  { id: "p-4", name: "Velas Sensoriais — Trio", category: "Casa", price: 690, image: IMG.beleza, description: "Três velas (oud, jasmim, fumo) em vidro fumê. Queima de 40h cada.", stock: 30 },
+  { id: "p-5", name: "Diário Privado Lux", category: "Papelaria", price: 320, image: IMG.editorial, description: "Caderno em couro com fechadura magnética. 240 páginas, papel marfim 100g.", stock: 48 },
+  { id: "p-6", name: "Massageador Obsidiana", category: "Brinquedos", price: 1190, image: IMG.beleza, description: "Vidro borossilicato negro. Embalagem em veludo. Garantia vitalícia.", stock: 8 },
+];
+
+// =============================================================
+// APOSTAS & BETS — Mocked games for showcase
+// =============================================================
+export const luxGames = [
+  { id: "lr-1", name: "Roleta Boudoir", category: "Roleta", description: "Roleta europeia com prêmios em produtos da boutique Lux.", image: IMG.noite, players: 142, multiplier: "x36" },
+  { id: "lr-2", name: "Slot Sensorial", category: "Slot", description: "Combine três frascos de perfume e leve para casa o kit Aurélia.", image: IMG.beleza, players: 287, multiplier: "x500" },
+  { id: "lr-3", name: "Raspadinha Velvet", category: "Instantâneo", description: "Revele três cetins iguais. Prêmios entre R$ 50 e R$ 5.000.", image: IMG.fashion, players: 521, multiplier: "x100" },
+  { id: "lr-4", name: "Poker Privado L.S", category: "Cartas", description: "Mesa fechada com 6 lugares. Buy-in mínimo R$ 1.000. Apenas convidados.", image: IMG.charuto, players: 6, multiplier: "VIP" },
+];
+
+// Legacy exports (kept to avoid breaking older imports)
+export const navLinks = menuConfig;
+export const lifestyleCategories = [];
+export const featuredHero = blogPosts.find((p) => p.featured) || blogPosts[0];
+export const featuredArticles = blogPosts.filter((p) => p.featured).slice(0, 3);
+export const videoContent = [];
+export const categories = [];
+export const recentArticles = blogPosts.slice(0, 4);
+export const articlesByCategory = {};
+export const categoryMeta = sectionMeta;

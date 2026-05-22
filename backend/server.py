@@ -59,6 +59,21 @@ class Banner(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
+# Post interactions models
+class Comment(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    post_id: str
+    author: str
+    text: str
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+class CommentCreate(BaseModel):
+    author: str = "Anônimo"
+    text: str
+
+
 class BannerCreate(BaseModel):
     slot: str
     sponsor: str
@@ -191,6 +206,72 @@ async def delete_banner(banner_id: str) -> Dict[str, str]:
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Banner not found")
     return {"status": "deleted", "id": banner_id}
+
+
+# =============================================================
+# Post interactions (likes + comments) — anonymous
+# =============================================================
+@api_router.get("/posts/{post_id}/stats")
+async def get_post_stats(post_id: str) -> Dict[str, int]:
+    doc = await db.post_stats.find_one({"post_id": post_id}, {"_id": 0})
+    likes = int(doc.get("likes", 0)) if doc else 0
+    comments = await db.comments.count_documents({"post_id": post_id})
+    return {"likes": likes, "comments": comments}
+
+
+@api_router.post("/posts/{post_id}/like")
+async def like_post(post_id: str) -> Dict[str, int]:
+    await db.post_stats.update_one(
+        {"post_id": post_id},
+        {"$inc": {"likes": 1}, "$setOnInsert": {"post_id": post_id}},
+        upsert=True,
+    )
+    doc = await db.post_stats.find_one({"post_id": post_id}, {"_id": 0})
+    return {"likes": int(doc.get("likes", 1))}
+
+
+@api_router.post("/posts/{post_id}/unlike")
+async def unlike_post(post_id: str) -> Dict[str, int]:
+    doc = await db.post_stats.find_one({"post_id": post_id}, {"_id": 0})
+    current = int(doc.get("likes", 0)) if doc else 0
+    new_value = max(0, current - 1)
+    await db.post_stats.update_one(
+        {"post_id": post_id},
+        {"$set": {"likes": new_value, "post_id": post_id}},
+        upsert=True,
+    )
+    return {"likes": new_value}
+
+
+@api_router.get("/posts/{post_id}/comments", response_model=List[Comment])
+async def list_comments(post_id: str) -> List[Dict[str, Any]]:
+    rows: List[Dict[str, Any]] = (
+        await db.comments.find({"post_id": post_id}, {"_id": 0})
+        .sort("created_at", -1)
+        .to_list(500)
+    )
+    for r in rows:
+        if isinstance(r.get("created_at"), str):
+            try:
+                r["created_at"] = datetime.fromisoformat(r["created_at"])
+            except ValueError:
+                pass
+    return rows
+
+
+@api_router.post("/posts/{post_id}/comments", response_model=Comment, status_code=201)
+async def add_comment(post_id: str, payload: CommentCreate) -> Comment:
+    author = (payload.author or "").strip() or "Anônimo"
+    text = (payload.text or "").strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="Comment text is required")
+    if len(text) > 2000:
+        raise HTTPException(status_code=400, detail="Comment too long")
+    obj = Comment(post_id=post_id, author=author[:80], text=text)
+    doc: Dict[str, Any] = obj.model_dump()
+    doc["created_at"] = doc["created_at"].isoformat()
+    await db.comments.insert_one(doc)
+    return obj
 
 
 # =============================================================

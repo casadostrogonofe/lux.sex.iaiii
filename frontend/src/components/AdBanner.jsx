@@ -6,15 +6,15 @@ const AdBanner = ({ variant = "premium", data }) => {
     return (
       <section className="max-w-[1400px] mx-auto px-6 md:px-10 py-12">
         <div className="flex items-center gap-3 mb-3">
-          <div className="h-px w-8 bg-[#6b6356]" />
-          <span className="text-[9px] tracking-[0.5em] text-[#6b6356] uppercase">
+          <div className="h-px w-8 bg-[#5a5470]" />
+          <span className="text-[9px] tracking-[0.5em] text-[#5a5470] uppercase">
             Conteúdo Patrocinado · {data.sponsor}
           </span>
         </div>
 
         <a
           href="#sponsor"
-          className="group relative block overflow-hidden border border-[#2b2b2b] hover:border-[#d4af37]/50 transition-all duration-700"
+          className="group relative block overflow-hidden border border-[#1a1526] hover:border-[#9b30ff]/50 transition-all duration-700"
         >
           <div className="grid md:grid-cols-[1.2fr_1fr] items-stretch">
             <div className="relative h-[260px] md:h-[340px] overflow-hidden bg-black">
@@ -25,14 +25,14 @@ const AdBanner = ({ variant = "premium", data }) => {
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
             </div>
-            <div className="bg-[#0f0f10] p-8 md:p-12 flex flex-col justify-center">
-              <h3 className="font-serif text-2xl md:text-3xl text-[#f5f0e6] leading-tight mb-4">
+            <div className="bg-[#0b0812] p-8 md:p-12 flex flex-col justify-center">
+              <h3 className="font-serif text-2xl md:text-3xl text-[#f5f0ff] leading-tight mb-4">
                 {data.headline}
               </h3>
-              <p className="text-[#a0998a] text-sm md:text-base leading-relaxed mb-8 font-light">
+              <p className="text-[#7c7893] text-sm md:text-base leading-relaxed mb-8 font-light">
                 {data.description}
               </p>
-              <div className="inline-flex items-center gap-3 text-[#d4af37] text-xs tracking-[0.3em] uppercase">
+              <div className="inline-flex items-center gap-3 text-[#9b30ff] text-xs tracking-[0.3em] uppercase">
                 <span className="group-hover:tracking-[0.4em] transition-all duration-500">
                   {data.cta}
                 </span>
@@ -50,19 +50,19 @@ const AdBanner = ({ variant = "premium", data }) => {
       <section className="max-w-[1400px] mx-auto px-6 md:px-10 py-8">
         <a
           href="#sponsor"
-          className="group block border-y border-[#2b2b2b] hover:border-[#d4af37]/40 py-8 md:py-10 transition-colors duration-500"
+          className="group block border-y border-[#1a1526] hover:border-[#9b30ff]/40 py-8 md:py-10 transition-colors duration-500"
         >
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <span className="text-[9px] tracking-[0.5em] text-[#6b6356] uppercase block mb-2">
+              <span className="text-[9px] tracking-[0.5em] text-[#5a5470] uppercase block mb-2">
                 Patrocinado · {data.sponsor}
               </span>
-              <h4 className="font-serif text-xl md:text-2xl text-[#f5f0e6] mb-1">
+              <h4 className="font-serif text-xl md:text-2xl text-[#f5f0ff] mb-1">
                 {data.headline}
               </h4>
-              <p className="text-[#a0998a] text-sm font-light">{data.description}</p>
+              <p className="text-[#7c7893] text-sm font-light">{data.description}</p>
             </div>
-            <div className="inline-flex items-center gap-3 text-[#d4af37] text-xs tracking-[0.3em] uppercase whitespace-nowrap">
+            <div className="inline-flex items-center gap-3 text-[#9b30ff] text-xs tracking-[0.3em] uppercase whitespace-nowrap">
               <span className="group-hover:tracking-[0.4em] transition-all duration-500">
                 {data.cta}
               </span>
@@ -79,19 +79,19 @@ const AdBanner = ({ variant = "premium", data }) => {
     <section className="max-w-[1400px] mx-auto px-6 md:px-10 py-14">
       <a
         href="#sponsor"
-        className="group block bg-gradient-to-br from-[#1a1410] to-[#0b0b0b] border border-[#d4af37]/20 hover:border-[#d4af37]/50 p-10 md:p-16 transition-all duration-700"
+        className="group block bg-gradient-to-br from-[#0f0c18] to-[#050208] border border-[#9b30ff]/20 hover:border-[#9b30ff]/50 p-10 md:p-16 transition-all duration-700"
       >
         <div className="text-center max-w-2xl mx-auto">
-          <span className="text-[9px] tracking-[0.5em] text-[#6b6356] uppercase block mb-6">
+          <span className="text-[9px] tracking-[0.5em] text-[#5a5470] uppercase block mb-6">
             Patrocinado · {data.sponsor}
           </span>
-          <h3 className="font-serif text-3xl md:text-4xl text-[#f5f0e6] mb-5 leading-tight">
+          <h3 className="font-serif text-3xl md:text-4xl text-[#f5f0ff] mb-5 leading-tight">
             {data.headline}
           </h3>
-          <p className="text-[#a0998a] text-base md:text-lg leading-relaxed mb-10 font-light">
+          <p className="text-[#7c7893] text-base md:text-lg leading-relaxed mb-10 font-light">
             {data.description}
           </p>
-          <div className="inline-flex items-center gap-3 px-8 py-3 border border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-black text-xs tracking-[0.3em] uppercase transition-colors duration-500">
+          <div className="inline-flex items-center gap-3 px-8 py-3 border border-[#9b30ff] text-[#9b30ff] hover:bg-[#9b30ff] hover:text-black text-xs tracking-[0.3em] uppercase transition-colors duration-500">
             {data.cta}
             <ArrowUpRight className="w-4 h-4" />
           </div>

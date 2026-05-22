@@ -7,8 +7,8 @@
 body {
   margin: 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: #0b0b0b;
-  color: #f5f0e6;
+  background-color: #050208;
+  color: #f5f0ff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -29,34 +29,35 @@ code {
 
 @layer base {
   :root {
-    --background: 0 0% 4%;
-    --foreground: 40 33% 93%;
-    --card: 0 0% 6%;
-    --card-foreground: 40 33% 93%;
-    --popover: 0 0% 6%;
-    --popover-foreground: 40 33% 93%;
-    --primary: 44 65% 52%;
-    --primary-foreground: 0 0% 4%;
-    --secondary: 0 0% 11%;
-    --secondary-foreground: 40 33% 93%;
-    --muted: 0 0% 11%;
-    --muted-foreground: 40 8% 58%;
-    --accent: 44 65% 52%;
-    --accent-foreground: 0 0% 4%;
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 40 33% 93%;
-    --border: 0 0% 17%;
-    --input: 0 0% 17%;
-    --ring: 44 65% 52%;
+    --background: #050208;
+    --foreground: #f5f0ff;
+    --card: #0b0812;
+    --card-foreground: #f5f0ff;
+    --popover: #0b0812;
+    --popover-foreground: #f5f0ff;
+    --primary: #9b30ff;
+    --primary-foreground: #ffffff;
+    --secondary: #110e1a;
+    --secondary-foreground: #f5f0ff;
+    --muted: #110e1a;
+    --muted-foreground: #7c7893;
+    --accent: #110e1a;
+    --accent-foreground: #f5f0ff;
+    --destructive: #ff6568;
+    --destructive-foreground: #ffffff;
+    --border: #1a1526;
+    --input: #0f0c18;
+    --ring: #9b30ff;
     --radius: 0rem;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: var(--border);
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background);
+    color: var(--foreground);
   }
 }

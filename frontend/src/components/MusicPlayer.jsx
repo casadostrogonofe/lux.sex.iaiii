@@ -100,12 +100,12 @@ const MusicPlayer = () => {
   };
 
   return (
-    <div className="flex items-center gap-2 md:gap-3 bg-black/60 backdrop-blur-md border border-[#2b2b2b] hover:border-[#d4af37]/50 transition-colors duration-500 pl-2 pr-3 py-1.5 group">
+    <div className="flex items-center gap-2 md:gap-3 bg-black/60 backdrop-blur-md border border-[#1a1526] hover:border-[#9b30ff]/50 transition-colors duration-500 pl-2 pr-3 py-1.5 group">
       <button
         onClick={toggle}
         disabled={!ready}
         aria-label={playing ? "Pausar música" : "Tocar música"}
-        className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#d4af37] hover:bg-[#e6c25a] disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition-colors"
+        className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#9b30ff] hover:bg-[#b15aff] disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition-colors"
       >
         {playing ? (
           <Pause className="w-3.5 h-3.5 text-black fill-current" />
@@ -115,10 +115,10 @@ const MusicPlayer = () => {
       </button>
 
       <div className="hidden sm:flex flex-col leading-tight min-w-0 max-w-[160px]">
-        <span className="text-[10px] tracking-[0.25em] text-[#d4af37] uppercase flex items-center gap-1">
+        <span className="text-[10px] tracking-[0.25em] text-[#9b30ff] uppercase flex items-center gap-1">
           <Music2 className="w-2.5 h-2.5" /> Lux Radio
         </span>
-        <span className="text-[11px] text-[#f5f0e6] truncate font-light">
+        <span className="text-[11px] text-[#f5f0ff] truncate font-light">
           {ready ? track.title : "Carregando..."}
         </span>
       </div>
@@ -127,7 +127,7 @@ const MusicPlayer = () => {
         onClick={toggleMute}
         disabled={!ready}
         aria-label={muted ? "Tirar mudo" : "Mutar"}
-        className="text-[#a0998a] hover:text-[#d4af37] disabled:opacity-40 transition-colors hidden md:block"
+        className="text-[#7c7893] hover:text-[#9b30ff] disabled:opacity-40 transition-colors hidden md:block"
       >
         {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
       </button>
