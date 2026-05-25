@@ -19,7 +19,17 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
-### 25/Mai/2026 — Sanity CMS integration ✅
+### 25/Mai/2026 (tarde) — Ads + Partners no Sanity + Player loop completo ✅
+- **Schema `ad`** em `/app/sanity-schemas/ad.js` — 18 formatos IAB (Outdoor 970×250, Retângulo Médio 300×250, Arranha-céu 120×600, etc) + 7 placements (sidebar, timeline_inline, section_inline, section_footer, shop_top, shop_grid, lifestyle_premium)
+- **Schema `partner`** em `/app/sanity-schemas/partner.js` — controla a sidebar de parceiros
+- **Schema registry** em `/app/sanity-schemas/index.js`
+- Service unificado em `/app/frontend/src/sanity/ads.js` — `fetchAdsByPlacement(placement)` + `fetchPartners()` + pool de imagens placeholder aleatórias
+- `EditorialHome`, `BlogPage`, `PartnersSidebar` agora consomem Sanity (fallback automático: Sanity → FastAPI → mock)
+- **MusicPlayer**: corrigido loop da playlist inteira — ao terminar uma track avança via `getCurrentSoundIndex` + `(index+1) % total`, garantindo todas as tracks tocarem em sequência e voltarem ao início
+- **Manual do Editor** completo em PT-BR em `/app/SANITY_SETUP.md` (setup, publicar matéria, criar banner, adicionar parceiro, FAQ)
+- Backend `server.py` limpo: removidos endpoints admin/articles órfãos que estavam quebrando o serviço (Sanity substitui)
+
+### 25/Mai/2026 (manhã) — Sanity CMS integration ✅
 - `/app/frontend/src/sanity/client.js` — Sanity client configurado (anonymous reads para published content)
 - `/app/frontend/src/sanity/queries.js` — GROQ queries: all, by path, by section, by slug
 - `/app/frontend/src/sanity/articles.js` — Service com normalização + fallback automático para `mockData` quando Sanity vazio

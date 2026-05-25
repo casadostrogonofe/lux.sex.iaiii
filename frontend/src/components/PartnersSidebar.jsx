@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ExternalLink } from "lucide-react";
-import { articleSidebarPartners } from "../mock/mockData";
+import { fetchPartners } from "../sanity/ads";
 
 // Partners shown on the right side of every article/blog page
 const PartnersSidebar = () => {
+  const [partners, setPartners] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const data = await fetchPartners();
+      if (!cancelled) setPartners(data || []);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <aside className="hidden lg:block w-full max-w-[260px] flex-shrink-0">
       <div className="sticky top-32 space-y-5">
@@ -11,7 +24,7 @@ const PartnersSidebar = () => {
           Parceiros oficiais
         </p>
 
-        {articleSidebarPartners.map((p) => (
+        {partners.map((p) => (
           <a
             key={p.id}
             href={p.link}

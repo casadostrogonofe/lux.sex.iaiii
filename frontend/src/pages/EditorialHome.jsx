@@ -6,7 +6,7 @@ import PartnersSidebar from "../components/PartnersSidebar";
 import Newsletter from "../components/Newsletter";
 import { menuConfig } from "../mock/mockData";
 import { fetchAllArticles } from "../sanity/articles";
-import { fetchBanners } from "../api/banners";
+import { fetchAdsByPlacement } from "../sanity/ads";
 
 // Editorial sections we want to show as latest
 const EDITORIAL_SECTIONS = [
@@ -36,9 +36,8 @@ const EditorialHome = () => {
 
   useEffect(() => {
     (async () => {
-      const list = await fetchBanners("shop_grid");
-      const extra = await fetchBanners("lifestyle_inline");
-      setAds([...(list || []), ...(extra || [])]);
+      const list = await fetchAdsByPlacement("timeline_inline");
+      setAds(list || []);
     })();
   }, []);
 

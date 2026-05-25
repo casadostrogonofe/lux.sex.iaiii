@@ -8,7 +8,7 @@ import Newsletter from "../components/Newsletter";
 import PartnersSidebar from "../components/PartnersSidebar";
 import { sectionMeta, menuConfig } from "../mock/mockData";
 import { fetchArticlesByPath, fetchArticlesBySection } from "../sanity/articles";
-import { fetchBannerBySlot, fetchBanners } from "../api/banners";
+import { fetchAdsByPlacement } from "../sanity/ads";
 
 const BlogPage = () => {
   const { section, sub } = useParams();
@@ -41,12 +41,15 @@ const BlogPage = () => {
   const [gridAds, setGridAds] = useState([]);
   useEffect(() => {
     (async () => {
-      const [inline, footer, ads] = await Promise.all([
-        fetchBannerBySlot("lifestyle_inline"),
-        fetchBannerBySlot("lifestyle_footer"),
-        fetchBanners("shop_grid"),
+      const [inlineList, footerList, ads] = await Promise.all([
+        fetchAdsByPlacement("section_inline"),
+        fetchAdsByPlacement("section_footer"),
+        fetchAdsByPlacement("timeline_inline"),
       ]);
-      setBanners({ inline, footer });
+      setBanners({
+        inline: (inlineList && inlineList[0]) || null,
+        footer: (footerList && footerList[0]) || null,
+      });
       setGridAds(ads || []);
     })();
   }, []);

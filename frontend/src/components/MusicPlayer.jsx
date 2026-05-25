@@ -5,7 +5,7 @@ import { SOUNDCLOUD_URL } from "../mock/mockData";
 // Autoplay + loop playlist with minimal controls (mute + volume only)
 const WIDGET_SRC = `https://w.soundcloud.com/player/?url=${encodeURIComponent(
   SOUNDCLOUD_URL
-)}&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&buying=false&sharing=false&download=false`;
+)}&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&buying=false&sharing=false&download=false&single_active=false`;
 
 const MusicPlayer = () => {
   const iframeRef = useRef(null);
@@ -44,18 +44,25 @@ const MusicPlayer = () => {
 
         widget.bind(SC.Widget.Events.READY, () => {
           setReady(true);
-          // Try to start muted autoplay (allowed by most browsers)
           widget.setVolume(0);
-          widget.play();
           widget.getSounds((sounds) => {
             playlistRef.current = sounds || [];
           });
-        });
-
-        // Loop the entire set: when finished, jump back to first track
-        widget.bind(SC.Widget.Events.FINISH, () => {
+          // Start from first track and play through the set
           widget.skip(0);
           widget.play();
+        });
+
+        // Advance through the playlist and loop back to the start at the end
+        widget.bind(SC.Widget.Events.FINISH, () => {
+          widget.getCurrentSoundIndex((index) => {
+            widget.getSounds((sounds) => {
+              const total = (sounds || []).length || 1;
+              const next = (index + 1) % total;
+              widget.skip(next);
+              widget.play();
+            });
+          });
         });
       } catch (e) {
         // ignore
