@@ -1,27 +1,37 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Clock, MoreHorizontal, Sparkles } from "lucide-react";
+import { MoreHorizontal, Sparkles } from "lucide-react";
 import PostInteractions from "./PostInteractions";
 import { menuConfig } from "../mock/mockData";
 
-// Map section path → label + accent
+// Helper to derive a relative time from a date label / id
+const timeAgo = (post) => {
+  // We have free-form date strings in mock; produce friendly relative phrases
+  const map = {
+    "18 Maio, MMXXVI": "agora há pouco",
+    "17 Maio, MMXXVI": "há 1 dia",
+    "16 Maio, MMXXVI": "há 2 dias",
+    "15 Maio, MMXXVI": "há 3 dias",
+    "14 Maio, MMXXVI": "há 4 dias",
+    "13 Maio, MMXXVI": "há 5 dias",
+    "12 Maio, MMXXVI": "há 6 dias",
+  };
+  if (map[post.date]) return map[post.date];
+  if (typeof post.date === "string" && post.date.includes("Maio")) return "há 1 semana";
+  if (typeof post.date === "string" && post.date.includes("Abril")) return "há 3 semanas";
+  if (typeof post.date === "string" && post.date.includes("Mar\u00e7o")) return "há 1 mês";
+  if (typeof post.date === "string" && post.date.includes("Semana")) return "esta semana";
+  return "recente";
+};
+
 const getSectionMeta = (path) => {
   const [section] = path.split("/");
   const parent = menuConfig.find((m) => m.href === "/" + section);
-  return {
-    sectionLabel: parent?.label || section,
-    subLabel: path.split("/")[1] || "",
-    href: "/" + path,
-  };
-};
-
-const timeAgo = (dateStr) => {
-  // Naive parse — fallback to original string
-  return dateStr;
+  return { sectionLabel: parent?.label || section, href: "/" + path };
 };
 
 const TimelinePostCard = ({ post, isNew = false }) => {
-  const { sectionLabel, subLabel, href } = getSectionMeta(post.path);
+  const { href } = getSectionMeta(post.path);
   const initials = (post.author || "L")
     .split(" ")
     .map((p) => p[0])
@@ -31,7 +41,7 @@ const TimelinePostCard = ({ post, isNew = false }) => {
 
   return (
     <article className="bg-[#0a0612] border border-[#1f1a35] rounded-2xl overflow-hidden hover:border-[#9b30ff]/35 transition-colors duration-500">
-      {/* Header */}
+      {/* Header — author + time only */}
       <div className="flex items-start gap-4 px-6 pt-6 pb-4">
         <div
           className="w-12 h-12 rounded-full flex items-center justify-center font-serif text-base text-white flex-shrink-0"
@@ -44,7 +54,9 @@ const TimelinePostCard = ({ post, isNew = false }) => {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-serif text-base text-[#f5f0ff] truncate">{post.author}</span>
+            <span className="font-serif text-base text-[#f5f0ff] truncate">
+              {post.author}
+            </span>
             {isNew && (
               <span className="text-[9px] tracking-[0.3em] uppercase px-2 py-0.5 bg-[#9b30ff]/15 text-[#9b30ff] border border-[#9b30ff]/40 rounded-full flex items-center gap-1">
                 <Sparkles className="w-2.5 h-2.5" />
@@ -52,18 +64,8 @@ const TimelinePostCard = ({ post, isNew = false }) => {
               </span>
             )}
           </div>
-          <div className="flex items-center gap-2 mt-1 text-[10px] tracking-[0.25em] text-[#7c7893] uppercase">
-            <Link to={href} className="hover:text-[#9b30ff] transition-colors">
-              {sectionLabel}
-              {subLabel ? ` · ${subLabel}` : ""}
-            </Link>
-            <span className="w-1 h-1 rounded-full bg-[#5a5470]" />
-            <span>{timeAgo(post.date)}</span>
-            <span className="w-1 h-1 rounded-full bg-[#5a5470]" />
-            <span className="flex items-center gap-1">
-              <Clock className="w-2.5 h-2.5" />
-              {post.readTime}
-            </span>
+          <div className="mt-1 text-[10px] tracking-[0.25em] text-[#7c7893] uppercase">
+            {timeAgo(post)}
           </div>
         </div>
         <button className="text-[#5a5470] hover:text-[#9b30ff] transition-colors p-1">
@@ -77,10 +79,14 @@ const TimelinePostCard = ({ post, isNew = false }) => {
           <h2 className="font-serif text-2xl md:text-3xl text-[#f5f0ff] leading-[1.2] mb-3 group-hover:text-[#9b30ff] transition-colors">
             {post.title}
             {post.sign && (
-              <span className="ml-3 text-3xl text-[#9b30ff] align-middle">{post.sign}</span>
+              <span className="ml-3 text-3xl text-[#9b30ff] align-middle">
+                {post.sign}
+              </span>
             )}
           </h2>
-          <p className="text-[#a89fc4] text-[15px] leading-[1.65] font-light">{post.excerpt}</p>
+          <p className="text-[#a89fc4] text-[15px] leading-[1.65] font-light">
+            {post.excerpt}
+          </p>
         </Link>
       </div>
 
@@ -111,7 +117,6 @@ const TimelinePostCard = ({ post, isNew = false }) => {
   );
 };
 
-// Inline ad card (matches timeline aesthetic)
 export const TimelineAdCard = ({ banner }) => (
   <a
     href={banner.link || "#"}

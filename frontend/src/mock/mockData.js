@@ -25,6 +25,8 @@ export const menuConfig = [
       { label: "Beleza", href: "/bem-estar/beleza" },
       { label: "Cultura", href: "/bem-estar/cultura" },
       { label: "Saúde", href: "/bem-estar/saude" },
+      { label: "Horóscopo", href: "/bem-estar/horoscopo" },
+      { label: "Contos Eróticos", href: "/bem-estar/contos" },
     ],
   },
   {
@@ -46,14 +48,6 @@ export const menuConfig = [
     ],
   },
   {
-    label: "Mais",
-    href: "/mais",
-    children: [
-      { label: "Horóscopo", href: "/mais/horoscopo" },
-      { label: "Contos Eróticos", href: "/mais/contos" },
-    ],
-  },
-  {
     label: "Shop",
     href: "/shop",
     children: [
@@ -61,6 +55,26 @@ export const menuConfig = [
       { label: "Marketplace", href: "/shop/marketplace" },
       { label: "Apostas & Bets", href: "/shop/apostas" },
     ],
+  },
+];
+
+// =============================================================
+// PARTNERS (right sidebar on article pages)
+// =============================================================
+export const articleSidebarPartners = [
+  {
+    id: "make-life",
+    name: "Make Life",
+    logo: "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/dzixwjjq_Captura%20de%20Tela%202026-05-23%20a%CC%80s%2018.25.28.png",
+    link: "https://loja.makelife.com.br/",
+    bg: "#ffffff",
+  },
+  {
+    id: "farma-ponte",
+    name: "Farma Ponte",
+    logo: "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/wnb5a75f_Captura%20de%20Tela%202026-05-23%20a%CC%80s%2018.27.26.png",
+    link: "https://www.farmaponte.com.br/",
+    bg: "#1c4eaa",
   },
 ];
 
@@ -148,17 +162,12 @@ export const sectionMeta = {
     tagline: "A inteligência do paladar",
     description: "Degustações às cegas, harmonizações ousadas e o mapa dos novos ingredientes.",
   },
-  mais: {
-    title: "Mais",
-    tagline: "Além do editorial",
-    description: "Horóscopo, contos eróticos e o que vier a inspirar uma noite diferente.",
-  },
-  "mais/horoscopo": {
+  "bem-estar/horoscopo": {
     title: "Horóscopo",
     tagline: "Os astros e o desejo",
     description: "Previsões diárias com curadoria astrológica — afetiva, sensual, sem filtros.",
   },
-  "mais/contos": {
+  "bem-estar/contos": {
     title: "Contos Eróticos",
     tagline: "Literatura para a madrugada",
     description: "Ficções breves de autores convidados. Leitura adulta, sem pressa.",
@@ -246,26 +255,26 @@ export const blogPosts = [
   { id: "sa-3", path: "gastronomia/sabor", title: "O Mapa dos Novos Ingredientes Brasileiros", excerpt: "Frutos amazônicos, ervas do cerrado e por que eles estão no centro da alta gastronomia.", author: "Camila Vasconcelos", date: "01 Maio, MMXXVI", readTime: "11 min", image: IMG.beleza },
 
   // MAIS / HORÓSCOPO (12 signs as posts)
-  { id: "ho-aries", path: "mais/horoscopo", title: "Áries — A Semana do Impulso", excerpt: "Marte favorece encontros breves e decisões instintivas. Cuidado com promessas feitas na madrugada.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.editorial, featured: true, sign: "♈" },
-  { id: "ho-touro", path: "mais/horoscopo", title: "Touro — Sensorial e Estratégico", excerpt: "Vênus em casa: aproveite para investir no boudoir, na adega e no descanso.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.beleza, sign: "♉" },
-  { id: "ho-gemeos", path: "mais/horoscopo", title: "Gêmeos — Conversas Longas", excerpt: "Mercúrio direto traz clareza. Diálogos íntimos rendem mais que encontros físicos esta semana.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.cultura, sign: "♊" },
-  { id: "ho-cancer", path: "mais/horoscopo", title: "Câncer — A Lua e o Lar", excerpt: "Convide para casa. A intimidade neste ciclo se constrói no doméstico, não no público.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.pousada, sign: "♋" },
-  { id: "ho-leao", path: "mais/horoscopo", title: "Leão — A Atenção do Mundo", excerpt: "Sol em casa 5: visibilidade total. Use a luz com elegância — não com excesso.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.fashion, sign: "♌" },
-  { id: "ho-virgem", path: "mais/horoscopo", title: "Virgem — Detalhes que Importam", excerpt: "Refinamento estético em alta. É o momento de redecorar o quarto e refinar o guarda-roupa.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.editorial, sign: "♍" },
-  { id: "ho-libra", path: "mais/horoscopo", title: "Libra — Equilíbrio Voluptuoso", excerpt: "Vênus rege: jantares a dois, perfumes e roupa íntima de seda. Sem moderação.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.gastro, sign: "♎" },
-  { id: "ho-escorpiao", path: "mais/horoscopo", title: "Escorpião — Intensidade Sem Pedir Licença", excerpt: "Plutão favorece ligações profundas. Evite o flerte superficial — não é seu jogo agora.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.noite, sign: "♏" },
-  { id: "ho-sagitario", path: "mais/horoscopo", title: "Sagitário — A Aventura Necessária", excerpt: "Júpiter pede viagem. Reserve um motel-conceito, um hotel discreto ou um voo curto.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.hotel, sign: "♐" },
-  { id: "ho-capricornio", path: "mais/horoscopo", title: "Capricórnio — Disciplina Sensual", excerpt: "Saturno cobra rotina, inclusive a íntima. Marque o encontro no calendário.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.charuto, sign: "♑" },
-  { id: "ho-aquario", path: "mais/horoscopo", title: "Aquário — O Imprevisto Provocador", excerpt: "Urano traz alguém inesperado. Diga sim ao convite estranho — com discernimento.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.vinho, sign: "♒" },
-  { id: "ho-peixes", path: "mais/horoscopo", title: "Peixes — A Magia do Difuso", excerpt: "Netuno em fase poética. Música, banho longo e uma carta escrita à mão são afrodisíacos.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.saude, sign: "♓" },
+  { id: "ho-aries", path: "bem-estar/horoscopo", title: "Áries — A Semana do Impulso", excerpt: "Marte favorece encontros breves e decisões instintivas. Cuidado com promessas feitas na madrugada.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.editorial, featured: true, sign: "♈" },
+  { id: "ho-touro", path: "bem-estar/horoscopo", title: "Touro — Sensorial e Estratégico", excerpt: "Vênus em casa: aproveite para investir no boudoir, na adega e no descanso.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.beleza, sign: "♉" },
+  { id: "ho-gemeos", path: "bem-estar/horoscopo", title: "Gêmeos — Conversas Longas", excerpt: "Mercúrio direto traz clareza. Diálogos íntimos rendem mais que encontros físicos esta semana.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.cultura, sign: "♊" },
+  { id: "ho-cancer", path: "bem-estar/horoscopo", title: "Câncer — A Lua e o Lar", excerpt: "Convide para casa. A intimidade neste ciclo se constrói no doméstico, não no público.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.pousada, sign: "♋" },
+  { id: "ho-leao", path: "bem-estar/horoscopo", title: "Leão — A Atenção do Mundo", excerpt: "Sol em casa 5: visibilidade total. Use a luz com elegância — não com excesso.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.fashion, sign: "♌" },
+  { id: "ho-virgem", path: "bem-estar/horoscopo", title: "Virgem — Detalhes que Importam", excerpt: "Refinamento estético em alta. É o momento de redecorar o quarto e refinar o guarda-roupa.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.editorial, sign: "♍" },
+  { id: "ho-libra", path: "bem-estar/horoscopo", title: "Libra — Equilíbrio Voluptuoso", excerpt: "Vênus rege: jantares a dois, perfumes e roupa íntima de seda. Sem moderação.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.gastro, sign: "♎" },
+  { id: "ho-escorpiao", path: "bem-estar/horoscopo", title: "Escorpião — Intensidade Sem Pedir Licença", excerpt: "Plutão favorece ligações profundas. Evite o flerte superficial — não é seu jogo agora.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.noite, sign: "♏" },
+  { id: "ho-sagitario", path: "bem-estar/horoscopo", title: "Sagitário — A Aventura Necessária", excerpt: "Júpiter pede viagem. Reserve um motel-conceito, um hotel discreto ou um voo curto.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.hotel, sign: "♐" },
+  { id: "ho-capricornio", path: "bem-estar/horoscopo", title: "Capricórnio — Disciplina Sensual", excerpt: "Saturno cobra rotina, inclusive a íntima. Marque o encontro no calendário.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.charuto, sign: "♑" },
+  { id: "ho-aquario", path: "bem-estar/horoscopo", title: "Aquário — O Imprevisto Provocador", excerpt: "Urano traz alguém inesperado. Diga sim ao convite estranho — com discernimento.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.vinho, sign: "♒" },
+  { id: "ho-peixes", path: "bem-estar/horoscopo", title: "Peixes — A Magia do Difuso", excerpt: "Netuno em fase poética. Música, banho longo e uma carta escrita à mão são afrodisíacos.", author: "Maga de Vênus", date: "Semana 21", readTime: "3 min", image: IMG.saude, sign: "♓" },
 
   // MAIS / CONTOS ERÓTICOS
-  { id: "co-1", path: "mais/contos", title: "A Carta que Nunca Foi Enviada", excerpt: "Ela escrevia toda quinta-feira. Nunca colocava no correio. Até a quinta em que ele apareceu na porta.", author: "Helena V.", date: "Maio MMXXVI", readTime: "9 min", image: IMG.editorial, featured: true, adult: true },
-  { id: "co-2", path: "mais/contos", title: "Três Notas no Atelier", excerpt: "Bergamota, fumo e algo de almíscar — assim ela definia o cheiro dele. Mas faltava uma quarta nota.", author: "Bruno Tellini", date: "Maio MMXXVI", readTime: "11 min", image: IMG.fashion, adult: true },
-  { id: "co-3", path: "mais/contos", title: "Quinta-feira Depois das 23h", excerpt: "Era o único horário que combinavam. Não por necessidade, mas por estética. Tudo neles era cuidado.", author: "Helena V.", date: "Abril MMXXVI", readTime: "8 min", image: IMG.noite, adult: true },
-  { id: "co-4", path: "mais/contos", title: "O Vinho que Eles Não Beberam", excerpt: "A garrafa ficou na mesa. Eles disseram que abririam depois. Nenhum dos dois pensava em vinho.", author: "Bruno Tellini", date: "Abril MMXXVI", readTime: "10 min", image: IMG.vinho, adult: true },
-  { id: "co-5", path: "mais/contos", title: "A Coleira de Veludo", excerpt: "Foi presente. Não falaram sobre o que significava. Mas ela usou no jantar de aniversário dele.", author: "Helena V.", date: "Abril MMXXVI", readTime: "12 min", image: IMG.beleza, adult: true },
-  { id: "co-6", path: "mais/contos", title: "Suíte 1407", excerpt: "Não havia nome de hóspede. Não havia câmera. Havia apenas uma chave magnética e um intervalo de 4 horas.", author: "Bruno Tellini", date: "Março MMXXVI", readTime: "9 min", image: IMG.motel, adult: true },
+  { id: "co-1", path: "bem-estar/contos", title: "A Carta que Nunca Foi Enviada", excerpt: "Ela escrevia toda quinta-feira. Nunca colocava no correio. Até a quinta em que ele apareceu na porta.", author: "Helena V.", date: "Maio MMXXVI", readTime: "9 min", image: IMG.editorial, featured: true, adult: true },
+  { id: "co-2", path: "bem-estar/contos", title: "Três Notas no Atelier", excerpt: "Bergamota, fumo e algo de almíscar — assim ela definia o cheiro dele. Mas faltava uma quarta nota.", author: "Bruno Tellini", date: "Maio MMXXVI", readTime: "11 min", image: IMG.fashion, adult: true },
+  { id: "co-3", path: "bem-estar/contos", title: "Quinta-feira Depois das 23h", excerpt: "Era o único horário que combinavam. Não por necessidade, mas por estética. Tudo neles era cuidado.", author: "Helena V.", date: "Abril MMXXVI", readTime: "8 min", image: IMG.noite, adult: true },
+  { id: "co-4", path: "bem-estar/contos", title: "O Vinho que Eles Não Beberam", excerpt: "A garrafa ficou na mesa. Eles disseram que abririam depois. Nenhum dos dois pensava em vinho.", author: "Bruno Tellini", date: "Abril MMXXVI", readTime: "10 min", image: IMG.vinho, adult: true },
+  { id: "co-5", path: "bem-estar/contos", title: "A Coleira de Veludo", excerpt: "Foi presente. Não falaram sobre o que significava. Mas ela usou no jantar de aniversário dele.", author: "Helena V.", date: "Abril MMXXVI", readTime: "12 min", image: IMG.beleza, adult: true },
+  { id: "co-6", path: "bem-estar/contos", title: "Suíte 1407", excerpt: "Não havia nome de hóspede. Não havia câmera. Havia apenas uma chave magnética e um intervalo de 4 horas.", author: "Bruno Tellini", date: "Março MMXXVI", readTime: "9 min", image: IMG.motel, adult: true },
 ];
 
 // =============================================================
@@ -284,6 +293,7 @@ export const shopCategories = [
 ];
 
 export const partnerStores = [
+  { id: "make-life", name: "Make Life", category: "bem-estar-intimo", tagline: "Higiene Íntima Premium", description: "Higienizador íntimo Chuka Pop — solução discreta, prática e desenvolvida com aprovação do orgulho LGBTQIA+.", cover: "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/i7t09s3t_WhatsApp%20Image%202026-05-23%20at%2012.54.53.jpeg", link: "https://loja.makelife.com.br/product/chuka-pop-lgbt/", badge: "Parceiro Oficial", rating: 5.0 },
   { id: "s1", name: "Velvet Noire", category: "lingerie", tagline: "Lingerie Couture", description: "Peças numeradas, feitas à mão em São Paulo. Selo L.S Premium.", cover: IMG.fashion, link: "https://example.com/velvet-noire", badge: "Editor's Pick", rating: 4.9 },
   { id: "s2", name: "Obsidian Toys", category: "brinquedos", tagline: "Design Erótico de Autor", description: "Objetos de luxo em vidro borossilicato e obsidiana negra.", cover: IMG.beleza, link: "https://example.com/obsidian", badge: "Premium", rating: 4.8 },
   { id: "s3", name: "Maison Aurélia", category: "fragrancias", tagline: "Perfumaria do Boudoir", description: "Coleção oud, almiscar e baunilha — frascos numerados a mão.", cover: IMG.cultura, link: "https://example.com/maison-aurelia", badge: "Edição Limitada", rating: 5.0 },

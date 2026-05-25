@@ -3,9 +3,8 @@ import { Outlet } from "react-router-dom";
 import AgeOverlay from "./AgeOverlay";
 import Header from "./Header";
 import Footer, { CookieBanner } from "./Footer";
-import FloatingMusicPlayer from "./FloatingMusicPlayer";
 
-// Persistent layout — MusicPlayer + Header stay mounted across routes
+// Persistent layout — Header (with MusicPlayer) stays mounted across routes
 const Layout = () => {
   return (
     <div className="min-h-screen bg-[#050208] text-[#f5f0ff] font-sans antialiased overflow-x-hidden flex flex-col">
@@ -16,7 +15,6 @@ const Layout = () => {
       </main>
       <Footer />
       <CookieBanner />
-      <FloatingMusicPlayer />
     </div>
   );
 };

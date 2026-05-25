@@ -59,3 +59,40 @@ html {
 .scrollbar-thin::-webkit-scrollbar-thumb {
   background: #1a1526;
 }
+
+/* Vertical volume slider for music player */
+.lux-volume {
+  -webkit-appearance: slider-vertical;
+  appearance: slider-vertical;
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(to top, #9b30ff 0%, #9b30ff var(--val, 50%), #1a1526 var(--val, 50%), #1a1526 100%);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+.lux-volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: #b15aff;
+  border: 2px solid #050208;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(155, 48, 255, 0.6);
+}
+.lux-volume::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: #b15aff;
+  border: 2px solid #050208;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.lux-volume::-moz-range-track {
+  background: #1a1526;
+  width: 6px;
+}

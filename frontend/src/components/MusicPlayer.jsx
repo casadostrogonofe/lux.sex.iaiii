@@ -1,20 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Play, Pause, Music2, Volume2, VolumeX } from "lucide-react";
+import { Volume2, VolumeX, Music2 } from "lucide-react";
 import { SOUNDCLOUD_URL } from "../mock/mockData";
 
+// Autoplay + loop playlist with minimal controls (mute + volume only)
 const WIDGET_SRC = `https://w.soundcloud.com/player/?url=${encodeURIComponent(
   SOUNDCLOUD_URL
-)}&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&buying=false&sharing=false&download=false`;
+)}&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&buying=false&sharing=false&download=false`;
 
 const MusicPlayer = () => {
   const iframeRef = useRef(null);
   const widgetRef = useRef(null);
+  const playlistRef = useRef([]);
   const [ready, setReady] = useState(false);
-  const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(false);
-  const [track, setTrack] = useState({ title: "Lux Sessions", artist: "Massive Jack" });
+  const [muted, setMuted] = useState(true); // browsers block sound autoplay
+  const [volume, setVolume] = useState(50);
+  const [showVolume, setShowVolume] = useState(false);
+  const volumeTimeout = useRef(null);
 
-  // Load SC Widget API script once
   useEffect(() => {
     const SCRIPT_ID = "sc-widget-api";
     if (document.getElementById(SCRIPT_ID)) return;
@@ -25,114 +27,136 @@ const MusicPlayer = () => {
     document.head.appendChild(s);
   }, []);
 
-  // Initialize widget when iframe and SC are ready
   useEffect(() => {
     let cancelled = false;
     let attempts = 0;
-
     const init = () => {
       if (cancelled) return;
       const SC = window.SC;
       const iframe = iframeRef.current;
       if (!SC || !iframe) {
-        if (attempts++ < 60) {
-          setTimeout(init, 250);
-        }
+        if (attempts++ < 80) setTimeout(init, 250);
         return;
       }
       try {
         const widget = SC.Widget(iframe);
         widgetRef.current = widget;
+
         widget.bind(SC.Widget.Events.READY, () => {
           setReady(true);
-          widget.getCurrentSound((sound) => {
-            if (!sound) return;
-            setTrack({
-              title: sound.title || "Lux Sessions",
-              artist: sound.user?.username || "Massive Jack",
-            });
+          // Try to start muted autoplay (allowed by most browsers)
+          widget.setVolume(0);
+          widget.play();
+          widget.getSounds((sounds) => {
+            playlistRef.current = sounds || [];
           });
         });
-        widget.bind(SC.Widget.Events.PLAY, () => setPlaying(true));
-        widget.bind(SC.Widget.Events.PAUSE, () => setPlaying(false));
-        widget.bind(SC.Widget.Events.FINISH, () => setPlaying(false));
-        widget.bind(SC.Widget.Events.PLAY_PROGRESS, () => {
-          // refresh current sound title only once
-          if (!widget._trackLoaded) {
-            widget._trackLoaded = true;
-            widget.getCurrentSound((sound) => {
-              if (!sound) return;
-              setTrack({
-                title: sound.title || "Lux Sessions",
-                artist: sound.user?.username || "Massive Jack",
-              });
-            });
-          }
+
+        // Loop the entire set: when finished, jump back to first track
+        widget.bind(SC.Widget.Events.FINISH, () => {
+          widget.skip(0);
+          widget.play();
         });
       } catch (e) {
-        console.warn("SC Widget init failed", e);
+        // ignore
       }
     };
-
     init();
     return () => {
       cancelled = true;
     };
   }, []);
 
-  const toggle = () => {
+  const applyVolume = (v) => {
     const w = widgetRef.current;
     if (!w) return;
-    if (playing) w.pause();
-    else w.play();
+    w.setVolume(v);
+  };
+
+  const onVolumeChange = (e) => {
+    const v = Number(e.target.value);
+    setVolume(v);
+    if (v === 0) {
+      setMuted(true);
+      applyVolume(0);
+    } else {
+      setMuted(false);
+      applyVolume(v);
+    }
   };
 
   const toggleMute = () => {
     const w = widgetRef.current;
     if (!w) return;
     if (muted) {
-      w.setVolume(80);
       setMuted(false);
+      const v = volume === 0 ? 50 : volume;
+      setVolume(v);
+      applyVolume(v);
+      // Try to ensure it's playing on unmute (user gesture)
+      w.isPaused((paused) => {
+        if (paused) w.play();
+      });
     } else {
-      w.setVolume(0);
       setMuted(true);
+      applyVolume(0);
     }
   };
 
+  const handleEnter = () => {
+    if (volumeTimeout.current) clearTimeout(volumeTimeout.current);
+    setShowVolume(true);
+  };
+  const handleLeave = () => {
+    volumeTimeout.current = setTimeout(() => setShowVolume(false), 400);
+  };
+
   return (
-    <div className="flex items-center gap-2 md:gap-3 bg-black/60 backdrop-blur-md border border-[#1a1526] hover:border-[#9b30ff]/50 transition-colors duration-500 pl-2 pr-3 py-1.5 group">
-      <button
-        onClick={toggle}
-        disabled={!ready}
-        aria-label={playing ? "Pausar música" : "Tocar música"}
-        className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-[#9b30ff] hover:bg-[#b15aff] disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition-colors"
-      >
-        {playing ? (
-          <Pause className="w-3.5 h-3.5 text-black fill-current" />
-        ) : (
-          <Play className="w-3.5 h-3.5 text-black fill-current ml-0.5" />
-        )}
-      </button>
-
-      <div className="hidden sm:flex flex-col leading-tight min-w-0 max-w-[160px]">
-        <span className="text-[10px] tracking-[0.25em] text-[#9b30ff] uppercase flex items-center gap-1">
-          <Music2 className="w-2.5 h-2.5" /> Lux Radio
-        </span>
-        <span className="text-[11px] text-[#f5f0ff] truncate font-light">
-          {ready ? track.title : "Carregando..."}
-        </span>
-      </div>
-
+    <div
+      className="relative flex items-center"
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+    >
       <button
         onClick={toggleMute}
         disabled={!ready}
         aria-label={muted ? "Tirar mudo" : "Mutar"}
-        className="text-[#7c7893] hover:text-[#9b30ff] disabled:opacity-40 transition-colors hidden md:block"
+        className="flex items-center gap-2 px-3 py-2 border border-[#1f1a35] hover:border-[#9b30ff]/50 text-[#7c7893] hover:text-[#9b30ff] disabled:opacity-40 disabled:cursor-not-allowed transition-colors duration-300 rounded-full"
       >
+        <Music2 className="w-3 h-3 text-[#9b30ff]" />
         {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
       </button>
 
-      {/* Hidden iframe used only as audio source */}
+      {/* Vertical volume slider */}
+      {showVolume && ready && (
+        <div
+          className="absolute top-full right-0 mt-3 z-50 bg-[#0a0612]/97 backdrop-blur-xl border border-[#1f1a35] rounded-2xl px-3 py-5 flex flex-col items-center gap-3 shadow-2xl shadow-black/60"
+          style={{ minWidth: 56 }}
+          onMouseEnter={handleEnter}
+          onMouseLeave={handleLeave}
+        >
+          <span className="text-[9px] tracking-[0.3em] text-[#9b30ff] uppercase">
+            {volume}
+          </span>
+          <div className="h-32 flex items-center justify-center">
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              value={volume}
+              onChange={onVolumeChange}
+              aria-label="Volume"
+              className="lux-volume"
+            />
+          </div>
+          <span className="text-[8px] tracking-[0.3em] text-[#5a5470] uppercase">
+            Lux
+          </span>
+        </div>
+      )}
+
+      {/* Hidden iframe with autoplay */}
       <iframe
         ref={iframeRef}
         title="Lux Radio"
@@ -142,7 +166,15 @@ const MusicPlayer = () => {
         frameBorder="no"
         allow="autoplay"
         src={WIDGET_SRC}
-        style={{ position: "absolute", width: 1, height: 1, opacity: 0, pointerEvents: "none" }}
+        style={{
+          position: "fixed",
+          width: 1,
+          height: 1,
+          opacity: 0,
+          pointerEvents: "none",
+          bottom: 0,
+          left: 0,
+        }}
       />
     </div>
   );

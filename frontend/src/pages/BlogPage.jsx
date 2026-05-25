@@ -1,11 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import { Clock, User, ChevronRight, ArrowRight } from "lucide-react";
 import PostInteractions from "../components/PostInteractions";
 import TimelinePostCard, { TimelineAdCard } from "../components/TimelinePostCard";
 import AdBanner from "../components/AdBanner";
 import Newsletter from "../components/Newsletter";
-import { blogPosts, sectionMeta, menuConfig } from "../mock/mockData";
+import PartnersSidebar from "../components/PartnersSidebar";
+import { sectionMeta, menuConfig } from "../mock/mockData";
+import { fetchArticlesByPath, fetchArticlesBySection } from "../sanity/articles";
 import { fetchBannerBySlot, fetchBanners } from "../api/banners";
 
 const BlogPage = () => {
@@ -20,11 +22,19 @@ const BlogPage = () => {
     description: "",
   };
 
-  const posts = useMemo(() => {
-    if (sub) return blogPosts.filter((p) => p.path === `${section}/${sub}`);
-    if (section)
-      return blogPosts.filter((p) => p.path.startsWith(section + "/"));
-    return [];
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      let data = [];
+      if (sub) data = await fetchArticlesByPath(`${section}/${sub}`);
+      else if (section) data = await fetchArticlesBySection(section);
+      if (!cancelled) setPosts(data || []);
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [section, sub]);
 
   const [banners, setBanners] = useState({ inline: null, footer: null });
@@ -172,11 +182,11 @@ const BlogPage = () => {
 
           {banners.inline && <AdBanner variant="inline" data={banners.inline} />}
 
-          {/* Timeline feed */}
+          {/* Timeline feed + partners sidebar */}
           {rest.length > 0 && (
             <section className="py-12">
-              <div className="max-w-[760px] mx-auto px-4 md:px-6">
-                <div className="space-y-6">
+              <div className="max-w-[1200px] mx-auto px-4 md:px-6 flex gap-10 justify-center">
+                <div className="flex-1 max-w-[760px] space-y-6">
                   {rest.map((p, idx) => (
                     <React.Fragment key={p.id}>
                       <TimelinePostCard post={p} />
@@ -188,6 +198,7 @@ const BlogPage = () => {
                     </React.Fragment>
                   ))}
                 </div>
+                <PartnersSidebar />
               </div>
             </section>
           )}

@@ -129,6 +129,7 @@ const Header = () => {
           </nav>
 
           <div className="flex items-center gap-2 md:gap-3 shrink-0">
+            <MusicPlayer />
             <button className="hidden md:flex items-center gap-1.5 text-[#7c7893] hover:text-[#9b30ff] transition-colors">
               <Globe className="w-4 h-4" />
               <span className="text-[10px] tracking-[0.2em] uppercase">PT</span>

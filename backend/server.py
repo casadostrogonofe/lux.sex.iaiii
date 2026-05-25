@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi import FastAPI, APIRouter, HTTPException, Header
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -272,6 +272,109 @@ async def add_comment(post_id: str, payload: CommentCreate) -> Comment:
     doc["created_at"] = doc["created_at"].isoformat()
     await db.comments.insert_one(doc)
     return obj
+
+
+# =============================================================
+# CMS — Articles (admin only)
+# =============================================================
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "lux2026")
+
+
+def _check_admin(token: Optional[str]) -> None:
+    if not token or token != ADMIN_PASSWORD:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+
+def _serialize_article(doc: Dict[str, Any]) -> Dict[str, Any]:
+    if not doc:
+        return doc
+    doc.pop("_id", None)
+    for k in ("created_at", "updated_at"):
+        if isinstance(doc.get(k), str):
+            try:
+                doc[k] = datetime.fromisoformat(doc[k])
+            except ValueError:
+                pass
+    return doc
+
+
+@api_router.post("/admin/login")
+async def admin_login(payload: AdminLogin) -> Dict[str, str]:
+    if (payload.password or "") != ADMIN_PASSWORD:
+        raise HTTPException(status_code=401, detail="Senha incorreta")
+    return {"token": ADMIN_PASSWORD, "status": "ok"}
+
+
+@api_router.get("/articles", response_model=List[Article])
+async def list_articles(
+    path: Optional[str] = None,
+    published_only: bool = True,
+) -> List[Dict[str, Any]]:
+    query: Dict[str, Any] = {}
+    if path:
+        query["path"] = path
+    if published_only:
+        query["published"] = True
+    rows: List[Dict[str, Any]] = (
+        await db.articles.find(query, {"_id": 0}).sort("created_at", -1).to_list(500)
+    )
+    for r in rows:
+        _serialize_article(r)
+    return rows
+
+
+@api_router.get("/articles/{article_id}", response_model=Article)
+async def get_article(article_id: str) -> Dict[str, Any]:
+    doc = await db.articles.find_one({"id": article_id}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Article not found")
+    return _serialize_article(doc)
+
+
+@api_router.post("/articles", response_model=Article, status_code=201)
+async def create_article(
+    payload: ArticleCreate,
+    x_admin_token: Optional[str] = Header(default=None),
+) -> Article:
+    _check_admin(x_admin_token)
+    data = payload.model_dump()
+    # map read_time alias for clarity
+    obj = Article(**data)
+    doc: Dict[str, Any] = obj.model_dump()
+    doc["created_at"] = doc["created_at"].isoformat()
+    doc["updated_at"] = doc["updated_at"].isoformat()
+    await db.articles.insert_one(doc)
+    return obj
+
+
+@api_router.put("/articles/{article_id}", response_model=Article)
+async def update_article(
+    article_id: str,
+    payload: ArticleUpdate,
+    x_admin_token: Optional[str] = Header(default=None),
+) -> Dict[str, Any]:
+    _check_admin(x_admin_token)
+    update_data = {k: v for k, v in payload.model_dump().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    update_data["updated_at"] = datetime.now(timezone.utc).isoformat()
+    result = await db.articles.update_one({"id": article_id}, {"$set": update_data})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Article not found")
+    doc = await db.articles.find_one({"id": article_id}, {"_id": 0})
+    return _serialize_article(doc)
+
+
+@api_router.delete("/articles/{article_id}")
+async def delete_article(
+    article_id: str,
+    x_admin_token: Optional[str] = Header(default=None),
+) -> Dict[str, str]:
+    _check_admin(x_admin_token)
+    result = await db.articles.delete_one({"id": article_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Article not found")
+    return {"status": "deleted", "id": article_id}
 
 
 # =============================================================

@@ -2,8 +2,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Sparkles, ArrowRight, Filter } from "lucide-react";
 import TimelinePostCard, { TimelineAdCard } from "../components/TimelinePostCard";
+import PartnersSidebar from "../components/PartnersSidebar";
 import Newsletter from "../components/Newsletter";
-import { blogPosts, menuConfig } from "../mock/mockData";
+import { menuConfig } from "../mock/mockData";
+import { fetchAllArticles } from "../sanity/articles";
 import { fetchBanners } from "../api/banners";
 
 // Editorial sections we want to show as latest
@@ -12,17 +14,15 @@ const EDITORIAL_SECTIONS = [
   { id: "bem-estar", label: "Bem Estar" },
   { id: "vida-noturna", label: "Vida Noturna" },
   { id: "gastronomia", label: "Gastronomia" },
-  { id: "mais", label: "Mais" },
 ];
 
-// Pick latest post per section (mocked by id order desc — newest mock entries first)
-const getLatestPerSection = () => {
+const getLatestPerSection = (posts) => {
   const latest = [];
   for (const s of EDITORIAL_SECTIONS) {
-    const candidates = blogPosts.filter((p) => p.path.startsWith(s.id + "/"));
+    const candidates = posts.filter(
+      (p) => p.path && p.path.startsWith(s.id + "/")
+    );
     if (candidates.length === 0) continue;
-    // Sort by date (string compare reverse — works for our mock dates with 'Maio'/'Abril' prefix? not reliable)
-    // Use post id heuristic + featured flag
     const featured = candidates.find((p) => p.featured) || candidates[0];
     latest.push({ ...featured, isNew: true, sectionId: s.id });
   }
@@ -32,6 +32,7 @@ const getLatestPerSection = () => {
 const EditorialHome = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const [ads, setAds] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -41,22 +42,38 @@ const EditorialHome = () => {
     })();
   }, []);
 
-  const latestPerSection = useMemo(() => getLatestPerSection(), []);
+  useEffect(() => {
+    (async () => {
+      const data = await fetchAllArticles();
+      setPosts(data || []);
+    })();
+  }, []);
+
+  const latestPerSection = useMemo(
+    () => getLatestPerSection(posts),
+    [posts]
+  );
 
   // Build extended feed: latest per section first, then more recent posts mixed
   const feed = useMemo(() => {
     const newestIds = new Set(latestPerSection.map((p) => p.id));
-    const others = blogPosts
+    const others = posts
       .filter((p) => !newestIds.has(p.id))
-      .filter((p) => activeFilter === "all" || p.path.startsWith(activeFilter + "/"));
+      .filter(
+        (p) =>
+          activeFilter === "all" ||
+          (p.path && p.path.startsWith(activeFilter + "/"))
+      );
 
     const filteredLatest =
       activeFilter === "all"
         ? latestPerSection
-        : latestPerSection.filter((p) => p.path.startsWith(activeFilter + "/"));
+        : latestPerSection.filter(
+            (p) => p.path && p.path.startsWith(activeFilter + "/")
+          );
 
     return [...filteredLatest, ...others.slice(0, 20)];
-  }, [activeFilter, latestPerSection]);
+  }, [activeFilter, latestPerSection, posts]);
 
   return (
     <>
@@ -123,49 +140,52 @@ const EditorialHome = () => {
         </div>
       </section>
 
-      {/* Timeline feed */}
+      {/* Timeline feed + partners sidebar */}
       <section className="py-12">
-        <div className="max-w-[760px] mx-auto px-4 md:px-6">
-          {feed.length === 0 ? (
-            <p className="text-center text-[#7c7893] py-24 font-serif text-2xl">
-              Nenhuma matéria nesta editoria ainda.
-            </p>
-          ) : (
-            <div className="space-y-6">
-              {feed.map((post, idx) => (
-                <React.Fragment key={post.id}>
-                  <TimelinePostCard post={post} isNew={post.isNew} />
-                  {/* Insert ad every 4 cards */}
-                  {(idx + 1) % 4 === 0 && ads.length > 0 && (
-                    <TimelineAdCard
-                      banner={ads[Math.floor(idx / 4) % ads.length]}
-                    />
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-          )}
-
-          {/* Explore more */}
-          <div className="mt-16 border-t border-[#1a1526] pt-10 text-center">
-            <span className="text-[10px] tracking-[0.5em] text-[#9b30ff] uppercase block mb-5">
-              Explore as editorias
-            </span>
-            <div className="flex flex-wrap justify-center gap-3">
-              {menuConfig
-                .filter((m) => !m.external && m.children && m.label !== "Shop")
-                .map((m) => (
-                  <Link
-                    key={m.href}
-                    to={m.href}
-                    className="text-[11px] tracking-[0.3em] uppercase px-5 py-3 border border-[#1a1526] text-[#7c7893] hover:border-[#9b30ff] hover:text-[#9b30ff] rounded-full transition-colors duration-300 flex items-center gap-2"
-                  >
-                    {m.label}
-                    <ArrowRight className="w-3 h-3" />
-                  </Link>
+        <div className="max-w-[1200px] mx-auto px-4 md:px-6 flex gap-10 justify-center">
+          <div className="flex-1 max-w-[760px]">
+            {feed.length === 0 ? (
+              <p className="text-center text-[#7c7893] py-24 font-serif text-2xl">
+                Nenhuma matéria nesta editoria ainda.
+              </p>
+            ) : (
+              <div className="space-y-6">
+                {feed.map((post, idx) => (
+                  <React.Fragment key={post.id}>
+                    <TimelinePostCard post={post} isNew={post.isNew} />
+                    {(idx + 1) % 4 === 0 && ads.length > 0 && (
+                      <TimelineAdCard
+                        banner={ads[Math.floor(idx / 4) % ads.length]}
+                      />
+                    )}
+                  </React.Fragment>
                 ))}
+              </div>
+            )}
+
+            {/* Explore more */}
+            <div className="mt-16 border-t border-[#1a1526] pt-10 text-center">
+              <span className="text-[10px] tracking-[0.5em] text-[#9b30ff] uppercase block mb-5">
+                Explore as editorias
+              </span>
+              <div className="flex flex-wrap justify-center gap-3">
+                {menuConfig
+                  .filter((m) => !m.external && m.children && m.label !== "Shop")
+                  .map((m) => (
+                    <Link
+                      key={m.href}
+                      to={m.href}
+                      className="text-[11px] tracking-[0.3em] uppercase px-5 py-3 border border-[#1a1526] text-[#7c7893] hover:border-[#9b30ff] hover:text-[#9b30ff] rounded-full transition-colors duration-300 flex items-center gap-2"
+                    >
+                      {m.label}
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  ))}
+              </div>
             </div>
           </div>
+
+          <PartnersSidebar />
         </div>
       </section>
 
