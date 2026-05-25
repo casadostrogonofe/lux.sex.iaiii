@@ -188,8 +188,8 @@ const BlogPage = () => {
           {/* Timeline feed + partners sidebar */}
           {rest.length > 0 && (
             <section className="py-12">
-              <div className="max-w-[1200px] mx-auto px-4 md:px-6 flex gap-10 justify-center">
-                <div className="flex-1 max-w-[760px] space-y-6">
+              <div className="max-w-[1200px] mx-auto px-4 md:px-6 flex flex-col lg:flex-row gap-10 lg:justify-center">
+                <div className="flex-1 lg:max-w-[760px] space-y-6">
                   {rest.map((p, idx) => (
                     <React.Fragment key={p.id}>
                       <TimelinePostCard post={p} />

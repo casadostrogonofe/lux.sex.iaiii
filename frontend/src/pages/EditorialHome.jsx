@@ -141,8 +141,8 @@ const EditorialHome = () => {
 
       {/* Timeline feed + partners sidebar */}
       <section className="py-12">
-        <div className="max-w-[1200px] mx-auto px-4 md:px-6 flex gap-10 justify-center">
-          <div className="flex-1 max-w-[760px]">
+        <div className="max-w-[1200px] mx-auto px-4 md:px-6 flex flex-col lg:flex-row gap-10 lg:justify-center">
+          <div className="flex-1 lg:max-w-[760px]">
             {feed.length === 0 ? (
               <p className="text-center text-[#7c7893] py-24 font-serif text-2xl">
                 Nenhuma matéria nesta editoria ainda.

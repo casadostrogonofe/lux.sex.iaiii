@@ -177,7 +177,7 @@ const ArticlePage = () => {
         )}
 
         {post && !loading && (
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-10 lg:gap-12">
             <article data-testid="article-content">
               {/* Header */}
               <header className="mb-10">
