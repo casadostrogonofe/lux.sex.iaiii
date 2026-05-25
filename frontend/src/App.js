@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import EditorialHome from "./pages/EditorialHome";
 import BlogPage from "./pages/BlogPage";
+import ArticlePage from "./pages/ArticlePage";
 import Shop from "./pages/Shop";
 import Marketplace from "./pages/Marketplace";
 import Apostas from "./pages/Apostas";
@@ -26,6 +27,7 @@ function App() {
             {/* Editorial blog routes — generic */}
             <Route path=":section" element={<BlogPage />} />
             <Route path=":section/:sub" element={<BlogPage />} />
+            <Route path=":section/:sub/:slug" element={<ArticlePage />} />
 
             <Route path="*" element={<Navigate to="/turismo" replace />} />
           </Route>

@@ -25,13 +25,21 @@ const timeAgo = (post) => {
 };
 
 const getSectionMeta = (path) => {
-  const [section] = path.split("/");
+  const [section] = (path || "").split("/");
   const parent = menuConfig.find((m) => m.href === "/" + section);
   return { sectionLabel: parent?.label || section, href: "/" + path };
 };
 
+const articleHref = (post) => {
+  // Always link to /section/sub/slug when we have a slug; otherwise fall back to listing
+  const slug = post.slug || post.id;
+  if (post.path && slug) return `/${post.path}/${slug}`;
+  if (post.path) return `/${post.path}`;
+  return "/";
+};
+
 const TimelinePostCard = ({ post, isNew = false }) => {
-  const { href } = getSectionMeta(post.path);
+  const href = articleHref(post);
   const initials = (post.author || "L")
     .split(" ")
     .map((p) => p[0])
