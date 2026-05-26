@@ -19,7 +19,18 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
-### 25/Mai/2026 (tarde) — Ads + Partners no Sanity + Player loop completo ✅
+### 26/Mai/2026 — i18n 6 idiomas + player polido + Spicy Club ✅
+- **i18next + react-i18next + LanguageDetector** instalados
+- **6 idiomas suportados**: PT (default), EN, ES, IT, FR, DE — auto-detect via `navigator.language`, salvo em `localStorage`
+- **LanguageSwitcher** no header com bandeiras + dropdown
+- Componentes traduzidos: Header (menu completo), NDA AgeOverlay, Newsletter, Footer, CookieBanner, TimelinePostCard, PartnersSidebar, ArticlePage, TimelineAdCard
+- `Intl.RelativeTimeFormat` para datas relativas localizadas em todas as línguas
+- Player neon: nome do artista + track menores + glow rosa neon, autoplay via user gesture (mute toggle), iframe mantido off-screen (não 1x1)
+- **Spicy Club** adicionado como 3º parceiro oficial → `https://www.spicyclub.com.br/`
+- Logo Farma Ponte atualizado
+- Suporte completo: support_agent guiou domínio nativo Emergent (instruções repassadas ao usuário)
+
+### 25/Mai/2026 — Ads + Partners no Sanity + Player loop + ArticlePage ✅
 - **Schema `ad`** em `/app/sanity-schemas/ad.js` — 18 formatos IAB (Outdoor 970×250, Retângulo Médio 300×250, Arranha-céu 120×600, etc) + 7 placements (sidebar, timeline_inline, section_inline, section_footer, shop_top, shop_grid, lifestyle_premium)
 - **Schema `partner`** em `/app/sanity-schemas/partner.js` — controla a sidebar de parceiros
 - **Schema registry** em `/app/sanity-schemas/index.js`

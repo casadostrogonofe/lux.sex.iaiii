@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ExternalLink } from "lucide-react";
 import { fetchPartners, fetchAdsByPlacement } from "../sanity/ads";
 
 // Partners + sidebar ads shown on every article/blog page.
 // Adapts to mobile: becomes a 2-col horizontal grid below the main content.
 const PartnersSidebar = () => {
+  const { t } = useTranslation();
   const [partners, setPartners] = useState([]);
   const [sidebarAds, setSidebarAds] = useState([]);
 
@@ -33,7 +35,7 @@ const PartnersSidebar = () => {
     >
       <div className="lg:sticky lg:top-32">
         <p className="text-[10px] tracking-[0.4em] text-[#9b30ff] uppercase mb-3">
-          Parceiros oficiais
+          {t("common.official_partners")}
         </p>
 
         <div className="grid grid-cols-2 lg:grid-cols-1 gap-4 lg:gap-5">
@@ -85,7 +87,7 @@ const PartnersSidebar = () => {
               )}
               <div className="px-3 lg:px-4 py-2.5 lg:py-3 border-t border-[#1f1a35]">
                 <span className="text-[8px] lg:text-[9px] tracking-[0.4em] text-[#5a5470] uppercase block mb-1">
-                  Patrocinado
+                  {t("common.sponsored")}
                 </span>
                 <span className="font-serif text-xs lg:text-sm text-[#f5f0ff] block truncate">
                   {ad.headline || ad.sponsor}
@@ -96,7 +98,7 @@ const PartnersSidebar = () => {
         </div>
 
         <p className="text-[9px] tracking-[0.4em] text-[#5a5470] uppercase mt-5 pt-3 border-t border-[#1f1a35]">
-          Patrocinados · Lux Society MMXXVI
+          {t("common.partners_footer")}
         </p>
       </div>
     </aside>

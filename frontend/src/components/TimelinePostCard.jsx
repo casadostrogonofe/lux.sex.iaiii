@@ -1,27 +1,34 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { MoreHorizontal, Sparkles } from "lucide-react";
 import PostInteractions from "./PostInteractions";
 import { menuConfig } from "../mock/mockData";
 
-// Helper to derive a relative time from a date label / id
-const timeAgo = (post) => {
-  // We have free-form date strings in mock; produce friendly relative phrases
-  const map = {
-    "18 Maio, MMXXVI": "agora há pouco",
-    "17 Maio, MMXXVI": "há 1 dia",
-    "16 Maio, MMXXVI": "há 2 dias",
-    "15 Maio, MMXXVI": "há 3 dias",
-    "14 Maio, MMXXVI": "há 4 dias",
-    "13 Maio, MMXXVI": "há 5 dias",
-    "12 Maio, MMXXVI": "há 6 dias",
+// Relative time helper — uses i18n for the words
+const useRelativeTime = () => {
+  const { t, i18n } = useTranslation();
+  return (post) => {
+    if (post.date && typeof post.date === "string" && post.date.includes("T")) {
+      // ISO date from Sanity
+      try {
+        const rtf = new Intl.RelativeTimeFormat(i18n.resolvedLanguage || "pt", {
+          numeric: "auto",
+        });
+        const diffMs = new Date(post.date).getTime() - Date.now();
+        const day = 1000 * 60 * 60 * 24;
+        const days = Math.round(diffMs / day);
+        if (Math.abs(days) < 1) return rtf.format(0, "day");
+        if (Math.abs(days) < 7) return rtf.format(days, "day");
+        if (Math.abs(days) < 30) return rtf.format(Math.round(days / 7), "week");
+        return rtf.format(Math.round(days / 30), "month");
+      } catch {
+        return "";
+      }
+    }
+    // Legacy Portuguese mock map
+    return post.date || "";
   };
-  if (map[post.date]) return map[post.date];
-  if (typeof post.date === "string" && post.date.includes("Maio")) return "há 1 semana";
-  if (typeof post.date === "string" && post.date.includes("Abril")) return "há 3 semanas";
-  if (typeof post.date === "string" && post.date.includes("Mar\u00e7o")) return "há 1 mês";
-  if (typeof post.date === "string" && post.date.includes("Semana")) return "esta semana";
-  return "recente";
 };
 
 const getSectionMeta = (path) => {
@@ -39,6 +46,8 @@ const articleHref = (post) => {
 };
 
 const TimelinePostCard = ({ post, isNew = false }) => {
+  const { t } = useTranslation();
+  const timeAgo = useRelativeTime();
   const href = articleHref(post);
   const initials = (post.author || "L")
     .split(" ")
@@ -68,7 +77,7 @@ const TimelinePostCard = ({ post, isNew = false }) => {
             {isNew && (
               <span className="text-[9px] tracking-[0.3em] uppercase px-2 py-0.5 bg-[#9b30ff]/15 text-[#9b30ff] border border-[#9b30ff]/40 rounded-full flex items-center gap-1">
                 <Sparkles className="w-2.5 h-2.5" />
-                Nova
+                {t("common.new")}
               </span>
             )}
           </div>
@@ -118,46 +127,49 @@ const TimelinePostCard = ({ post, isNew = false }) => {
           to={href}
           className="text-[10px] tracking-[0.3em] uppercase px-3 py-2 text-[#9b30ff] hover:text-[#b15aff] transition-colors"
         >
-          Ler matéria →
+          {t("common.read_more")} →
         </Link>
       </div>
     </article>
   );
 };
 
-export const TimelineAdCard = ({ banner }) => (
-  <a
-    href={banner.link || "#"}
-    target="_blank"
-    rel="noopener noreferrer sponsored"
-    className="block bg-gradient-to-br from-[#1a0d2e] to-[#0a0612] border border-[#9b30ff]/25 hover:border-[#9b30ff]/60 rounded-2xl overflow-hidden transition-colors duration-500"
-  >
-    <div className="grid md:grid-cols-[1fr_1.3fr]">
-      {banner.image && (
-        <div className="relative aspect-[16/10] md:aspect-auto md:min-h-[220px] overflow-hidden bg-[#0a0612]">
-          <img
-            src={banner.image}
-            alt={banner.headline}
-            className="absolute inset-0 w-full h-full object-cover opacity-85 hover:opacity-100 transition-opacity duration-500"
-          />
+export const TimelineAdCard = ({ banner }) => {
+  const { t } = useTranslation();
+  return (
+    <a
+      href={banner.link || "#"}
+      target="_blank"
+      rel="noopener noreferrer sponsored"
+      className="block bg-gradient-to-br from-[#1a0d2e] to-[#0a0612] border border-[#9b30ff]/25 hover:border-[#9b30ff]/60 rounded-2xl overflow-hidden transition-colors duration-500"
+    >
+      <div className="grid md:grid-cols-[1fr_1.3fr]">
+        {banner.image && (
+          <div className="relative aspect-[16/10] md:aspect-auto md:min-h-[220px] overflow-hidden bg-[#0a0612]">
+            <img
+              src={banner.image}
+              alt={banner.headline}
+              className="absolute inset-0 w-full h-full object-cover opacity-85 hover:opacity-100 transition-opacity duration-500"
+            />
+          </div>
+        )}
+        <div className="p-7 md:p-9 flex flex-col justify-center">
+          <span className="text-[9px] tracking-[0.5em] text-[#5a5470] uppercase block mb-4">
+            {t("common.sponsored")} · {banner.sponsor}
+          </span>
+          <h3 className="font-serif text-2xl md:text-3xl text-[#f5f0ff] mb-4 leading-tight">
+            {banner.headline}
+          </h3>
+          <p className="text-[#a89fc4] text-sm md:text-base leading-relaxed mb-6 font-light">
+            {banner.description}
+          </p>
+          <span className="inline-flex items-center gap-2 text-[#9b30ff] text-xs tracking-[0.3em] uppercase">
+            {banner.cta} →
+          </span>
         </div>
-      )}
-      <div className="p-7 md:p-9 flex flex-col justify-center">
-        <span className="text-[9px] tracking-[0.5em] text-[#5a5470] uppercase block mb-4">
-          Patrocinado · {banner.sponsor}
-        </span>
-        <h3 className="font-serif text-2xl md:text-3xl text-[#f5f0ff] mb-4 leading-tight">
-          {banner.headline}
-        </h3>
-        <p className="text-[#a89fc4] text-sm md:text-base leading-relaxed mb-6 font-light">
-          {banner.description}
-        </p>
-        <span className="inline-flex items-center gap-2 text-[#9b30ff] text-xs tracking-[0.3em] uppercase">
-          {banner.cta} →
-        </span>
       </div>
-    </div>
-  </a>
-);
+    </a>
+  );
+};
 
 export default TimelinePostCard;

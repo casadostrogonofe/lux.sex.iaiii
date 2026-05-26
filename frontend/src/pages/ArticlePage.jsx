@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams, Link, useLocation } from "react-router-dom";
 import { ArrowLeft, Clock, ChevronRight } from "lucide-react";
 import { PortableText } from "@portabletext/react";
@@ -6,6 +7,7 @@ import PostInteractions from "../components/PostInteractions";
 import PartnersSidebar from "../components/PartnersSidebar";
 import Newsletter from "../components/Newsletter";
 import { menuConfig } from "../mock/mockData";
+import { menuLabel } from "../i18n/menuMap";
 import { fetchArticleBySlug } from "../sanity/articles";
 import { urlFor } from "../sanity/client";
 
@@ -85,6 +87,7 @@ const ptComponents = {
 };
 
 const ArticlePage = () => {
+  const { t, i18n } = useTranslation();
   const { section, sub, slug } = useParams();
   const location = useLocation();
   const [post, setPost] = useState(null);
@@ -130,7 +133,7 @@ const ArticlePage = () => {
           data-testid="article-breadcrumb"
         >
           <Link to="/" className="hover:text-[#9b30ff]">
-            Início
+            {t("menu.home")}
           </Link>
           <ChevronRight className="w-3 h-3" />
           <Link to={`/${section}`} className="hover:text-[#9b30ff]">
@@ -188,7 +191,7 @@ const ArticlePage = () => {
                   </span>
                   {post.adult && (
                     <span className="text-[9px] tracking-[0.3em] uppercase px-2 py-0.5 bg-[#d4af37]/15 text-[#d4af37] border border-[#d4af37]/40 rounded-full">
-                      18+
+                      {t("common.adult_18")}
                     </span>
                   )}
                 </div>
@@ -273,7 +276,7 @@ const ArticlePage = () => {
                   className="inline-flex items-center gap-2 text-[#9b30ff] text-xs tracking-[0.3em] uppercase hover:text-[#b15aff]"
                 >
                   <ArrowLeft className="w-3 h-3" />
-                  Voltar para {sectionLabel}
+                  {t("common.back_to")} {sectionLabel}
                 </Link>
               </div>
             </article>

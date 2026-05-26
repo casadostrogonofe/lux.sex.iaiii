@@ -130,10 +130,14 @@ const MusicPlayer = () => {
       const v = volume === 0 ? 50 : volume;
       setVolume(v);
       applyVolume(v);
-      // Try to ensure it's playing on unmute (user gesture)
-      w.isPaused((paused) => {
-        if (paused) w.play();
-      });
+      // Force a play() on user gesture — browser allows audible playback now
+      w.play();
+      setTimeout(() => {
+        w.isPaused((paused) => {
+          if (paused) w.play();
+        });
+        updateCurrentTrack(w);
+      }, 400);
     } else {
       setMuted(true);
       applyVolume(0);
@@ -157,21 +161,21 @@ const MusicPlayer = () => {
       {/* Neon "now playing" marquee — visible when ready and not muted */}
       {ready && trackInfo.artist && !muted && (
         <div
-          className="hidden md:flex items-center gap-2 max-w-[240px] overflow-hidden"
+          className="hidden md:flex items-center gap-2 max-w-[180px] overflow-hidden"
           data-testid="now-playing-neon"
           aria-live="polite"
         >
-          <span className="relative flex h-2 w-2">
+          <span className="relative flex h-1.5 w-1.5">
             <span className="absolute inline-flex h-full w-full rounded-full bg-[#ff2bd6] opacity-75 animate-ping" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff2bd6]" />
+            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#ff2bd6]" />
           </span>
-          <div className="flex flex-col leading-tight overflow-hidden">
+          <div className="flex flex-col leading-[1.1] overflow-hidden">
             <span
-              className="font-serif text-[11px] uppercase tracking-[0.3em] whitespace-nowrap"
+              className="font-serif text-[9px] uppercase tracking-[0.28em] whitespace-nowrap truncate"
               style={{
                 color: "#ff2bd6",
                 textShadow:
-                  "0 0 4px #ff2bd6, 0 0 10px #ff2bd6, 0 0 18px rgba(255,43,214,0.7)",
+                  "0 0 3px #ff2bd6, 0 0 7px rgba(255,43,214,0.85)",
               }}
               title={trackInfo.artist}
             >
@@ -179,8 +183,7 @@ const MusicPlayer = () => {
             </span>
             {trackInfo.title && (
               <span
-                className="text-[9px] tracking-[0.25em] text-[#b48cff] uppercase whitespace-nowrap truncate"
-                style={{ textShadow: "0 0 5px rgba(180,140,255,0.6)" }}
+                className="text-[8px] tracking-[0.2em] text-[#b48cff]/80 uppercase whitespace-nowrap truncate"
                 title={trackInfo.title}
               >
                 {trackInfo.title}
@@ -229,24 +232,25 @@ const MusicPlayer = () => {
         </div>
       )}
 
-      {/* Hidden iframe with autoplay */}
+      {/* Hidden iframe with autoplay — kept rendered (visibility hidden, off-screen) so SoundCloud doesn't pause */}
       <iframe
         ref={iframeRef}
         title="Lux Radio"
-        width="1"
-        height="1"
+        width="300"
+        height="80"
         scrolling="no"
         frameBorder="no"
         allow="autoplay"
         src={WIDGET_SRC}
         style={{
           position: "fixed",
-          width: 1,
-          height: 1,
+          width: 300,
+          height: 80,
           opacity: 0,
           pointerEvents: "none",
-          bottom: 0,
-          left: 0,
+          bottom: -200,
+          left: -2000,
+          zIndex: -1,
         }}
       />
     </div>

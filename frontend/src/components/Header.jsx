@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useLocation, Link } from "react-router-dom";
-import { Menu, X, Globe, ExternalLink, ChevronDown } from "lucide-react";
+import { Menu, X, ExternalLink, ChevronDown } from "lucide-react";
 import { LOGO_IAIII, menuConfig } from "../mock/mockData";
+import { menuLabel } from "../i18n/menuMap";
 import MusicPlayer from "./MusicPlayer";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Header = () => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hovered, setHovered] = useState(null);
@@ -68,7 +72,7 @@ const Header = () => {
                     rel="noopener noreferrer"
                     className="text-[11px] tracking-[0.25em] uppercase px-4 py-2 text-[#f5f0ff] hover:text-[#9b30ff] transition-colors duration-300 flex items-center gap-1.5"
                   >
-                    {item.label}
+                    {menuLabel(t, item.href, item.label)}
                     <ExternalLink className="w-3 h-3 opacity-60" />
                   </a>
                 );
@@ -90,7 +94,7 @@ const Header = () => {
                         : "text-[#f5f0ff] hover:text-[#9b30ff]"
                     }`}
                   >
-                    {item.label}
+                    {menuLabel(t, item.href, item.label)}
                     {hasChildren && (
                       <ChevronDown
                         className={`w-3 h-3 transition-transform duration-300 ${
@@ -130,14 +134,11 @@ const Header = () => {
 
           <div className="flex items-center gap-2 md:gap-3 shrink-0">
             <MusicPlayer />
-            <button className="hidden md:flex items-center gap-1.5 text-[#7c7893] hover:text-[#9b30ff] transition-colors">
-              <Globe className="w-4 h-4" />
-              <span className="text-[10px] tracking-[0.2em] uppercase">PT</span>
-            </button>
+            <LanguageSwitcher />
             <button
               onClick={() => setOpen(true)}
               className="text-[#f5f0ff] hover:text-[#9b30ff] transition-colors"
-              aria-label="Abrir menu"
+              aria-label="Open menu"
             >
               <Menu className="w-6 h-6 md:w-7 md:h-7" />
             </button>
@@ -176,7 +177,7 @@ const Header = () => {
                     className="font-serif text-2xl text-[#f5f0ff] hover:text-[#9b30ff] transition-colors duration-300 flex items-center justify-between py-3 border-b border-[#1a1526]"
                     style={{ animation: open ? `fadeUp 0.4s ${i * 0.05}s both` : "none" }}
                   >
-                    <span>{item.label}</span>
+                    <span>{menuLabel(t, item.href, item.label)}</span>
                     <ExternalLink className="w-4 h-4 opacity-60" />
                   </a>
                 );
@@ -230,7 +231,7 @@ const Header = () => {
                               : "text-[#7c7893] hover:text-[#f5f0ff]"
                           }`}
                         >
-                          {child.label}
+                          {menuLabel(t, child.href, child.label)}
                         </Link>
                       ))}
                     </div>

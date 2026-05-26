@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { ShieldCheck, Lock, EyeOff, ArrowRight, LogOut, Sparkles } from "lucide-react";
 
 const STORAGE_KEY = "luxsex_age_ok";
 
 const AgeOverlay = () => {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -58,28 +60,29 @@ const AgeOverlay = () => {
 
           <div className="relative max-w-xl w-full pt-20 lg:pt-0">
             <p className="text-[10px] md:text-[11px] tracking-[0.4em] text-[#d4af37] uppercase mb-10 md:mb-16">
-              Acesso Restrito · A Estética do Desejo
+              {t("nda_overlay.access")}
             </p>
 
             <h1 className="font-serif text-[#f5f0ff] text-5xl sm:text-6xl md:text-7xl lg:text-[88px] leading-[0.98] mb-12 lg:mb-16">
-              <span className="block">A discrição</span>
+              <span className="block">{t("nda_overlay.h1_line1")}</span>
               <span className="block italic bg-gradient-to-r from-[#d4af37] via-[#e6c971] to-[#b8956b] bg-clip-text text-transparent">
-                como
+                {t("nda_overlay.h1_line2")}
               </span>
               <span className="block italic bg-gradient-to-r from-[#d4af37] via-[#e6c971] to-[#b8956b] bg-clip-text text-transparent">
-                manifesto.
+                {t("nda_overlay.h1_line3")}
               </span>
             </h1>
 
-            <p className="text-[#a89fc4] text-base md:text-lg leading-[1.75] font-light max-w-lg mb-16 lg:mb-24">
-              A <strong className="text-[#f5f0ff] font-medium">Lux.sex</strong> é um ecossistema privado dedicado ao público adulto que entende o prazer como uma extensão do estilo de vida. Plataforma sob curadoria, fechada e construída para quem exige o extraordinário.
-            </p>
+            <p
+              className="text-[#a89fc4] text-base md:text-lg leading-[1.75] font-light max-w-lg mb-16 lg:mb-24"
+              dangerouslySetInnerHTML={{ __html: t("nda_overlay.manifest") }}
+            />
 
             {/* Pillars */}
             <div className="grid grid-cols-3 gap-6 md:gap-10 pt-10 border-t border-[#1f1a35]">
-              <Pillar number="I" label="Verificação" label2="real" />
-              <Pillar number="II" label="100%" label2="discreto" />
-              <Pillar number="III" label="Curadoria" label2="premium" />
+              <Pillar number="I" label={t("nda_overlay.pillar1_l1")} label2={t("nda_overlay.pillar1_l2")} t={t} />
+              <Pillar number="II" label={t("nda_overlay.pillar2_l1")} label2={t("nda_overlay.pillar2_l2")} t={t} />
+              <Pillar number="III" label={t("nda_overlay.pillar3_l1")} label2={t("nda_overlay.pillar3_l2")} t={t} />
             </div>
           </div>
         </div>
@@ -111,30 +114,24 @@ const AgeOverlay = () => {
               </div>
 
               <p className="text-[10px] md:text-[11px] tracking-[0.4em] text-[#d4af37] uppercase mb-6">
-                Verificação de idade
+                {t("nda_overlay.verify")}
               </p>
 
-              <h2 className="font-serif text-[#f5f0ff] text-4xl md:text-[44px] leading-[1.05] mb-7">
-                Conteúdo adulto<br />sob NDA.
-              </h2>
+              <h2
+                className="font-serif text-[#f5f0ff] text-4xl md:text-[44px] leading-[1.05] mb-7"
+                dangerouslySetInnerHTML={{ __html: t("nda_overlay.card_title") }}
+              />
 
-              <p className="text-[#9a93b8] text-[15px] leading-[1.65] font-light mb-8">
-                Este site contém conteúdo exclusivo para maiores de 18 anos. Ao continuar, você confirma ter 18 anos ou mais e concorda com nossos{" "}
-                <a href="#termos" className="text-[#d4af37] underline decoration-[#d4af37]/40 hover:decoration-[#d4af37] underline-offset-2 transition-colors">
-                  Termos de Uso
-                </a>{" "}
-                e{" "}
-                <a href="#privacidade" className="text-[#d4af37] underline decoration-[#d4af37]/40 hover:decoration-[#d4af37] underline-offset-2 transition-colors">
-                  Política de Privacidade
-                </a>
-                .
-              </p>
+              <p
+                className="text-[#9a93b8] text-[15px] leading-[1.65] font-light mb-8"
+                dangerouslySetInnerHTML={{ __html: t("nda_overlay.card_body") }}
+              />
 
               {/* Trust pills */}
               <div className="flex flex-wrap gap-2 mb-9">
-                <TrustPill icon={ShieldCheck} label="ECA Digital" />
-                <TrustPill icon={Lock} label="LGPD 2026" />
-                <TrustPill icon={EyeOff} label="Não indexado" />
+                <TrustPill icon={ShieldCheck} label={t("nda_overlay.pill1")} />
+                <TrustPill icon={Lock} label={t("nda_overlay.pill2")} />
+                <TrustPill icon={EyeOff} label={t("nda_overlay.pill3")} />
               </div>
 
               {/* Primary CTA with glow */}
@@ -147,9 +144,10 @@ const AgeOverlay = () => {
                   boxShadow:
                     "0 0 32px rgba(155, 48, 255, 0.55), 0 8px 28px rgba(155, 48, 255, 0.35), inset 0 1px 0 rgba(255,255,255,0.15)",
                 }}
+                data-testid="age-confirm-button"
               >
                 <ArrowRight className="w-4 h-4 -rotate-45 group-hover:translate-x-0.5 transition-transform" />
-                Tenho 18+ anos — Entrar
+                {t("nda_overlay.enter_button")}
               </button>
 
               <button
@@ -157,7 +155,7 @@ const AgeOverlay = () => {
                 className="w-full mt-5 py-2.5 text-[#7c7893] hover:text-[#9b30ff] text-sm transition-colors flex items-center justify-center gap-2"
               >
                 <LogOut className="w-3.5 h-3.5" />
-                Sair do site
+                {t("nda_overlay.exit_button")}
               </button>
 
               {/* Footer */}
@@ -165,7 +163,7 @@ const AgeOverlay = () => {
                 <span className="text-[#5a5470]">MMXXVI · Lux Society</span>
                 <span className="flex items-center gap-2 text-[#5a5470]">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#3ecf8e] shadow-[0_0_8px_#3ecf8e]" />
-                  Conexão Privada
+                  {t("nda_overlay.private_conn")}
                 </span>
               </div>
             </div>
@@ -176,10 +174,10 @@ const AgeOverlay = () => {
   );
 };
 
-const Pillar = ({ number, label, label2 }) => (
+const Pillar = ({ number, label, label2, t }) => (
   <div>
     <p className="text-[10px] tracking-[0.4em] text-[#d4af37] uppercase mb-3">
-      Pilar {number}
+      {t ? t("nda_overlay.pillar")  : "Pilar"} {number}
     </p>
     <p className="font-serif text-[#f5f0ff] text-xl md:text-2xl leading-tight">
       {label}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { LOGO_IAIII } from "../mock/mockData";
 
 const Footer = () => (
@@ -68,6 +69,7 @@ const Footer = () => (
 );
 
 export const CookieBanner = () => {
+  const { t } = useTranslation();
   const [show, setShow] = useState(false);
   useEffect(() => {
     const ok = localStorage.getItem("luxsex_cookies");
@@ -79,16 +81,22 @@ export const CookieBanner = () => {
     setShow(false);
   };
   return (
-    <div className="fixed bottom-6 left-6 right-6 md:left-auto md:right-6 md:max-w-md z-40 bg-[#0b0812] border border-[#1a1526] p-6 shadow-2xl">
-      <h6 className="font-serif text-lg text-[#f5f0ff] mb-2">Cookies essenciais</h6>
+    <div
+      className="fixed bottom-6 left-6 right-6 md:left-auto md:right-6 md:max-w-md z-40 bg-[#0b0812] border border-[#1a1526] p-6 shadow-2xl"
+      data-testid="cookie-banner"
+    >
+      <h6 className="font-serif text-lg text-[#f5f0ff] mb-2">
+        {t("cookies.title")}
+      </h6>
       <p className="text-[#7c7893] text-xs leading-relaxed mb-5 font-light">
-        Usamos cookies estritamente necessários para autenticação, idioma e verificação de idade — sem analytics ou publicidade.
+        {t("cookies.text")}
       </p>
       <button
         onClick={accept}
         className="w-full px-6 py-3 bg-[#9b30ff] hover:bg-[#b15aff] text-black text-[10px] tracking-[0.4em] uppercase font-medium transition-colors"
+        data-testid="cookie-accept"
       >
-        Entendi
+        {t("cookies.accept")}
       </button>
     </div>
   );
