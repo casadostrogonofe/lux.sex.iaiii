@@ -6,6 +6,7 @@ import { PortableText } from "@portabletext/react";
 import PostInteractions from "../components/PostInteractions";
 import PartnersSidebar from "../components/PartnersSidebar";
 import Newsletter from "../components/Newsletter";
+import ArticleVideo from "../components/ArticleVideo";
 import { menuConfig } from "../mock/mockData";
 import { menuLabel } from "../i18n/menuMap";
 import { fetchArticleBySlug } from "../sanity/articles";
@@ -99,7 +100,8 @@ const ArticlePage = () => {
     (async () => {
       setLoading(true);
       setNotFound(false);
-      const data = await fetchArticleBySlug(slug);
+      const lang = (i18n.resolvedLanguage || "pt").split("-")[0];
+      const data = await fetchArticleBySlug(slug, lang);
       if (cancelled) return;
       if (!data) {
         setNotFound(true);
@@ -112,7 +114,7 @@ const ArticlePage = () => {
     return () => {
       cancelled = true;
     };
-  }, [slug]);
+  }, [slug, i18n.resolvedLanguage]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -236,8 +238,17 @@ const ArticlePage = () => {
                 </div>
               </header>
 
-              {/* Cover image */}
-              {post.image && (
+              {/* Video (priority: uploaded file > external link) */}
+              {(post.videoFile || post.videoUrl) && (
+                <ArticleVideo
+                  url={post.videoUrl}
+                  file={post.videoFile}
+                  title={post.title}
+                />
+              )}
+
+              {/* Cover image — only shown when no video */}
+              {!post.videoFile && !post.videoUrl && post.image && (
                 <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-[#1f1a35] mb-12">
                   <img
                     src={post.image}

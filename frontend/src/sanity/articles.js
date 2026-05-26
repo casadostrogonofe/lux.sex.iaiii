@@ -26,6 +26,8 @@ const normalize = (doc) => {
     featured: Boolean(doc.featured),
     sign: doc.sign,
     adult: Boolean(doc.adult),
+    videoUrl: doc.videoUrl || null,
+    videoFile: doc.videoFile || null,
     source: "sanity",
   };
 };
@@ -43,38 +45,110 @@ const safe = async (promise, fallback) => {
   }
 };
 
-export const fetchAllArticles = async () => {
+// =============================================================
+// Batch translation cache for cards
+// =============================================================
+let _cardsTranslationCache = { lang: null, items: {} };
+
+const fetchCardTranslations = async (lang) => {
+  if (!lang || lang === "pt") return {};
+  if (_cardsTranslationCache.lang === lang) return _cardsTranslationCache.items;
+  try {
+    const base = process.env.REACT_APP_BACKEND_URL || "";
+    const res = await fetch(
+      `${base}/api/i18n/cards?lang=${encodeURIComponent(lang)}`
+    );
+    if (!res.ok) return {};
+    const data = await res.json();
+    _cardsTranslationCache = { lang, items: data.items || {} };
+    return _cardsTranslationCache.items;
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.warn("[i18n] cards translation failed", err);
+    return {};
+  }
+};
+
+const applyCardTranslations = (posts, items) => {
+  if (!items || Object.keys(items).length === 0) return posts;
+  return posts.map((p) => {
+    const tr = items[p.slug];
+    if (!tr) return p;
+    return {
+      ...p,
+      title: tr.title || p.title,
+      excerpt: tr.excerpt || p.excerpt,
+    };
+  });
+};
+
+export const fetchAllArticles = async (lang = "pt") => {
   const docs = await safe(sanityClient.fetch(ARTICLES_QUERY), []);
   const sanityPosts = (docs || []).map(normalize).filter(Boolean);
-  if (sanityPosts.length > 0) return sanityPosts;
+  if (sanityPosts.length > 0) {
+    const items = await fetchCardTranslations(lang);
+    return applyCardTranslations(sanityPosts, items);
+  }
   return mockPosts;
 };
 
-export const fetchArticlesByPath = async (path) => {
+export const fetchArticlesByPath = async (path, lang = "pt") => {
   const docs = await safe(
     sanityClient.fetch(ARTICLES_BY_PATH_QUERY, { path }),
     []
   );
   const sanityPosts = (docs || []).map(normalize).filter(Boolean);
-  if (sanityPosts.length > 0) return sanityPosts;
+  if (sanityPosts.length > 0) {
+    const items = await fetchCardTranslations(lang);
+    return applyCardTranslations(sanityPosts, items);
+  }
   return mockPosts.filter((p) => p.path === path);
 };
 
-export const fetchArticlesBySection = async (section) => {
+export const fetchArticlesBySection = async (section, lang = "pt") => {
   const docs = await safe(
     sanityClient.fetch(ARTICLES_BY_SECTION_QUERY, { section }),
     []
   );
   const sanityPosts = (docs || []).map(normalize).filter(Boolean);
-  if (sanityPosts.length > 0) return sanityPosts;
+  if (sanityPosts.length > 0) {
+    const items = await fetchCardTranslations(lang);
+    return applyCardTranslations(sanityPosts, items);
+  }
   return mockPosts.filter((p) => p.path.startsWith(section + "/"));
 };
 
-export const fetchArticleBySlug = async (slug) => {
+export const fetchArticleBySlug = async (slug, lang = "pt") => {
   const doc = await safe(
     sanityClient.fetch(ARTICLE_BY_SLUG_QUERY, { slug }),
     null
   );
-  if (doc) return normalize(doc);
-  return mockPosts.find((p) => p.id === slug || p.slug === slug) || null;
+  const base = doc
+    ? normalize(doc)
+    : mockPosts.find((p) => p.id === slug || p.slug === slug) || null;
+  if (!base) return null;
+
+  // For Portuguese (source) or mock data → return as is
+  if (!lang || lang === "pt" || base.source !== "sanity") return base;
+
+  try {
+    const apiBase = process.env.REACT_APP_BACKEND_URL || "";
+    const res = await fetch(
+      `${apiBase}/api/i18n/article?slug=${encodeURIComponent(
+        slug
+      )}&lang=${encodeURIComponent(lang)}`
+    );
+    if (!res.ok) return base;
+    const tr = await res.json();
+    return {
+      ...base,
+      title: tr.title || base.title,
+      excerpt: tr.excerpt || base.excerpt,
+      body: tr.body || base.body,
+    };
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.warn("[i18n] translation failed", err);
+    return base;
+  }
 };

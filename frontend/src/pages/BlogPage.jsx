@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams, Link, useLocation } from "react-router-dom";
 import { Clock, User, ChevronRight, ArrowRight } from "lucide-react";
 import PostInteractions from "../components/PostInteractions";
@@ -7,10 +8,12 @@ import AdBanner from "../components/AdBanner";
 import Newsletter from "../components/Newsletter";
 import PartnersSidebar from "../components/PartnersSidebar";
 import { sectionMeta, menuConfig } from "../mock/mockData";
+import { menuLabel } from "../i18n/menuMap";
 import { fetchArticlesByPath, fetchArticlesBySection } from "../sanity/articles";
 import { fetchAdsByPlacement } from "../sanity/ads";
 
 const BlogPage = () => {
+  const { t, i18n } = useTranslation();
   const { section, sub } = useParams();
   const location = useLocation();
 
@@ -27,15 +30,16 @@ const BlogPage = () => {
   useEffect(() => {
     let cancelled = false;
     (async () => {
+      const lang = (i18n.resolvedLanguage || "pt").split("-")[0];
       let data = [];
-      if (sub) data = await fetchArticlesByPath(`${section}/${sub}`);
-      else if (section) data = await fetchArticlesBySection(section);
+      if (sub) data = await fetchArticlesByPath(`${section}/${sub}`, lang);
+      else if (section) data = await fetchArticlesBySection(section, lang);
       if (!cancelled) setPosts(data || []);
     })();
     return () => {
       cancelled = true;
     };
-  }, [section, sub]);
+  }, [section, sub, i18n.resolvedLanguage]);
 
   const [banners, setBanners] = useState({ inline: null, footer: null });
   const [gridAds, setGridAds] = useState([]);
@@ -73,12 +77,14 @@ const BlogPage = () => {
             {parentItem && (
               <>
                 <Link to={parentItem.href} className="hover:text-[#9b30ff] transition-colors">
-                  {parentItem.label}
+                  {menuLabel(t, parentItem.href, parentItem.label)}
                 </Link>
                 {sub && (
                   <>
                     <ChevronRight className="w-3 h-3" />
-                    <span className="text-[#9b30ff]">{meta.title}</span>
+                    <span className="text-[#9b30ff]">
+                      {menuLabel(t, `/${section}/${sub}`, meta.title)}
+                    </span>
                   </>
                 )}
               </>
@@ -95,10 +101,12 @@ const BlogPage = () => {
           )}
 
           <h1 className="font-serif text-[#f5f0ff] text-5xl md:text-7xl lg:text-[88px] leading-[1.05] mb-8">
-            {meta.title}
+            {sub
+              ? menuLabel(t, `/${section}/${sub}`, meta.title)
+              : menuLabel(t, `/${section}`, meta.title)}
             {isAdult && (
               <span className="ml-4 align-middle text-xs tracking-[0.4em] uppercase text-[#9b30ff] border border-[#9b30ff] px-2.5 py-1.5">
-                18+
+                {t("common.adult_18")}
               </span>
             )}
           </h1>
@@ -118,7 +126,7 @@ const BlogPage = () => {
                   to={c.href}
                   className="text-[10px] tracking-[0.3em] uppercase px-4 py-2.5 border border-[#1a1526] text-[#7c7893] hover:border-[#9b30ff] hover:text-[#9b30ff] transition-colors duration-300"
                 >
-                  {c.label}
+                  {menuLabel(t, c.href, c.label)}
                 </Link>
               ))}
             </div>

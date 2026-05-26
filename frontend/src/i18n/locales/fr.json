@@ -78,7 +78,15 @@
     "hero_subtitle": "Culture, plaisir et raffinement pour ceux qui vivent avec intention.",
     "section_latest": "Édition courante",
     "section_feed": "Chronologie",
-    "filter_all": "Tout"
+    "filter_all": "Tout",
+    "empty": "Aucun article dans cette rubrique pour l'instant.",
+    "explore": "Explorez les rubriques"
+  },
+  "home_hero": {
+    "tagline": "Éditorial · Mis à jour en temps réel",
+    "title_pre": "Ce qui se passe aujourd'hui",
+    "title_em": "chez Lux.",
+    "subtitle": "Flux éditorial avec le dernier article de chaque rubrique. Mise à jour automatique à chaque publication — vous voyez toujours la nouveauté en premier."
   },
   "shop": {
     "title": "Shop",

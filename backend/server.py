@@ -372,6 +372,10 @@ async def seed_banners() -> None:
 # Include router
 app.include_router(api_router)
 
+# Translation router (Gemini-powered article translations)
+from routers.translation import make_router as make_translation_router
+app.include_router(make_translation_router(db))
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,

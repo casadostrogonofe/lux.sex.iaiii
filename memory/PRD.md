@@ -19,7 +19,18 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
-### 26/Mai/2026 — i18n 6 idiomas + player polido + Spicy Club ✅
+### 26/Mai/2026 (tarde) — Tradução automática Gemini + Vídeo nas matérias ✅
+- **Backend `/api/i18n/article` + `/api/i18n/cards`** — endpoints FastAPI que traduzem título/excerpt/corpo via **Gemini 3 Flash** com cache MongoDB por (slug, lang)
+- Cache invalidado automaticamente quando `_updatedAt` do Sanity muda
+- `emergentintegrations.llm.chat` com Emergent LLM Key universal
+- Frontend: `fetchArticleBySlug(slug, lang)`, `fetchAllArticles(lang)`, `fetchArticlesBy*(*, lang)` consomem traduções automaticamente
+- TimelinePostCard, EditorialHome hero, BlogPage breadcrumb/título da editoria/sub-tabs/empty/explore — todos traduzidos
+- **Schema Sanity atualizado** com 2 campos novos: `videoUrl` (link YouTube/Vimeo/MP4) e `videoFile` (upload .mp4/.webm). Upload tem prioridade.
+- Componente `ArticleVideo.jsx` renderiza YouTube embed, Vimeo embed, ou `<video>` HTML nativo
+- ArticlePage usa vídeo como hero quando presente, senão imagem
+- Guia `/app/SANITY_SETUP.md` atualizado com instruções de vídeo + tradução
+
+### 26/Mai/2026 (manhã) — i18n 6 idiomas + player polido + Spicy Club ✅
 - **i18next + react-i18next + LanguageDetector** instalados
 - **6 idiomas suportados**: PT (default), EN, ES, IT, FR, DE — auto-detect via `navigator.language`, salvo em `localStorage`
 - **LanguageSwitcher** no header com bandeiras + dropdown

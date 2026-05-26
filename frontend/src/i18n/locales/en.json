@@ -78,7 +78,15 @@
     "hero_subtitle": "Culture, pleasure and sophistication curated for those who live with intention.",
     "section_latest": "Current edition",
     "section_feed": "Timeline",
-    "filter_all": "All"
+    "filter_all": "All",
+    "empty": "No stories in this section yet.",
+    "explore": "Explore the editorials"
+  },
+  "home_hero": {
+    "tagline": "Editorial · Updated in real time",
+    "title_pre": "What's happening today",
+    "title_em": "at Lux.",
+    "subtitle": "Editorial feed with the latest story from every section. Auto-updates with every publish — you always see what's new, first."
   },
   "shop": {
     "title": "Shop",

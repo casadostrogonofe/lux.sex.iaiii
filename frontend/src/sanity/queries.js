@@ -72,6 +72,8 @@ export const ARTICLE_BY_SLUG_QUERY = `
   body,
   featured,
   sign,
-  adult
+  adult,
+  videoUrl,
+  "videoFile": videoFile.asset->url
 }
 `;

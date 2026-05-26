@@ -70,7 +70,9 @@ Escolha um subdomínio (ex: `luxnovo`). Acesse depois em `https://luxnovo.sanity
    - **Slug** — gera sozinho ao clicar "Generate"
    - **Editoria (path)** — escolha da lista (ex: `vida-noturna/locais`)
    - **Chamada / Resumo** — frase curta que aparece no card (até 280 caracteres)
-   - **Imagem de capa** — upload (recomendado 1600×900px)
+   - **Imagem de capa** — upload (recomendado 1600×900px). Usada como capa **quando não houver vídeo**.
+   - 🎥 **Vídeo de capa (link)** — cola URL do YouTube, Vimeo ou .mp4 direto. Aparece como hero da matéria.
+   - 🎥 **Vídeo de capa (upload)** — alternativa: faz upload de .mp4/.webm. **Se preencher os dois, o upload tem prioridade.**
    - **Corpo** — escreva o texto com formatação rica (h2, h3, negrito, links, imagens no meio)
    - **Autor** — ex: "Marina Rezende"
    - **Publicado em** — data de publicação (deixa hoje por padrão)
@@ -79,8 +81,13 @@ Escolha um subdomínio (ex: `luxnovo`). Acesse depois em `https://luxnovo.sanity
    - **Conteúdo adulto** — ✓ apenas para Contos Eróticos
 3. Clique em **Publish** (botão verde no rodapé)
 4. Abra o site → atualize a página → a matéria aparece na editoria e no feed da home
+5. 🌍 **Tradução automática**: se um visitante mudar o idioma (EN/ES/IT/FR/DE), o site **traduz o título, chamada e corpo via IA Gemini** uma única vez e mantém em cache. Não precisa fazer nada manualmente.
+
+> **Atualizou a matéria?** O cache de tradução é invalidado automaticamente — a próxima visita em outro idioma regenera com o conteúdo novo.
 
 > **Dica**: se você desmarcar **Publish**, a matéria some do site sem ser apagada.
+
+> **Schema atualizado**: se você criou o Studio antes de 26/Mai, substitua o `schemaTypes/article.js` pela versão mais recente em `/app/sanity-schemas/article.js` (agora com campos de vídeo) e rode `npx sanity deploy` para atualizar o painel.
 
 ---
 

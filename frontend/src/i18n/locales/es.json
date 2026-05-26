@@ -78,7 +78,15 @@
     "hero_subtitle": "Cultura, placer y sofisticación curados para quienes viven con intención.",
     "section_latest": "Edición actual",
     "section_feed": "Línea de tiempo",
-    "filter_all": "Todo"
+    "filter_all": "Todo",
+    "empty": "Aún no hay artículos en esta editorial.",
+    "explore": "Explora las editoriales"
+  },
+  "home_hero": {
+    "tagline": "Editorial · Actualizado en tiempo real",
+    "title_pre": "Lo que está pasando hoy",
+    "title_em": "en Lux.",
+    "subtitle": "Feed editorial con el artículo más reciente de cada sección. Se actualiza solo con cada publicación — siempre ves lo nuevo primero."
   },
   "shop": {
     "title": "Shop",

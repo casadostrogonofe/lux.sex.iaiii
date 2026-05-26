@@ -78,7 +78,15 @@
     "hero_subtitle": "Kultur, Vergnügen und Raffinesse — kuratiert für die, die bewusst leben.",
     "section_latest": "Aktuelle Ausgabe",
     "section_feed": "Zeitachse",
-    "filter_all": "Alles"
+    "filter_all": "Alles",
+    "empty": "Noch keine Beiträge in dieser Rubrik.",
+    "explore": "Rubriken erkunden"
+  },
+  "home_hero": {
+    "tagline": "Editorial · In Echtzeit aktualisiert",
+    "title_pre": "Was heute passiert,",
+    "title_em": "bei Lux.",
+    "subtitle": "Editorial-Feed mit dem neuesten Beitrag jeder Rubrik. Aktualisiert sich bei jeder Veröffentlichung automatisch — Sie sehen Neues immer zuerst."
   },
   "shop": {
     "title": "Shop",
