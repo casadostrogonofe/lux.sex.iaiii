@@ -72,9 +72,16 @@ export const articleSidebarPartners = [
   {
     id: "farma-ponte",
     name: "Farma Ponte",
-    logo: "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/wnb5a75f_Captura%20de%20Tela%202026-05-23%20a%CC%80s%2018.27.26.png",
+    logo: "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/4tezuhj8_WhatsApp%20Image%202026-05-23%20at%2012.54.54%20%281%29.jpeg",
     link: "https://www.farmaponte.com.br/",
     bg: "#1c4eaa",
+  },
+  {
+    id: "spicy-club",
+    name: "Spicy Club",
+    logo: "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/fue0fvfg_Captura%20de%20Tela%202026-05-25%20a%CC%80s%2022.25.11.png",
+    link: "https://www.spicyclub.com.br/",
+    bg: "#000000",
   },
 ];
 

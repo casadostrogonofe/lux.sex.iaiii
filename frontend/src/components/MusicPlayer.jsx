@@ -15,7 +15,24 @@ const MusicPlayer = () => {
   const [muted, setMuted] = useState(true); // browsers block sound autoplay
   const [volume, setVolume] = useState(50);
   const [showVolume, setShowVolume] = useState(false);
+  const [trackInfo, setTrackInfo] = useState({ title: "", artist: "" });
   const volumeTimeout = useRef(null);
+
+  const updateCurrentTrack = (widget) => {
+    if (!widget) return;
+    widget.getCurrentSound((sound) => {
+      if (!sound) return;
+      const fullTitle = sound.title || "";
+      const parts = fullTitle.split(/[-–—]/);
+      let artist = sound.user?.username || "";
+      let title = fullTitle;
+      if (parts.length >= 2) {
+        artist = parts[0].trim();
+        title = parts.slice(1).join(" - ").trim();
+      }
+      setTrackInfo({ title, artist });
+    });
+  };
 
   useEffect(() => {
     const SCRIPT_ID = "sc-widget-api";
@@ -51,6 +68,18 @@ const MusicPlayer = () => {
           // Start from first track and play through the set
           widget.skip(0);
           widget.play();
+          updateCurrentTrack(widget);
+        });
+
+        widget.bind(SC.Widget.Events.PLAY, () => {
+          updateCurrentTrack(widget);
+        });
+        widget.bind(SC.Widget.Events.PLAY_PROGRESS, () => {
+          // Cheap throttle: only update if title is empty (first load)
+          if (!widgetRef.current?._trackKnown) {
+            updateCurrentTrack(widget);
+            widgetRef.current._trackKnown = true;
+          }
         });
 
         // Advance through the playlist and loop back to the start at the end
@@ -61,6 +90,7 @@ const MusicPlayer = () => {
               const next = (index + 1) % total;
               widget.skip(next);
               widget.play();
+              setTimeout(() => updateCurrentTrack(widget), 800);
             });
           });
         });
@@ -120,10 +150,46 @@ const MusicPlayer = () => {
 
   return (
     <div
-      className="relative flex items-center"
+      className="relative flex items-center gap-3"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
+      {/* Neon "now playing" marquee — visible when ready and not muted */}
+      {ready && trackInfo.artist && !muted && (
+        <div
+          className="hidden md:flex items-center gap-2 max-w-[240px] overflow-hidden"
+          data-testid="now-playing-neon"
+          aria-live="polite"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full rounded-full bg-[#ff2bd6] opacity-75 animate-ping" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff2bd6]" />
+          </span>
+          <div className="flex flex-col leading-tight overflow-hidden">
+            <span
+              className="font-serif text-[11px] uppercase tracking-[0.3em] whitespace-nowrap"
+              style={{
+                color: "#ff2bd6",
+                textShadow:
+                  "0 0 4px #ff2bd6, 0 0 10px #ff2bd6, 0 0 18px rgba(255,43,214,0.7)",
+              }}
+              title={trackInfo.artist}
+            >
+              {trackInfo.artist}
+            </span>
+            {trackInfo.title && (
+              <span
+                className="text-[9px] tracking-[0.25em] text-[#b48cff] uppercase whitespace-nowrap truncate"
+                style={{ textShadow: "0 0 5px rgba(180,140,255,0.6)" }}
+                title={trackInfo.title}
+              >
+                {trackInfo.title}
+              </span>
+            )}
+          </div>
+        </div>
+      )}
+
       <button
         onClick={toggleMute}
         disabled={!ready}
