@@ -74,7 +74,7 @@ export const articleSidebarPartners = [
     name: "Farma Ponte",
     logo: "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/h76q9da4_FARMA%20PONTE.jpg",
     link: "https://www.farmaponte.com.br/",
-    bg: "#1c4eaa",
+    bg: "#004b96",
   },
   {
     id: "spicy-club",
