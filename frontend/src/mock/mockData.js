@@ -26,6 +26,7 @@ export const menuConfig = [
       { label: "Cultura", href: "/bem-estar/cultura" },
       { label: "Saúde", href: "/bem-estar/saude" },
       { label: "Horóscopo", href: "/bem-estar/horoscopo" },
+      { label: "Sexualidade", href: "/bem-estar/sexualidade" },
       { label: "Contos Eróticos", href: "/bem-estar/contos" },
     ],
   },
@@ -36,6 +37,14 @@ export const menuConfig = [
       { label: "Locais", href: "/vida-noturna/locais" },
       { label: "Vinhos", href: "/vida-noturna/vinhos" },
       { label: "Charutos", href: "/vida-noturna/charutos" },
+      { label: "Música", href: "/vida-noturna/musica" },
+      {
+        label: "Artistas",
+        href: "/vida-noturna/artistas",
+        children: [
+          { label: "Zetta Records", href: "/vida-noturna/artistas/zetta-records" },
+        ],
+      },
     ],
   },
   {
@@ -90,7 +99,33 @@ export const articleSidebarPartners = [
     link: "https://www.instagram.com/strogos_house",
     bg: "#000000",
   },
+  {
+    id: "vivence-odontologia",
+    name: "Vivence Odontologia",
+    logo: "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/nghc5pzj_WhatsApp%20Image%202026-06-02%20at%2010.36.21.jpeg",
+    link: "https://www.vivenceodontologia.com.br/",
+    bg: "#ffffff",
+  },
 ];
+
+// =============================================================
+// FALLBACK EDITORS (shown until Sanity has data)
+// =============================================================
+export const fallbackEditors = {
+  "bem-estar/sexualidade": [
+    {
+      id: "darlene-zeferina",
+      name: "Darlene Barbosa | Dra. Zeferina",
+      role: "Especialista em sexualidade e comportamento humano",
+      photo:
+        "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/mxnnm2nx_banner%20editorial%201%20-%20darlene.jpg",
+      banner:
+        "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/mxnnm2nx_banner%20editorial%201%20-%20darlene.jpg",
+      instagram: "https://www.instagram.com/darlenebarbosa",
+      section: "bem-estar/sexualidade",
+    },
+  ],
+};
 
 // =============================================================
 // SECTION METADATA (for hero of each category/subcategory page)

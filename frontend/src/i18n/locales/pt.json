@@ -20,10 +20,14 @@
     "culture": "Cultura",
     "health": "Saúde",
     "horoscope": "Horóscopo",
+    "sexuality": "Sexualidade",
     "erotic_tales": "Contos Eróticos",
     "venues": "Locais",
     "wines": "Vinhos",
     "cigars": "Charutos",
+    "music": "Música",
+    "artists": "Artistas",
+    "zetta_records": "Zetta Records",
     "cooking": "Culinária",
     "art": "Arte",
     "flavor": "Sabor",
@@ -87,6 +91,21 @@
     "title_pre": "O que está acontecendo hoje",
     "title_em": "na Lux.",
     "subtitle": "Feed editorial com a matéria mais recente de cada editoria. Atualiza sozinho a cada publicação — você sempre vê o que há de novo, primeiro."
+  },
+  "horoscope": {
+    "tagline": "Astrologia & Desejo",
+    "title": "Horóscopo Lux",
+    "subtitle": "Leituras astrais para quem entende que o céu também sussurra. Atualizado pelos nossos astrólogos colaboradores.",
+    "read_today": "Ler hoje",
+    "coming_soon": "Em breve",
+    "tip": "Publique no Sanity uma matéria com path \"bem-estar/horoscopo\" e o campo Signo correspondente — o card abre direto na matéria."
+  },
+  "sexuality": {
+    "tagline": "Bem Estar · Sexualidade",
+    "cover_story": "Matéria de capa",
+    "editors_tagline": "Em pauta agora",
+    "editors_title": "As editoras de Sexualidade",
+    "empty_banner": "Adicione um Editor com Banner no Sanity para começar o carrossel."
   },
   "shop": {
     "title": "Shop",

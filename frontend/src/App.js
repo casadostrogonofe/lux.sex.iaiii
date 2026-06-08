@@ -5,6 +5,8 @@ import Layout from "./components/Layout";
 import EditorialHome from "./pages/EditorialHome";
 import BlogPage from "./pages/BlogPage";
 import ArticlePage from "./pages/ArticlePage";
+import SexualidadePage from "./pages/SexualidadePage";
+import HoroscopePage from "./pages/HoroscopePage";
 import Shop from "./pages/Shop";
 import Marketplace from "./pages/Marketplace";
 import Apostas from "./pages/Apostas";
@@ -23,6 +25,10 @@ function App() {
             <Route path="shop/sex-shop" element={<Shop />} />
             <Route path="shop/marketplace" element={<Marketplace />} />
             <Route path="shop/apostas" element={<Apostas />} />
+
+            {/* Special editorial sub-pages — declared BEFORE generic to win the match */}
+            <Route path="bem-estar/sexualidade" element={<SexualidadePage />} />
+            <Route path="bem-estar/horoscopo" element={<HoroscopePage />} />
 
             {/* Editorial blog routes — generic */}
             <Route path=":section" element={<BlogPage />} />

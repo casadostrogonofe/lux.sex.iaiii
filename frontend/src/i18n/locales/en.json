@@ -20,10 +20,14 @@
     "culture": "Culture",
     "health": "Health",
     "horoscope": "Horoscope",
+    "sexuality": "Sexuality",
     "erotic_tales": "Erotic Tales",
     "venues": "Venues",
     "wines": "Wines",
     "cigars": "Cigars",
+    "music": "Music",
+    "artists": "Artists",
+    "zetta_records": "Zetta Records",
     "cooking": "Cooking",
     "art": "Art",
     "flavor": "Flavor",
@@ -87,6 +91,21 @@
     "title_pre": "What's happening today",
     "title_em": "at Lux.",
     "subtitle": "Editorial feed with the latest story from every section. Auto-updates with every publish — you always see what's new, first."
+  },
+  "horoscope": {
+    "tagline": "Astrology & Desire",
+    "title": "Lux Horoscope",
+    "subtitle": "Celestial readings for those who know the sky whispers too. Updated by our collaborating astrologers.",
+    "read_today": "Read today",
+    "coming_soon": "Coming soon",
+    "tip": "Publish an article in Sanity with path \"bem-estar/horoscopo\" and a matching Sign — the card links straight to it."
+  },
+  "sexuality": {
+    "tagline": "Wellness · Sexuality",
+    "cover_story": "Cover story",
+    "editors_tagline": "On the agenda now",
+    "editors_title": "The Sexuality editors",
+    "empty_banner": "Add an Editor with a Banner in Sanity to start the carousel."
   },
   "shop": {
     "title": "Shop",

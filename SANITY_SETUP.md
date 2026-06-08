@@ -159,6 +159,37 @@ Parceiros aparecem na lateral direita de todas as páginas de matéria.
 
 ---
 
+## 🎤 Como adicionar um Artista
+
+1. Studio → **"Artista" → Create**
+2. Preencha:
+   - **Nome**, **Slug**, **Foto**, **Bio**, **Gênero musical**
+   - **Selo (label)** — escolha "Zetta Records", "Independente" ou outro
+   - **Redes sociais** — campos separados: **Instagram**, **Spotify**, **SoundCloud**, **YouTube**, **TikTok**, **Site oficial**
+   - **Destacar** ✓ se quiser na vitrine principal
+3. **Publish**
+
+Artistas aparecem em `/vida-noturna/artistas` e os de selo Zetta Records também em `/vida-noturna/artistas/zetta-records`.
+
+---
+
+## 🎙️ Como adicionar um Editor / Colunista (cards de Reels em Sexualidade)
+
+1. Studio → **"Editor / Colunista" → Create**
+2. Preencha:
+   - **Nome**, **Slug**, **Cargo/Editoria** (ex: "Editora de Sexualidade")
+   - **Foto/avatar** — usada como capa do card de reel (recomendado 1080×1920)
+   - **Banner editorial** — imagem horizontal (1600×500) para o **carrossel do topo** da página de Sexualidade
+   - **Bio curta**
+   - **Instagram (URL)** — clique no card abre o perfil
+   - **Link do Reels mais recente** — se preencher, mostra **embed do reel** dentro do card (ao invés da foto)
+   - **Editoria principal** — escolha "Bem Estar · Sexualidade" (ou outra)
+3. **Publish**
+
+Os 4 primeiros editores (por prioridade) da editoria escolhida aparecem como cards verticais no estilo Reels do Instagram. Quando você publica novo Reel, basta atualizar o link no Sanity.
+
+---
+
 ## 🎵 Som / Playlist
 
 A playlist do SoundCloud é fixa (configurada uma vez no código). O player toca a playlist **inteira em loop** automaticamente. Ao final do último track, volta para o primeiro.

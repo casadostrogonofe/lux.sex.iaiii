@@ -2,7 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX, Music2 } from "lucide-react";
 import { SOUNDCLOUD_URL } from "../mock/mockData";
 
-// Autoplay + loop playlist with minimal controls (mute + volume only)
+// Autoplay + loop entire playlist with minimal UI (single mute button).
+// Strategy:
+//  • Start muted (volume 0) so browsers allow autoplay.
+//  • On user click → setVolume(80), play() and keep retrying play() if widget pauses.
+//  • Bind FINISH event to advance to next track (mod total).
 const WIDGET_SRC = `https://w.soundcloud.com/player/?url=${encodeURIComponent(
   SOUNDCLOUD_URL
 )}&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&buying=false&sharing=false&download=false&single_active=false`;
@@ -10,13 +14,9 @@ const WIDGET_SRC = `https://w.soundcloud.com/player/?url=${encodeURIComponent(
 const MusicPlayer = () => {
   const iframeRef = useRef(null);
   const widgetRef = useRef(null);
-  const playlistRef = useRef([]);
   const [ready, setReady] = useState(false);
-  const [muted, setMuted] = useState(true); // browsers block sound autoplay
-  const [volume, setVolume] = useState(50);
-  const [showVolume, setShowVolume] = useState(false);
+  const [muted, setMuted] = useState(true);
   const [trackInfo, setTrackInfo] = useState({ title: "", artist: "" });
-  const volumeTimeout = useRef(null);
 
   const updateCurrentTrack = (widget) => {
     if (!widget) return;
@@ -34,6 +34,7 @@ const MusicPlayer = () => {
     });
   };
 
+  // Inject SoundCloud Widget API script
   useEffect(() => {
     const SCRIPT_ID = "sc-widget-api";
     if (document.getElementById(SCRIPT_ID)) return;
@@ -44,6 +45,7 @@ const MusicPlayer = () => {
     document.head.appendChild(s);
   }, []);
 
+  // Wire up the widget once script + iframe are ready
   useEffect(() => {
     let cancelled = false;
     let attempts = 0;
@@ -55,48 +57,41 @@ const MusicPlayer = () => {
         if (attempts++ < 80) setTimeout(init, 250);
         return;
       }
-      try {
-        const widget = SC.Widget(iframe);
-        widgetRef.current = widget;
+      const widget = SC.Widget(iframe);
+      widgetRef.current = widget;
 
-        widget.bind(SC.Widget.Events.READY, () => {
-          setReady(true);
-          widget.setVolume(0);
+      widget.bind(SC.Widget.Events.READY, () => {
+        if (cancelled) return;
+        setReady(true);
+        widget.setVolume(0);
+        widget.skip(0);
+        widget.play();
+        // Kick autoplay retry loop — keeps trying until first user gesture
+        const tryPlay = () => {
+          if (cancelled) return;
+          widget.isPaused((paused) => {
+            if (paused) widget.play();
+          });
+          setTimeout(tryPlay, 3000);
+        };
+        setTimeout(tryPlay, 1000);
+        setTimeout(() => updateCurrentTrack(widget), 800);
+      });
+
+      widget.bind(SC.Widget.Events.PLAY, () => updateCurrentTrack(widget));
+
+      // Advance through playlist, loop at the end
+      widget.bind(SC.Widget.Events.FINISH, () => {
+        widget.getCurrentSoundIndex((index) => {
           widget.getSounds((sounds) => {
-            playlistRef.current = sounds || [];
-          });
-          // Start from first track and play through the set
-          widget.skip(0);
-          widget.play();
-          updateCurrentTrack(widget);
-        });
-
-        widget.bind(SC.Widget.Events.PLAY, () => {
-          updateCurrentTrack(widget);
-        });
-        widget.bind(SC.Widget.Events.PLAY_PROGRESS, () => {
-          // Cheap throttle: only update if title is empty (first load)
-          if (!widgetRef.current?._trackKnown) {
-            updateCurrentTrack(widget);
-            widgetRef.current._trackKnown = true;
-          }
-        });
-
-        // Advance through the playlist and loop back to the start at the end
-        widget.bind(SC.Widget.Events.FINISH, () => {
-          widget.getCurrentSoundIndex((index) => {
-            widget.getSounds((sounds) => {
-              const total = (sounds || []).length || 1;
-              const next = (index + 1) % total;
-              widget.skip(next);
-              widget.play();
-              setTimeout(() => updateCurrentTrack(widget), 800);
-            });
+            const total = (sounds || []).length || 1;
+            const next = (index + 1) % total;
+            widget.skip(next);
+            widget.play();
+            setTimeout(() => updateCurrentTrack(widget), 600);
           });
         });
-      } catch (e) {
-        // ignore
-      }
+      });
     };
     init();
     return () => {
@@ -104,33 +99,13 @@ const MusicPlayer = () => {
     };
   }, []);
 
-  const applyVolume = (v) => {
-    const w = widgetRef.current;
-    if (!w) return;
-    w.setVolume(v);
-  };
-
-  const onVolumeChange = (e) => {
-    const v = Number(e.target.value);
-    setVolume(v);
-    if (v === 0) {
-      setMuted(true);
-      applyVolume(0);
-    } else {
-      setMuted(false);
-      applyVolume(v);
-    }
-  };
-
   const toggleMute = () => {
     const w = widgetRef.current;
     if (!w) return;
     if (muted) {
       setMuted(false);
-      const v = volume === 0 ? 50 : volume;
-      setVolume(v);
-      applyVolume(v);
-      // Force a play() on user gesture — browser allows audible playback now
+      w.setVolume(80);
+      // Force play on user gesture
       w.play();
       setTimeout(() => {
         w.isPaused((paused) => {
@@ -140,25 +115,13 @@ const MusicPlayer = () => {
       }, 400);
     } else {
       setMuted(true);
-      applyVolume(0);
+      w.setVolume(0);
     }
   };
 
-  const handleEnter = () => {
-    if (volumeTimeout.current) clearTimeout(volumeTimeout.current);
-    setShowVolume(true);
-  };
-  const handleLeave = () => {
-    volumeTimeout.current = setTimeout(() => setShowVolume(false), 400);
-  };
-
   return (
-    <div
-      className="relative flex items-center gap-3"
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
-    >
-      {/* Neon "now playing" marquee — visible when ready and not muted */}
+    <div className="relative flex items-center gap-3" data-testid="music-player">
+      {/* Neon "now playing" — visible when unmuted */}
       {ready && trackInfo.artist && !muted && (
         <div
           className="hidden md:flex items-center gap-2 max-w-[180px] overflow-hidden"
@@ -195,44 +158,27 @@ const MusicPlayer = () => {
 
       <button
         onClick={toggleMute}
-        disabled={!ready}
-        aria-label={muted ? "Tirar mudo" : "Mutar"}
-        className="flex items-center gap-2 px-3 py-2 border border-[#1f1a35] hover:border-[#9b30ff]/50 text-[#7c7893] hover:text-[#9b30ff] disabled:opacity-40 disabled:cursor-not-allowed transition-colors duration-300 rounded-full"
+        className={`relative w-9 h-9 flex items-center justify-center rounded-full border transition-colors duration-300 ${
+          muted
+            ? "border-[#1f1a35] text-[#7c7893] hover:border-[#9b30ff] hover:text-[#9b30ff]"
+            : "border-[#9b30ff]/50 text-[#9b30ff] bg-[#9b30ff]/10"
+        }`}
+        aria-label={muted ? "Tirar mudo" : "Mudo"}
+        data-testid="music-mute-toggle"
       >
-        <Music2 className="w-3 h-3 text-[#9b30ff]" />
         {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+        {muted && ready && (
+          <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#9b30ff] animate-pulse shadow-[0_0_6px_#9b30ff]" />
+        )}
+        {!muted && (
+          <Music2
+            className="absolute -bottom-1 -right-1 w-2.5 h-2.5 text-[#ff2bd6]"
+            style={{ filter: "drop-shadow(0 0 4px #ff2bd6)" }}
+          />
+        )}
       </button>
 
-      {/* Vertical volume slider */}
-      {showVolume && ready && (
-        <div
-          className="absolute top-full right-0 mt-3 z-50 bg-[#0a0612]/97 backdrop-blur-xl border border-[#1f1a35] rounded-2xl px-3 py-5 flex flex-col items-center gap-3 shadow-2xl shadow-black/60"
-          style={{ minWidth: 56 }}
-          onMouseEnter={handleEnter}
-          onMouseLeave={handleLeave}
-        >
-          <span className="text-[9px] tracking-[0.3em] text-[#9b30ff] uppercase">
-            {volume}
-          </span>
-          <div className="h-32 flex items-center justify-center">
-            <input
-              type="range"
-              min="0"
-              max="100"
-              step="1"
-              value={volume}
-              onChange={onVolumeChange}
-              aria-label="Volume"
-              className="lux-volume"
-            />
-          </div>
-          <span className="text-[8px] tracking-[0.3em] text-[#5a5470] uppercase">
-            Lux
-          </span>
-        </div>
-      )}
-
-      {/* Hidden iframe with autoplay — kept rendered (visibility hidden, off-screen) so SoundCloud doesn't pause */}
+      {/* Hidden iframe — off-screen, kept mounted so audio survives navigation */}
       <iframe
         ref={iframeRef}
         title="Lux Radio"
