@@ -86,6 +86,13 @@ export const articleSidebarPartners = [
     bg: "#004b96",
   },
   {
+    id: "vivence-odontologia",
+    name: "Vivence Odontologia",
+    logo: "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/nghc5pzj_WhatsApp%20Image%202026-06-02%20at%2010.36.21.jpeg",
+    link: "https://www.vivenceodontologia.com.br/",
+    bg: "#ffffff",
+  },
+  {
     id: "spicy-club",
     name: "Spicy Club",
     logo: "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/c1t5dads_SPICY.jpg",
@@ -98,13 +105,6 @@ export const articleSidebarPartners = [
     logo: "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/otdgkkpa_strogos.jpg",
     link: "https://www.instagram.com/strogos_house",
     bg: "#000000",
-  },
-  {
-    id: "vivence-odontologia",
-    name: "Vivence Odontologia",
-    logo: "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/nghc5pzj_WhatsApp%20Image%202026-06-02%20at%2010.36.21.jpeg",
-    link: "https://www.vivenceodontologia.com.br/",
-    bg: "#ffffff",
   },
 ];
 
@@ -121,7 +121,16 @@ export const fallbackEditors = {
         "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/mxnnm2nx_banner%20editorial%201%20-%20darlene.jpg",
       banner:
         "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/mxnnm2nx_banner%20editorial%201%20-%20darlene.jpg",
-      instagram: "https://www.instagram.com/darlenebarbosa",
+      instagram: "https://www.instagram.com/doutora.zeferina/",
+      section: "bem-estar/sexualidade",
+    },
+    {
+      id: "lorrayne-lovely",
+      name: "Lorrayne Lovely",
+      role: "Lifestyle & desejo",
+      photo: null,
+      instagram:
+        "https://www.instagram.com/lorraynelovely?igsh=MWY2dmpnaTJ1dnNscA%3D%3D",
       section: "bem-estar/sexualidade",
     },
   ],

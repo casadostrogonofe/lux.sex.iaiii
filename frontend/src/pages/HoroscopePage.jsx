@@ -156,13 +156,6 @@ const HoroscopePage = () => {
                 );
               })}
             </div>
-
-            {/* Tips */}
-            <div className="mt-12 border-t border-[#1a1526] pt-10">
-              <p className="text-[#7c7893] text-sm leading-[1.7] font-light max-w-2xl">
-                {t("horoscope.tip")}
-              </p>
-            </div>
           </div>
           <PartnersSidebar />
         </div>
