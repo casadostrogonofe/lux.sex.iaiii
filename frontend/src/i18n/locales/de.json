@@ -110,6 +110,14 @@
   "editorial": {
     "editors": "Redakteure dieser Rubrik"
   },
+  "editor": {
+    "profile": "Editor-Profil",
+    "bylined_articles": "Beiträge",
+    "read_their_work": "Lesen Sie deren Arbeiten",
+    "no_articles": "Diese Redakteurin hat noch keine Beiträge veröffentlicht.",
+    "not_found_title": "Editor nicht gefunden",
+    "not_found_text": "Dieses Profil wurde möglicherweise entfernt oder noch nicht veröffentlicht."
+  },
   "artists": {
     "subtitle": "Die ausgezeichneten Künstler von Lux Society.",
     "subtitle_zetta": "Das Label Zetta Records — Produktion, Releases und die Szene, die zählt.",

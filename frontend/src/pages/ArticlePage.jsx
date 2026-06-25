@@ -216,8 +216,17 @@ const ArticlePage = () => {
                 <div className="flex flex-wrap items-center gap-4 text-xs text-[#7c7893] tracking-wide">
                   {post.author && (
                     <span>
-                      por{" "}
-                      <span className="text-[#f5f0ff]">{post.author}</span>
+                      {t("common.by")}{" "}
+                      {post.editorSlug ? (
+                        <Link
+                          to={`/editores/${post.editorSlug}`}
+                          className="text-[#f5f0ff] hover:text-[#9b30ff] transition-colors"
+                        >
+                          {post.author}
+                        </Link>
+                      ) : (
+                        <span className="text-[#f5f0ff]">{post.author}</span>
+                      )}
                     </span>
                   )}
                   {post.date && (

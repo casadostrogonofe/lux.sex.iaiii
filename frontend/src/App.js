@@ -8,6 +8,7 @@ import ArticlePage from "./pages/ArticlePage";
 import SexualidadePage from "./pages/SexualidadePage";
 import HoroscopePage from "./pages/HoroscopePage";
 import ArtistsPage from "./pages/ArtistsPage";
+import EditorProfile from "./pages/EditorProfile";
 import Shop from "./pages/Shop";
 import Marketplace from "./pages/Marketplace";
 import Apostas from "./pages/Apostas";
@@ -35,6 +36,7 @@ function App() {
               path="vida-noturna/artistas/:label"
               element={<ArtistsPage />}
             />
+            <Route path="editores/:slug" element={<EditorProfile />} />
 
             {/* Editorial blog routes — generic */}
             <Route path=":section" element={<BlogPage />} />

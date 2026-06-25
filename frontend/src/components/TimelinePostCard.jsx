@@ -60,20 +60,51 @@ const TimelinePostCard = ({ post, isNew = false }) => {
     <article className="bg-[#0a0612] border border-[#1f1a35] rounded-2xl overflow-hidden hover:border-[#9b30ff]/35 transition-colors duration-500">
       {/* Header — author + time only */}
       <div className="flex items-start gap-4 px-6 pt-6 pb-4">
-        <div
-          className="w-12 h-12 rounded-full flex items-center justify-center font-serif text-base text-white flex-shrink-0"
-          style={{
-            background: "linear-gradient(135deg, #9b30ff 0%, #5e1599 100%)",
-            boxShadow: "0 0 16px rgba(155,48,255,0.3)",
-          }}
-        >
-          {initials}
-        </div>
+        {post.editorSlug ? (
+          <Link
+            to={`/editores/${post.editorSlug}`}
+            className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center font-serif text-base text-white flex-shrink-0 transition-transform hover:scale-105"
+            style={{
+              background: "linear-gradient(135deg, #9b30ff 0%, #5e1599 100%)",
+              boxShadow: "0 0 16px rgba(155,48,255,0.3)",
+            }}
+            aria-label={post.author}
+          >
+            {post.editorPhoto ? (
+              <img
+                src={post.editorPhoto}
+                alt={post.author}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              initials
+            )}
+          </Link>
+        ) : (
+          <div
+            className="w-12 h-12 rounded-full flex items-center justify-center font-serif text-base text-white flex-shrink-0"
+            style={{
+              background: "linear-gradient(135deg, #9b30ff 0%, #5e1599 100%)",
+              boxShadow: "0 0 16px rgba(155,48,255,0.3)",
+            }}
+          >
+            {initials}
+          </div>
+        )}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-serif text-base text-[#f5f0ff] truncate">
-              {post.author}
-            </span>
+            {post.editorSlug ? (
+              <Link
+                to={`/editores/${post.editorSlug}`}
+                className="font-serif text-base text-[#f5f0ff] truncate hover:text-[#9b30ff] transition-colors"
+              >
+                {post.author}
+              </Link>
+            ) : (
+              <span className="font-serif text-base text-[#f5f0ff] truncate">
+                {post.author}
+              </span>
+            )}
             {isNew && (
               <span className="text-[9px] tracking-[0.3em] uppercase px-2 py-0.5 bg-[#9b30ff]/15 text-[#9b30ff] border border-[#9b30ff]/40 rounded-full flex items-center gap-1">
                 <Sparkles className="w-2.5 h-2.5" />

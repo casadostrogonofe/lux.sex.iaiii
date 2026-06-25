@@ -110,6 +110,14 @@
   "editorial": {
     "editors": "Editoras desta editoria"
   },
+  "editor": {
+    "profile": "Perfil do editor",
+    "bylined_articles": "Assinaturas",
+    "read_their_work": "Leia o trabalho de",
+    "no_articles": "Esta editora ainda não publicou matérias.",
+    "not_found_title": "Editor não encontrado",
+    "not_found_text": "Este perfil pode ter sido removido ou ainda não foi publicado."
+  },
   "artists": {
     "subtitle": "Os artistas em destaque na Lux Society.",
     "subtitle_zetta": "O selo Zetta Records — produção, releases e a cena que importa.",

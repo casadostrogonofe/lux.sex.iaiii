@@ -110,6 +110,14 @@
   "editorial": {
     "editors": "Editors of this section"
   },
+  "editor": {
+    "profile": "Editor profile",
+    "bylined_articles": "Bylined work",
+    "read_their_work": "Read their work",
+    "no_articles": "This editor hasn't published any stories yet.",
+    "not_found_title": "Editor not found",
+    "not_found_text": "This profile may have been removed or not yet published."
+  },
   "artists": {
     "subtitle": "Lux Society's featured artists.",
     "subtitle_zetta": "The Zetta Records label — production, releases and the scene that matters.",
