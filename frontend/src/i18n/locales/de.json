@@ -107,6 +107,14 @@
     "editors_title": "Die Sexualitäts-Redakteurinnen",
     "empty_banner": "Fügen Sie in Sanity einen Editor mit Banner hinzu, um den Karussell zu starten."
   },
+  "editorial": {
+    "editors": "Redakteure dieser Rubrik"
+  },
+  "artists": {
+    "subtitle": "Die ausgezeichneten Künstler von Lux Society.",
+    "subtitle_zetta": "Das Label Zetta Records — Produktion, Releases und die Szene, die zählt.",
+    "empty": "Noch keine Künstler eingetragen."
+  },
   "shop": {
     "title": "Shop",
     "subtitle": "Eine Auswahl an Marken und Produkten von Lux Society.",

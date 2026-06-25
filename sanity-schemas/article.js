@@ -1,7 +1,6 @@
-# Lux Novo — Sanity Article schema (versão 2 com Vídeo)
-# Cole este arquivo em: <seu-projeto-sanity>/schemaTypes/article.js
-# Substitui o anterior. Os novos campos `videoUrl` e `videoFile` aparecem
-# como uma seção "VÍDEO" no editor.
+// Lux Novo — Sanity Article schema (v3 com Vídeo + Referência ao Editor)
+// Cole este arquivo em: <seu-projeto-sanity>/schemaTypes/article.js
+// Substitui o anterior. Depois rode `npx sanity deploy` no Studio.
 
 export default {
   name: "article",
@@ -52,22 +51,36 @@ export default {
       name: "videoUrl",
       title: "Vídeo de capa (link YouTube / Vimeo / MP4)",
       type: "url",
-      description: "Cole a URL do YouTube, Vimeo ou um link direto .mp4.",
-      validation: (Rule) =>
-        Rule.uri({ allowRelative: false, scheme: ["http", "https"] }).optional()
+      description: "Cole a URL do YouTube, Vimeo ou um link direto .mp4."
     },
     {
       name: "videoFile",
       title: "Vídeo de capa (upload — alternativa ao link)",
       type: "file",
       description:
-        "Faça upload de um arquivo .mp4 / .webm (recomendado <100MB). Se preencher os dois, o upload tem prioridade.",
+        "Faça upload de um arquivo .mp4 / .webm. Se preencher os dois, o upload tem prioridade.",
       options: { accept: "video/mp4,video/webm,video/quicktime" }
     },
-    // ===================================
 
     { name: "body", title: "Corpo", type: "array", of: [{ type: "block" }, { type: "image", options: { hotspot: true } }] },
-    { name: "authorName", title: "Autor", type: "string" },
+
+    // ============== AUTOR — escolhe do banco de Editores ==============
+    {
+      name: "editor",
+      title: "Autor (escolha do banco de Editores)",
+      type: "reference",
+      to: [{ type: "editor" }],
+      description:
+        "Selecione um Editor já cadastrado. Para criar novo, vá em \"Editor / Colunista\" e crie. Esse autor passa a ser exibido na matéria."
+    },
+    {
+      name: "authorName",
+      title: "Autor (texto livre — fallback)",
+      type: "string",
+      description:
+        "OPCIONAL. Use somente se quiser sobrescrever o autor sem cadastrar um Editor."
+    },
+
     { name: "publishedAt", title: "Publicado em", type: "datetime", initialValue: () => new Date().toISOString() },
     { name: "readTime", title: "Tempo de leitura (min)", type: "number", initialValue: 6, validation: (Rule) => Rule.min(1).max(60) },
     { name: "featured", title: "Destacar em capa", type: "boolean", initialValue: false },

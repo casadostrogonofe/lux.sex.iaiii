@@ -109,32 +109,10 @@ export const articleSidebarPartners = [
 ];
 
 // =============================================================
-// FALLBACK EDITORS (shown until Sanity has data)
+// FALLBACK EDITORS (empty by default — once you add Editors in Sanity,
+// they show up automatically on the corresponding section pages)
 // =============================================================
-export const fallbackEditors = {
-  "bem-estar/sexualidade": [
-    {
-      id: "darlene-zeferina",
-      name: "Darlene Barbosa | Dra. Zeferina",
-      role: "Especialista em sexualidade e comportamento humano",
-      photo:
-        "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/mxnnm2nx_banner%20editorial%201%20-%20darlene.jpg",
-      banner:
-        "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/mxnnm2nx_banner%20editorial%201%20-%20darlene.jpg",
-      instagram: "https://www.instagram.com/doutora.zeferina/",
-      section: "bem-estar/sexualidade",
-    },
-    {
-      id: "lorrayne-lovely",
-      name: "Lorrayne Lovely",
-      role: "Lifestyle & desejo",
-      photo: null,
-      instagram:
-        "https://www.instagram.com/lorraynelovely?igsh=MWY2dmpnaTJ1dnNscA%3D%3D",
-      section: "bem-estar/sexualidade",
-    },
-  ],
-};
+export const fallbackEditors = {};
 
 // =============================================================
 // SECTION METADATA (for hero of each category/subcategory page)

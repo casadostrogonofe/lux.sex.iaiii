@@ -7,6 +7,7 @@ import BlogPage from "./pages/BlogPage";
 import ArticlePage from "./pages/ArticlePage";
 import SexualidadePage from "./pages/SexualidadePage";
 import HoroscopePage from "./pages/HoroscopePage";
+import ArtistsPage from "./pages/ArtistsPage";
 import Shop from "./pages/Shop";
 import Marketplace from "./pages/Marketplace";
 import Apostas from "./pages/Apostas";
@@ -29,6 +30,11 @@ function App() {
             {/* Special editorial sub-pages — declared BEFORE generic to win the match */}
             <Route path="bem-estar/sexualidade" element={<SexualidadePage />} />
             <Route path="bem-estar/horoscopo" element={<HoroscopePage />} />
+            <Route path="vida-noturna/artistas" element={<ArtistsPage />} />
+            <Route
+              path="vida-noturna/artistas/:label"
+              element={<ArtistsPage />}
+            />
 
             {/* Editorial blog routes — generic */}
             <Route path=":section" element={<BlogPage />} />

@@ -107,6 +107,14 @@
     "editors_title": "Les éditrices de Sexualité",
     "empty_banner": "Ajoutez un Éditeur avec une Bannière dans Sanity pour lancer le carrousel."
   },
+  "editorial": {
+    "editors": "Éditeurs de cette rubrique"
+  },
+  "artists": {
+    "subtitle": "Les artistes en vedette chez Lux Society.",
+    "subtitle_zetta": "Le label Zetta Records — production, sorties et la scène qui compte.",
+    "empty": "Aucun artiste enregistré pour le moment."
+  },
   "shop": {
     "title": "Shop",
     "subtitle": "Une curation de marques et produits sélectionnés par Lux Society.",

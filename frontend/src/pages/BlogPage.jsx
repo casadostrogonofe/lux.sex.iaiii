@@ -5,6 +5,7 @@ import { Clock, User, ChevronRight, ArrowRight } from "lucide-react";
 import PostInteractions from "../components/PostInteractions";
 import TimelinePostCard, { TimelineAdCard } from "../components/TimelinePostCard";
 import AdBanner from "../components/AdBanner";
+import EditorialBanner from "../components/EditorialBanner";
 import Newsletter from "../components/Newsletter";
 import PartnersSidebar from "../components/PartnersSidebar";
 import { sectionMeta, menuConfig } from "../mock/mockData";
@@ -132,6 +133,11 @@ const BlogPage = () => {
             </div>
           )}
         </div>
+      </section>
+
+      {/* Editorial banner (banner + 4 editor reels) — only shows if Sanity has editors for this section */}
+      <section className="max-w-[1400px] mx-auto px-6 md:px-10 pt-2">
+        <EditorialBanner section={sub ? `${section}/${sub}` : section} />
       </section>
 
       {posts.length === 0 ? (

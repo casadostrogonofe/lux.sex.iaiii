@@ -107,6 +107,14 @@
     "editors_title": "The Sexuality editors",
     "empty_banner": "Add an Editor with a Banner in Sanity to start the carousel."
   },
+  "editorial": {
+    "editors": "Editors of this section"
+  },
+  "artists": {
+    "subtitle": "Lux Society's featured artists.",
+    "subtitle_zetta": "The Zetta Records label — production, releases and the scene that matters.",
+    "empty": "No artists registered yet."
+  },
   "shop": {
     "title": "Shop",
     "subtitle": "A curation of brands and products selected by Lux Society.",
