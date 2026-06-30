@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { Instagram } from "lucide-react";
 import { LOGO_IAIII } from "../mock/mockData";
 
 const Footer = () => (
@@ -18,6 +19,28 @@ const Footer = () => (
           <p className="text-[#7c7893] text-sm leading-relaxed max-w-md font-light">
             Plataforma premium de entretenimento adulto. Curadoria editorial Lux Society. Acesso restrito (18+), conteúdo não indexado.
           </p>
+          <div className="mt-4 flex items-center gap-3 text-[10px] tracking-[0.35em] text-[#5a5470] uppercase">
+            <span>Criado por</span>
+            <a
+              href="https://site-ashen-beta-14.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#9b30ff] hover:text-[#b15aff] transition-colors"
+              data-testid="footer-hub3-link"
+            >
+              Hub3 Pixel Lab
+            </a>
+            <a
+              href="https://www.instagram.com/hub3pixellab"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#7c7893] hover:text-[#ff2bd6] transition-colors"
+              aria-label="Hub3 Pixel Lab — Instagram"
+              data-testid="footer-hub3-instagram"
+            >
+              <Instagram className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
 
         {/* Links */}
