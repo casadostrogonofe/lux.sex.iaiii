@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Header
+from fastapi import FastAPI, APIRouter, HTTPException, Header, Depends
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -13,6 +13,13 @@ from datetime import datetime, timezone
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
+
+ADMIN_API_KEY = os.environ.get("ADMIN_API_KEY")
+
+
+async def require_admin(x_admin_key: Optional[str] = Header(None)) -> None:
+    if not ADMIN_API_KEY or x_admin_key != ADMIN_API_KEY:
+        raise HTTPException(status_code=401, detail="Admin credentials required")
 
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
@@ -174,7 +181,7 @@ async def get_banner(banner_id: str) -> Dict[str, Any]:
     return doc
 
 
-@api_router.post("/banners", response_model=Banner, status_code=201)
+@api_router.post("/banners", response_model=Banner, status_code=201, dependencies=[Depends(require_admin)])
 async def create_banner(payload: BannerCreate) -> Banner:
     obj = Banner(**payload.model_dump())
     doc: Dict[str, Any] = obj.model_dump()
@@ -183,7 +190,7 @@ async def create_banner(payload: BannerCreate) -> Banner:
     return obj
 
 
-@api_router.put("/banners/{banner_id}", response_model=Banner)
+@api_router.put("/banners/{banner_id}", response_model=Banner, dependencies=[Depends(require_admin)])
 async def update_banner(banner_id: str, payload: BannerUpdate) -> Dict[str, Any]:
     update_data = {k: v for k, v in payload.model_dump().items() if v is not None}
     if not update_data:
@@ -200,7 +207,7 @@ async def update_banner(banner_id: str, payload: BannerUpdate) -> Dict[str, Any]
     return doc
 
 
-@api_router.delete("/banners/{banner_id}")
+@api_router.delete("/banners/{banner_id}", dependencies=[Depends(require_admin)])
 async def delete_banner(banner_id: str) -> Dict[str, str]:
     result = await db.banners.delete_one({"id": banner_id})
     if result.deleted_count == 0:
@@ -380,10 +387,11 @@ app.include_router(make_translation_router(db))
 from routers.horoscope import make_router as make_horoscope_router
 app.include_router(make_horoscope_router(db))
 
+_cors_origins = [o.strip() for o in os.environ.get('CORS_ORIGINS', '*').split(',')]
 app.add_middleware(
     CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_credentials="*" not in _cors_origins,
+    allow_origins=_cors_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )

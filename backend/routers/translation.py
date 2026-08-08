@@ -14,10 +14,11 @@ import os
 from typing import Any, Dict, List, Optional
 
 import httpx
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from emergentintegrations.llm.chat import LlmChat, UserMessage
+from rate_limit import rate_limit
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +61,7 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
         async with httpx.AsyncClient(timeout=15) as client:
             r = await client.get(url, params=params, headers=headers)
             if r.status_code != 200:
-                logger.error("sanity fetch failed %s %s", r.status_code, r.text[:300])
+                logger.error("sanity fetch failed with status %s", r.status_code)
                 return None
             data = r.json()
             return data.get("result")
@@ -107,7 +108,7 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
             # Fallback: at least return original so the page still renders
             return payload
 
-    @router.get("/article")
+    @router.get("/article", dependencies=[Depends(rate_limit("i18n-article", 30, 60))])
     async def translated_article(slug: str, lang: str) -> Dict[str, Any]:
         lang = (lang or "").lower()
         if lang == SOURCE_LANG or lang not in SUPPORTED_LANGS:
@@ -156,7 +157,7 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
             "cached": False,
         }
 
-    @router.get("/cards")
+    @router.get("/cards", dependencies=[Depends(rate_limit("i18n-cards", 15, 60))])
     async def translated_cards(lang: str) -> Dict[str, Any]:
         """Return a compact map of {slug: {title, excerpt}} translations for cards."""
         lang = (lang or "").lower()
