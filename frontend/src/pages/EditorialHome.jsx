@@ -5,6 +5,7 @@ import { Sparkles, ArrowRight, Filter } from "lucide-react";
 import TimelinePostCard, { TimelineAdCard } from "../components/TimelinePostCard";
 import PartnersSidebar from "../components/PartnersSidebar";
 import Newsletter from "../components/Newsletter";
+import HoroscopeFeedCard from "../components/horoscope/HoroscopeFeedCard";
 import { menuConfig } from "../mock/mockData";
 import { menuLabel } from "../i18n/menuMap";
 import { fetchAllArticles } from "../sanity/articles";
@@ -153,6 +154,7 @@ const EditorialHome = () => {
               </p>
             ) : (
               <div className="space-y-6">
+                <HoroscopeFeedCard />
                 {feed.map((post, idx) => (
                   <React.Fragment key={post.id}>
                     <TimelinePostCard post={post} isNew={post.isNew} />

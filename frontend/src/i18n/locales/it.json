@@ -119,7 +119,13 @@
       "generate": "Rivela il mio destino",
       "generating": "Leggendo la tua carta..."
     },
-    "open_reading": "Leggi l'oroscopo"
+    "open_reading": "Leggi l'oroscopo",
+    "feed": {
+      "title": "Oroscopo del giorno",
+      "pick": "Qual è il tuo segno?",
+      "change": "Cambia segno",
+      "full": "Vedi l'oroscopo completo"
+    }
   },
   "sexuality": {
     "tagline": "Benessere · Sessualità",

@@ -19,6 +19,10 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 08/Jun/2026 — Horóscopo no Feed da Home ✅
+- Card "Horóscopo do dia" no topo do feed (HoroscopeFeedCard): visitante escolhe o signo (salvo em localStorage), vê o panorama do dia + cor/número da sorte e link para o horóscopo completo; botão "Trocar signo"; 6 idiomas
+- Auto-testado via screenshot (picker, leitura, persistência após reload)
+
 ### 08/Jun/2026 — Auditoria de Segurança + Correções ✅
 - Audit executado (FAIL inicial) → 3 achados corrigidos e reverificados pelo testing agent (100%, iteration_2.json):
   - SEC-001: POST/PUT/DELETE `/api/banners` agora exigem header `X-Admin-Key` (ADMIN_API_KEY no backend/.env, comparação timing-safe); GET continua público

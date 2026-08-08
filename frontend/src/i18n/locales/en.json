@@ -119,7 +119,13 @@
       "generate": "Reveal my destiny",
       "generating": "Reading your chart..."
     },
-    "open_reading": "Read horoscope"
+    "open_reading": "Read horoscope",
+    "feed": {
+      "title": "Today's horoscope",
+      "pick": "What's your sign?",
+      "change": "Change sign",
+      "full": "See full horoscope"
+    }
   },
   "sexuality": {
     "tagline": "Wellness · Sexuality",

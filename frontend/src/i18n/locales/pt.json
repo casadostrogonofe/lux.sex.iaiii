@@ -119,7 +119,13 @@
       "generate": "Revelar meu destino",
       "generating": "Lendo o seu mapa..."
     },
-    "open_reading": "Ler horóscopo"
+    "open_reading": "Ler horóscopo",
+    "feed": {
+      "title": "Horóscopo do dia",
+      "pick": "Qual é o seu signo?",
+      "change": "Trocar signo",
+      "full": "Ver horóscopo completo"
+    }
   },
   "sexuality": {
     "tagline": "Bem Estar · Sexualidade",

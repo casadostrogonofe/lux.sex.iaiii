@@ -119,7 +119,13 @@
       "generate": "Mein Schicksal enthüllen",
       "generating": "Ihre Karte wird gelesen..."
     },
-    "open_reading": "Horoskop lesen"
+    "open_reading": "Horoskop lesen",
+    "feed": {
+      "title": "Horoskop des Tages",
+      "pick": "Was ist Ihr Sternzeichen?",
+      "change": "Zeichen ändern",
+      "full": "Zum vollständigen Horoskop"
+    }
   },
   "sexuality": {
     "tagline": "Wellness · Sexualität",
