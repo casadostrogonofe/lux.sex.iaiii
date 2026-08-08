@@ -376,6 +376,10 @@ app.include_router(api_router)
 from routers.translation import make_router as make_translation_router
 app.include_router(make_translation_router(db))
 
+# Horoscope router (Gemini-powered AI readings)
+from routers.horoscope import make_router as make_horoscope_router
+app.include_router(make_horoscope_router(db))
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,

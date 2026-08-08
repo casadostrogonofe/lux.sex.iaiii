@@ -7,6 +7,8 @@ import { menuConfig } from "../mock/mockData";
 import { menuLabel } from "../i18n/menuMap";
 import PartnersSidebar from "../components/PartnersSidebar";
 import Newsletter from "../components/Newsletter";
+import DailyReadingModal from "../components/horoscope/DailyReadingModal";
+import PersonalReading from "../components/horoscope/PersonalReading";
 
 const SECTION_PATH = "bem-estar/horoscopo";
 
@@ -28,6 +30,7 @@ const SIGNS = [
 const HoroscopePage = () => {
   const { t, i18n } = useTranslation();
   const [posts, setPosts] = useState([]);
+  const [selectedSign, setSelectedSign] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -100,23 +103,12 @@ const HoroscopePage = () => {
           <div className="flex-1 lg:max-w-[900px]">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
               {SIGNS.map((s) => {
-                const article = signArticleMap[s.id];
-                const href = article
-                  ? `/${article.path}/${article.slug}`
-                  : `/${SECTION_PATH}#${s.id}`;
-                const Wrapper = article ? Link : "div";
-                const wrapperProps = article
-                  ? { to: href }
-                  : { "aria-disabled": "true" };
                 return (
-                  <Wrapper
+                  <button
                     key={s.id}
-                    {...wrapperProps}
-                    className={`group relative block aspect-square overflow-hidden rounded-2xl border bg-[#0a0612] text-center p-4 md:p-6 transition-all duration-500 ${
-                      article
-                        ? "border-[#1f1a35] hover:border-[#9b30ff]/60 hover:-translate-y-1 cursor-pointer"
-                        : "border-[#15101e] opacity-60 cursor-default"
-                    }`}
+                    type="button"
+                    onClick={() => setSelectedSign(s)}
+                    className="group relative block w-full aspect-square overflow-hidden rounded-2xl border bg-[#0a0612] text-center p-4 md:p-6 transition-all duration-500 border-[#1f1a35] hover:border-[#9b30ff]/60 hover:-translate-y-1 cursor-pointer"
                     data-testid={`horoscope-sign-${s.id}`}
                   >
                     <div
@@ -144,22 +136,27 @@ const HoroscopePage = () => {
                       <span className="text-[9px] tracking-[0.2em] text-[#7c7893] uppercase">
                         {s.dates}
                       </span>
-                      <span
-                        className={`mt-3 text-[8px] tracking-[0.3em] uppercase ${
-                          article ? "text-[#9b30ff]" : "text-[#5a5470]"
-                        }`}
-                      >
-                        {article ? t("horoscope.read_today") : t("horoscope.coming_soon")}
+                      <span className="mt-3 text-[8px] tracking-[0.3em] uppercase text-[#9b30ff]">
+                        {t("horoscope.open_reading")}
                       </span>
                     </div>
-                  </Wrapper>
+                  </button>
                 );
               })}
             </div>
+            <PersonalReading />
           </div>
           <PartnersSidebar />
         </div>
       </section>
+
+      {selectedSign && (
+        <DailyReadingModal
+          sign={selectedSign}
+          article={signArticleMap[selectedSign.id]}
+          onClose={() => setSelectedSign(null)}
+        />
+      )}
 
       <Newsletter />
     </>

@@ -98,7 +98,28 @@
     "subtitle": "Celestial readings for those who know the sky whispers too. Updated by our collaborating astrologers.",
     "read_today": "Read today",
     "coming_soon": "Coming soon",
-    "tip": "Publish an article in Sanity with path \"bem-estar/horoscopo\" and a matching Sign — the card links straight to it."
+    "tip": "Publish an article in Sanity with path \"bem-estar/horoscopo\" and a matching Sign — the card links straight to it.",
+    "ai": {
+      "daily_tag": "Today's reading · Lux AI",
+      "consulting": "Consulting the stars...",
+      "love": "Love & Desire",
+      "career": "Career & Money",
+      "advice": "Cosmic advice",
+      "lucky_color": "Color of the day",
+      "lucky_number": "Lucky number",
+      "read_article": "Read the full story",
+      "error": "The stars are silent right now. Try again in a moment.",
+      "personal_tag": "Personal destiny",
+      "personal_title": "Your destiny reading",
+      "personal_subtitle": "Enter your name and date of birth — our astral AI reveals in real time what the sky has drawn for you.",
+      "name_label": "Your name",
+      "birth_label": "Date of birth",
+      "focus_label": "Focus (optional)",
+      "focus_placeholder": "Love, career, a new cycle...",
+      "generate": "Reveal my destiny",
+      "generating": "Reading your chart..."
+    },
+    "open_reading": "Read horoscope"
   },
   "sexuality": {
     "tagline": "Wellness · Sexuality",
@@ -156,5 +177,12 @@
     "enter_button": "I'm 18+ — Enter",
     "exit_button": "Leave site",
     "private_conn": "Private connection"
+  },
+  "share": {
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram",
+    "copy": "Copy link",
+    "copied": "Link copied!",
+    "more": "More options..."
   }
 }

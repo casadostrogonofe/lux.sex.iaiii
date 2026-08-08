@@ -98,7 +98,28 @@
     "subtitle": "Lectures célestes pour ceux qui savent que le ciel chuchote aussi. Mis à jour par nos astrologues collaborateurs.",
     "read_today": "Lire aujourd'hui",
     "coming_soon": "Bientôt",
-    "tip": "Publiez un article dans Sanity avec le path \"bem-estar/horoscopo\" et le Signe correspondant — la carte mène directement à l'article."
+    "tip": "Publiez un article dans Sanity avec le path \"bem-estar/horoscopo\" et le Signe correspondant — la carte mène directement à l'article.",
+    "ai": {
+      "daily_tag": "Lecture du jour · IA Lux",
+      "consulting": "Consultation des astres...",
+      "love": "Amour & Désir",
+      "career": "Carrière & Argent",
+      "advice": "Conseil cosmique",
+      "lucky_color": "Couleur du jour",
+      "lucky_number": "Chiffre porte-bonheur",
+      "read_article": "Lire l'article complet",
+      "error": "Les astres sont silencieux pour l'instant. Réessayez dans un instant.",
+      "personal_tag": "Destin personnalisé",
+      "personal_title": "Votre lecture de destin",
+      "personal_subtitle": "Indiquez votre nom et votre date de naissance — notre IA astrale révèle en temps réel ce que le ciel dessine pour vous.",
+      "name_label": "Votre nom",
+      "birth_label": "Date de naissance",
+      "focus_label": "Focus (optionnel)",
+      "focus_placeholder": "Amour, carrière, un nouveau cycle...",
+      "generate": "Révéler mon destin",
+      "generating": "Lecture de votre carte..."
+    },
+    "open_reading": "Lire l'horoscope"
   },
   "sexuality": {
     "tagline": "Bien-être · Sexualité",
@@ -156,5 +177,12 @@
     "enter_button": "J'ai 18+ ans — Entrer",
     "exit_button": "Quitter le site",
     "private_conn": "Connexion Privée"
+  },
+  "share": {
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram",
+    "copy": "Copier le lien",
+    "copied": "Lien copié !",
+    "more": "Plus d'options..."
   }
 }

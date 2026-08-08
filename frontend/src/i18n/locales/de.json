@@ -98,7 +98,28 @@
     "subtitle": "Himmlische Lesungen für jene, die wissen, dass der Himmel flüstert. Aktualisiert von unseren mitwirkenden Astrologen.",
     "read_today": "Heute lesen",
     "coming_soon": "Bald",
-    "tip": "Veröffentlichen Sie in Sanity einen Artikel mit Path \"bem-estar/horoscopo\" und dem entsprechenden Sternzeichen — die Karte führt direkt dorthin."
+    "tip": "Veröffentlichen Sie in Sanity einen Artikel mit Path \"bem-estar/horoscopo\" und dem entsprechenden Sternzeichen — die Karte führt direkt dorthin.",
+    "ai": {
+      "daily_tag": "Tageslesung · Lux KI",
+      "consulting": "Die Sterne werden befragt...",
+      "love": "Liebe & Verlangen",
+      "career": "Karriere & Geld",
+      "advice": "Kosmischer Rat",
+      "lucky_color": "Farbe des Tages",
+      "lucky_number": "Glückszahl",
+      "read_article": "Ganzen Artikel lesen",
+      "error": "Die Sterne schweigen gerade. Versuchen Sie es gleich noch einmal.",
+      "personal_tag": "Persönliches Schicksal",
+      "personal_title": "Ihre Schicksalslesung",
+      "personal_subtitle": "Geben Sie Namen und Geburtsdatum ein — unsere astrale KI enthüllt in Echtzeit, was der Himmel für Sie zeichnet.",
+      "name_label": "Ihr Name",
+      "birth_label": "Geburtsdatum",
+      "focus_label": "Fokus (optional)",
+      "focus_placeholder": "Liebe, Karriere, ein neuer Zyklus...",
+      "generate": "Mein Schicksal enthüllen",
+      "generating": "Ihre Karte wird gelesen..."
+    },
+    "open_reading": "Horoskop lesen"
   },
   "sexuality": {
     "tagline": "Wellness · Sexualität",
@@ -156,5 +177,12 @@
     "enter_button": "Ich bin 18+ — Eintreten",
     "exit_button": "Seite verlassen",
     "private_conn": "Private Verbindung"
+  },
+  "share": {
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram",
+    "copy": "Link kopieren",
+    "copied": "Link kopiert!",
+    "more": "Weitere Optionen..."
   }
 }

@@ -98,7 +98,28 @@
     "subtitle": "Letture astrali per chi sa che anche il cielo sussurra. Aggiornato dai nostri astrologi collaboratori.",
     "read_today": "Leggi oggi",
     "coming_soon": "Presto",
-    "tip": "Pubblica un articolo in Sanity con path \"bem-estar/horoscopo\" e il Segno corrispondente — la card porta direttamente all'articolo."
+    "tip": "Pubblica un articolo in Sanity con path \"bem-estar/horoscopo\" e il Segno corrispondente — la card porta direttamente all'articolo.",
+    "ai": {
+      "daily_tag": "Lettura del giorno · IA Lux",
+      "consulting": "Consultando gli astri...",
+      "love": "Amore & Desiderio",
+      "career": "Carriera & Denaro",
+      "advice": "Consiglio cosmico",
+      "lucky_color": "Colore del giorno",
+      "lucky_number": "Numero fortunato",
+      "read_article": "Leggi l'articolo completo",
+      "error": "Gli astri tacciono in questo momento. Riprova tra poco.",
+      "personal_tag": "Destino personalizzato",
+      "personal_title": "La tua lettura del destino",
+      "personal_subtitle": "Inserisci nome e data di nascita — la nostra IA astrale rivela in tempo reale ciò che il cielo disegna per te.",
+      "name_label": "Il tuo nome",
+      "birth_label": "Data di nascita",
+      "focus_label": "Focus (opzionale)",
+      "focus_placeholder": "Amore, carriera, un nuovo ciclo...",
+      "generate": "Rivela il mio destino",
+      "generating": "Leggendo la tua carta..."
+    },
+    "open_reading": "Leggi l'oroscopo"
   },
   "sexuality": {
     "tagline": "Benessere · Sessualità",
@@ -156,5 +177,12 @@
     "enter_button": "Ho 18+ anni — Entra",
     "exit_button": "Esci dal sito",
     "private_conn": "Connessione Privata"
+  },
+  "share": {
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram",
+    "copy": "Copia link",
+    "copied": "Link copiato!",
+    "more": "Altre opzioni..."
   }
 }

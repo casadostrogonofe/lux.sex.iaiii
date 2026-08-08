@@ -153,7 +153,12 @@ const TimelinePostCard = ({ post, isNew = false }) => {
 
       {/* Interactions bar */}
       <div className="flex items-center justify-between px-4 py-2 border-t border-[#1f1a35]">
-        <PostInteractions postId={post.id} postTitle={post.title} compact />
+        <PostInteractions
+          postId={post.id}
+          postTitle={post.title}
+          postUrl={`${window.location.origin}${href}`}
+          compact
+        />
         <Link
           to={href}
           className="text-[10px] tracking-[0.3em] uppercase px-3 py-2 text-[#9b30ff] hover:text-[#b15aff] transition-colors"
