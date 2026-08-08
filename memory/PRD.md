@@ -19,6 +19,11 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 08/Jun/2026 — Bug produção: horóscopo "astros em silêncio" ✅ (diagnóstico)
+- Causa raiz: o deploy em luxsexiaiii.com é ANTERIOR às rotas /api/horoscope — a API devolve o HTML do SPA e o modal cai no estado de erro. Preview 100% funcional (iteration_3.json)
+- Corrigido bloqueio de deploy: .gitignore excluía .env / test_credentials.md (removido). Deployment agent: PASS
+- AÇÃO DO USUÁRIO: republicar (Deploy) para o horóscopo funcionar em produção
+
 ### 08/Jun/2026 — Horóscopo no Feed da Home ✅
 - Card "Horóscopo do dia" no topo do feed (HoroscopeFeedCard): visitante escolhe o signo (salvo em localStorage), vê o panorama do dia + cor/número da sorte e link para o horóscopo completo; botão "Trocar signo"; 6 idiomas
 - Auto-testado via screenshot (picker, leitura, persistência após reload)
