@@ -111,13 +111,16 @@
       "error": "Gli astri tacciono in questo momento. Riprova tra poco.",
       "personal_tag": "Destino personalizzato",
       "personal_title": "La tua lettura del destino",
-      "personal_subtitle": "Inserisci nome e data di nascita — la nostra IA astrale rivela in tempo reale ciò che il cielo disegna per te.",
+      "personal_subtitle": "Inserisci nome e data di nascita e il nostro astrale rivela in tempo reale ciò che il cielo disegna per te.",
       "name_label": "Il tuo nome",
       "birth_label": "Data di nascita",
       "focus_label": "Focus (opzionale)",
       "focus_placeholder": "Amore, carriera, un nuovo ciclo...",
       "generate": "Rivela il mio destino",
-      "generating": "Leggendo la tua carta..."
+      "generating": "Leggendo la tua carta...",
+      "gender_label": "Come rivolgerci a te?",
+      "gender_male": "Maschile",
+      "gender_female": "Femminile"
     },
     "open_reading": "Leggi l'oroscopo",
     "feed": {

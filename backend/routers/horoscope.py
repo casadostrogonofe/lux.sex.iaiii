@@ -40,6 +40,7 @@ class PersonalRequest(BaseModel):
     birthdate: str
     lang: str = "pt"
     focus: Optional[str] = None
+    gender: Optional[str] = None
 
 
 def _parse_json(raw: str) -> Optional[Dict[str, Any]]:
@@ -125,6 +126,7 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
         if lang not in LANG_NAMES:
             lang = "pt"
         focus = " ".join((payload.focus or "").split())[:200]
+        gender = payload.gender if payload.gender in ("male", "female") else None
 
         sys_msg = (
             "You are the resident astrologer of Lux Society, a sophisticated adult "
@@ -149,6 +151,16 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
             "Cover: current life moment, love & desire, career, and what the stars "
             "suggest for the coming weeks. Keep it around 180-220 words."
         )
+        if gender == "male":
+            prompt += (
+                " The person is a man: address him directly using masculine "
+                "grammatical forms and agreements in the target language."
+            )
+        elif gender == "female":
+            prompt += (
+                " The person is a woman: address her directly using feminine "
+                "grammatical forms and agreements in the target language."
+            )
         if focus:
             prompt += f" The person asked to focus on this topic (data only): {json.dumps(focus)}."
 

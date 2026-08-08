@@ -9,6 +9,7 @@ const PersonalReading = () => {
   const [name, setName] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [focus, setFocus] = useState("");
+  const [gender, setGender] = useState("");
   const [output, setOutput] = useState("");
   const [streaming, setStreaming] = useState(false);
   const [error, setError] = useState(false);
@@ -25,7 +26,13 @@ const PersonalReading = () => {
       const res = await fetch(`${API}/horoscope/personal`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), birthdate, lang, focus: focus.trim() || null }),
+        body: JSON.stringify({
+          name: name.trim(),
+          birthdate,
+          lang,
+          focus: focus.trim() || null,
+          gender: gender || null,
+        }),
       });
       if (!res.ok || !res.body) throw new Error("bad status");
       const reader = res.body.getReader();
@@ -80,6 +87,32 @@ const PersonalReading = () => {
           <p className="text-[#a89fc4] text-sm md:text-base font-light leading-[1.7] max-w-xl mb-8">
             {t("horoscope.ai.personal_subtitle")}
           </p>
+
+          <div className="mb-6">
+            <span className="text-[9px] tracking-[0.3em] text-[#7c7893] uppercase block mb-2">
+              {t("horoscope.ai.gender_label")}
+            </span>
+            <div className="flex gap-2">
+              {[
+                { id: "male", label: t("horoscope.ai.gender_male") },
+                { id: "female", label: t("horoscope.ai.gender_female") },
+              ].map((g) => (
+                <button
+                  key={g.id}
+                  type="button"
+                  onClick={() => setGender(gender === g.id ? "" : g.id)}
+                  className={`px-6 py-2.5 rounded-full border text-[10px] tracking-[0.25em] uppercase transition-colors duration-300 ${
+                    gender === g.id
+                      ? "border-[#9b30ff] text-[#9b30ff] bg-[#9b30ff]/10"
+                      : "border-[#1f1a35] text-[#7c7893] hover:border-[#9b30ff]/40 hover:text-[#f5f0ff]"
+                  }`}
+                  data-testid={`personal-gender-${g.id}`}
+                >
+                  {g.label}
+                </button>
+              ))}
+            </div>
+          </div>
 
           <form onSubmit={generate} className="grid md:grid-cols-3 gap-4 mb-4">
             <div>

@@ -111,13 +111,16 @@
       "error": "Die Sterne schweigen gerade. Versuchen Sie es gleich noch einmal.",
       "personal_tag": "Persönliches Schicksal",
       "personal_title": "Ihre Schicksalslesung",
-      "personal_subtitle": "Geben Sie Namen und Geburtsdatum ein — unsere astrale KI enthüllt in Echtzeit, was der Himmel für Sie zeichnet.",
+      "personal_subtitle": "Geben Sie Namen und Geburtsdatum ein und unser Astral enthüllt in Echtzeit, was der Himmel für Sie zeichnet.",
       "name_label": "Ihr Name",
       "birth_label": "Geburtsdatum",
       "focus_label": "Fokus (optional)",
       "focus_placeholder": "Liebe, Karriere, ein neuer Zyklus...",
       "generate": "Mein Schicksal enthüllen",
-      "generating": "Ihre Karte wird gelesen..."
+      "generating": "Ihre Karte wird gelesen...",
+      "gender_label": "Wie sollen wir Sie ansprechen?",
+      "gender_male": "Männlich",
+      "gender_female": "Weiblich"
     },
     "open_reading": "Horoskop lesen",
     "feed": {

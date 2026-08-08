@@ -19,6 +19,11 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 08/Jun/2026 — Texto + Gênero na leitura pessoal + Vercel ✅
+- Subtítulo da leitura pessoal trocado: "Informe seu nome e data de nascimento e nosso astral revela em tempo real o que o céu desenha para você." (6 idiomas)
+- Opção Masculino/Feminino no formulário — backend adapta a linguagem (formas gramaticais) da leitura ao gênero (testado: "Querida Carla")
+- Vercel: vercel.json já presente em /app/frontend; orientação do suporte repassada (frontend no Vercel + backend na Emergent, REACT_APP_BACKEND_URL no painel do Vercel)
+
 ### 08/Jun/2026 — Bug produção: horóscopo "astros em silêncio" ✅ (diagnóstico)
 - Causa raiz: o deploy em luxsexiaiii.com é ANTERIOR às rotas /api/horoscope — a API devolve o HTML do SPA e o modal cai no estado de erro. Preview 100% funcional (iteration_3.json)
 - Corrigido bloqueio de deploy: .gitignore excluía .env / test_credentials.md (removido). Deployment agent: PASS

@@ -111,13 +111,16 @@
       "error": "Les astres sont silencieux pour l'instant. Réessayez dans un instant.",
       "personal_tag": "Destin personnalisé",
       "personal_title": "Votre lecture de destin",
-      "personal_subtitle": "Indiquez votre nom et votre date de naissance — notre IA astrale révèle en temps réel ce que le ciel dessine pour vous.",
+      "personal_subtitle": "Indiquez votre nom et votre date de naissance et notre astral révèle en temps réel ce que le ciel dessine pour vous.",
       "name_label": "Votre nom",
       "birth_label": "Date de naissance",
       "focus_label": "Focus (optionnel)",
       "focus_placeholder": "Amour, carrière, un nouveau cycle...",
       "generate": "Révéler mon destin",
-      "generating": "Lecture de votre carte..."
+      "generating": "Lecture de votre carte...",
+      "gender_label": "Comment s'adresser à vous ?",
+      "gender_male": "Masculin",
+      "gender_female": "Féminin"
     },
     "open_reading": "Lire l'horoscope",
     "feed": {

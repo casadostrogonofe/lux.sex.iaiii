@@ -111,13 +111,16 @@
       "error": "The stars are silent right now. Try again in a moment.",
       "personal_tag": "Personal destiny",
       "personal_title": "Your destiny reading",
-      "personal_subtitle": "Enter your name and date of birth — our astral AI reveals in real time what the sky has drawn for you.",
+      "personal_subtitle": "Enter your name and date of birth and our astral reader reveals in real time what the sky has drawn for you.",
       "name_label": "Your name",
       "birth_label": "Date of birth",
       "focus_label": "Focus (optional)",
       "focus_placeholder": "Love, career, a new cycle...",
       "generate": "Reveal my destiny",
-      "generating": "Reading your chart..."
+      "generating": "Reading your chart...",
+      "gender_label": "How should we address you?",
+      "gender_male": "Masculine",
+      "gender_female": "Feminine"
     },
     "open_reading": "Read horoscope",
     "feed": {

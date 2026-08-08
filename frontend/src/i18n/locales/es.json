@@ -111,13 +111,16 @@
       "error": "Los astros guardan silencio ahora. Inténtalo de nuevo en un momento.",
       "personal_tag": "Destino personalizado",
       "personal_title": "Tu lectura de destino",
-      "personal_subtitle": "Escribe tu nombre y fecha de nacimiento — nuestra IA astral revela en tiempo real lo que el cielo dibuja para ti.",
+      "personal_subtitle": "Escribe tu nombre y fecha de nacimiento y nuestro astral revela en tiempo real lo que el cielo dibuja para ti.",
       "name_label": "Tu nombre",
       "birth_label": "Fecha de nacimiento",
       "focus_label": "Enfoque (opcional)",
       "focus_placeholder": "Amor, carrera, un nuevo ciclo...",
       "generate": "Revelar mi destino",
-      "generating": "Leyendo tu carta..."
+      "generating": "Leyendo tu carta...",
+      "gender_label": "¿Cómo hablarte?",
+      "gender_male": "Masculino",
+      "gender_female": "Femenino"
     },
     "open_reading": "Leer horóscopo",
     "feed": {
