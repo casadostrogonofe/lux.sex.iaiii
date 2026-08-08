@@ -19,6 +19,9 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 08/Jun/2026 — Subtítulo da home atualizado ✅
+- Subtítulo do feed (home.subtitle) trocado nos 6 idiomas para: "Moda, arte, luxo, vida premium e diversão, tudo para você, vem viver a experiência Lux.Sex"
+
 ### 26/Mai/2026 (tarde) — Tradução automática Gemini + Vídeo nas matérias ✅
 - **Backend `/api/i18n/article` + `/api/i18n/cards`** — endpoints FastAPI que traduzem título/excerpt/corpo via **Gemini 3 Flash** com cache MongoDB por (slug, lang)
 - Cache invalidado automaticamente quando `_updatedAt` do Sanity muda
