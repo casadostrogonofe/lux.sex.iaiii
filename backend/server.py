@@ -18,7 +18,8 @@ ADMIN_API_KEY = os.environ.get("ADMIN_API_KEY")
 
 
 async def require_admin(x_admin_key: Optional[str] = Header(None)) -> None:
-    if not ADMIN_API_KEY or x_admin_key != ADMIN_API_KEY:
+    import hmac
+    if not ADMIN_API_KEY or not x_admin_key or not hmac.compare_digest(x_admin_key, ADMIN_API_KEY):
         raise HTTPException(status_code=401, detail="Admin credentials required")
 
 # MongoDB connection

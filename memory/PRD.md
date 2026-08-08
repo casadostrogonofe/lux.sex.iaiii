@@ -19,6 +19,14 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 08/Jun/2026 — Auditoria de Segurança + Correções ✅
+- Audit executado (FAIL inicial) → 3 achados corrigidos e reverificados pelo testing agent (100%, iteration_2.json):
+  - SEC-001: POST/PUT/DELETE `/api/banners` agora exigem header `X-Admin-Key` (ADMIN_API_KEY no backend/.env, comparação timing-safe); GET continua público
+  - SEC-002: rate limiting por IP (`rate_limit.py`): /horoscope/personal 5/min, /horoscope/daily 30/min, /i18n/article 30/min, /i18n/cards 15/min → 429
+  - SEC-003: prompt hardening no horóscopo pessoal (name/birthdate/focus tratados como dados, injeção ignorada)
+  - Hardening: CORS allow_credentials=False com origem '*'; logs do Sanity sem corpo da resposta; sanitização do campo focus
+- Credencial admin registrada em /app/memory/test_credentials.md
+
 ### 08/Jun/2026 — Horóscopo IA (Gemini) + Compartilhamento ✅
 - **`/api/horoscope/daily?sign=&lang=`** — leitura diária por signo via Gemini 3 Flash, cache MongoDB (sign/date/lang), 6 idiomas
 - **`/api/horoscope/personal`** — leitura de destino personalizada (nome + nascimento + foco) com streaming SSE em tempo real

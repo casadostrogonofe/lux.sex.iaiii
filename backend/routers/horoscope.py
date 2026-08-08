@@ -124,7 +124,7 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
         lang = payload.lang.lower() if payload.lang else "pt"
         if lang not in LANG_NAMES:
             lang = "pt"
-        focus = (payload.focus or "").strip()[:200]
+        focus = " ".join((payload.focus or "").split())[:200]
 
         sys_msg = (
             "You are the resident astrologer of Lux Society, a sophisticated adult "

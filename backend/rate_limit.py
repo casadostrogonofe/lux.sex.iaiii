@@ -21,6 +21,9 @@ def rate_limit(name: str, max_calls: int, window_seconds: int):
     async def dependency(request: Request) -> None:
         key = f"{name}:{_client_ip(request)}"
         now = time.monotonic()
+        if len(_buckets) > 10000:
+            for k in [k for k, v in _buckets.items() if not v or now - v[-1] > window_seconds]:
+                _buckets.pop(k, None)
         bucket = _buckets[key]
         while bucket and now - bucket[0] > window_seconds:
             bucket.popleft()
