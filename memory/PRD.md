@@ -19,6 +19,14 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 08/Jun/2026 — Horóscopo IA (Gemini) + Compartilhamento ✅
+- **`/api/horoscope/daily?sign=&lang=`** — leitura diária por signo via Gemini 3 Flash, cache MongoDB (sign/date/lang), 6 idiomas
+- **`/api/horoscope/personal`** — leitura de destino personalizada (nome + nascimento + foco) com streaming SSE em tempo real
+- HoroscopePage: cards dos 12 signos abrem modal com leitura IA (panorama, amor, carreira, conselho, cor e número da sorte) + seção "Sua leitura de destino" com formulário e texto streamado
+- Compartilhamento renovado (PostInteractions): WhatsApp, Instagram (copia link + abre app), X, Facebook, Telegram, Copiar link e compartilhamento nativo — na matéria E nos cards do feed (cards compartilham a URL da matéria, não da home)
+- emergentintegrations atualizado 0.1.0 → 0.2.0; react-icons adicionado
+- Testado pelo testing agent: 100% backend e frontend (/app/test_reports/iteration_1.json)
+
 ### 08/Jun/2026 — Subtítulo da home atualizado ✅
 - Subtítulo do feed (home.subtitle) trocado nos 6 idiomas para: "Moda, arte, luxo, vida premium e diversão, tudo para você, vem viver a experiência Lux.Sex"
 
@@ -88,6 +96,8 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 - Migrar `partnerStores` e `marketplaceProducts` para Sanity também
 
 ## 5. Endpoints
+- `GET /api/horoscope/daily?sign=<id>&lang=<lang>` (leitura diária IA, cache)
+- `POST /api/horoscope/personal` (SSE stream, body: name/birthdate/lang/focus)
 - `POST /api/posts/{id}/like`
 - `POST /api/posts/{id}/unlike`
 - `GET /api/posts/{id}/comments`

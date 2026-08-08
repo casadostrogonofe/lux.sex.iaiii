@@ -40,9 +40,13 @@ const PersonalReading = () => {
         for (const part of parts) {
           const line = part.trim();
           if (!line.startsWith("data: ")) continue;
-          const payload = JSON.parse(line.slice(6));
-          if (payload.t) setOutput((prev) => prev + payload.t);
-          if (payload.error) setError(true);
+          try {
+            const payload = JSON.parse(line.slice(6));
+            if (payload.t) setOutput((prev) => prev + payload.t);
+            if (payload.error) setError(true);
+          } catch {
+            // skip malformed chunk
+          }
         }
       }
     } catch {
