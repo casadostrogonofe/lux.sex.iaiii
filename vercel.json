@@ -5,11 +5,11 @@
   "installCommand": "echo 'install handled in buildCommand'",
   "rewrites": [
     {
-      "source": "/api/(.*)",
+      "source": "/api/:path*",
       "destination": "/api/index"
     },
     {
-      "source": "/((?!api/).*)",
+      "source": "/:path*",
       "destination": "/index.html"
     }
   ],
@@ -27,7 +27,9 @@
   "functions": {
     "api/index.py": {
       "memory": 1024,
-      "maxDuration": 60
+      "maxDuration": 60,
+      "includeFiles": "backend/**",
+      "excludeFiles": "{backend/tests/**,test_reports/**,memory/**}"
     }
   }
 }
