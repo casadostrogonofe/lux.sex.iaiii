@@ -158,7 +158,7 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
 
         # Get all articles (slug + title + excerpt only) from Sanity
         groq = (
-            '*[_type == "article" && defined(slug.current)]'
+            '*[_type == "article" && defined(slug.current)] | order(_updatedAt desc)[0...500]'
             '{ "slug": slug.current, _updatedAt, title, excerpt }'
         )
         url = (
@@ -174,9 +174,12 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
         # Look up cache for all slugs
         cached_docs = {}
         if articles:
-            async for doc in db.translations.find(
-                {"slug": {"$in": [a["slug"] for a in articles]}, "lang": lang}
-            ):
+            slugs = [article["slug"] for article in articles]
+            docs = await db.translations.find(
+                {"slug": {"$in": slugs}, "lang": lang},
+                {"_id": 0, "slug": 1, "title": 1, "excerpt": 1, "source_updated_at": 1},
+            ).to_list(length=len(slugs))
+            for doc in docs:
                 cached_docs[doc["slug"]] = doc
 
         items: Dict[str, Dict[str, str]] = {}
