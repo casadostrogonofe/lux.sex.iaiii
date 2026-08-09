@@ -27,6 +27,16 @@ def api_client():
     return s
 
 
+# --- Health endpoint ---
+class TestHealthEndpoint:
+    def test_health_reports_ok_and_connected_database(self, api_client):
+        r = api_client.get(f"{BASE_URL}/api/health", timeout=20)
+        assert r.status_code == 200, r.text[:400]
+        data = r.json()
+        assert data.get("status") == "ok"
+        assert data.get("database") == "connected"
+
+
 # --- Daily horoscope endpoint ---
 class TestDailyHoroscope:
     def test_daily_valid_sign_pt(self, api_client):
