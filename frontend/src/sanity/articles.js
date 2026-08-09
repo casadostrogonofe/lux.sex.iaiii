@@ -42,7 +42,6 @@ const safe = async (promise, fallback) => {
     return data;
   } catch (err) {
     if (typeof window !== "undefined") {
-      // eslint-disable-next-line no-console
       console.warn("[sanity]", err?.message || err);
     }
     return fallback;
@@ -67,7 +66,6 @@ const fetchCardTranslations = async (lang) => {
     _cardsTranslationCache = { lang, items: data.items || {} };
     return _cardsTranslationCache.items;
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.warn("[i18n] cards translation failed", err);
     return {};
   }
@@ -151,7 +149,6 @@ export const fetchArticleBySlug = async (slug, lang = "pt") => {
       body: tr.body || base.body,
     };
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.warn("[i18n] translation failed", err);
     return base;
   }

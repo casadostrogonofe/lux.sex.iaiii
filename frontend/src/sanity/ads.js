@@ -84,7 +84,6 @@ const safe = async (promise, fallback) => {
     return await promise;
   } catch (err) {
     if (typeof window !== "undefined") {
-      // eslint-disable-next-line no-console
       console.warn("[sanity-ads]", err?.message || err);
     }
     return fallback;

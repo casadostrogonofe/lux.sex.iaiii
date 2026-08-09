@@ -1,0 +1,57 @@
+{
+  "summary": "Validação completa de regressão Vercel + Horóscopo IA concluída. Backend e integração passaram: uv resolve api/requirements.txt com --python-version 3.12, api/index.py importa e expõe /api/, /api/horoscope/daily e /api/horoscope/personal, vercel.json mantém rewrite de /api/:path* antes do fallback SPA e inclui backend/** no bundle. Em preview externo, GET /api/horoscope/daily?sign=aries&lang=pt retornou application/json com reading (nunca HTML) e POST /api/horoscope/personal retornou SSE com texto e done=true. UI no preview carregou sem tela branca, age-gate funcionou, leitura diária abriu no modal e leitura pessoal foi gerada em streaming.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "AgeGate",
+        "issue": "Botão principal de entrada (\"I'm 18+ — Enter\") não possui data-testid, reduzindo testabilidade e estabilidade de automação",
+        "selector": "button:has-text('18+')",
+        "priority": "MEDIUM"
+      }
+    ],
+    "integration_issues": [
+      {
+        "flow": "Carregamento inicial do frontend",
+        "issue": "Console mostra warnings recorrentes de i18n translation fetch failure e permissões encrypted-media; fluxo principal permanece funcional",
+        "affected_selectors": []
+      }
+    ],
+    "design_issues": [
+      {
+        "screen": "HoroscopePage > PersonalReading",
+        "issues": [
+          "Campo de data usa input nativo (picker do browser) em vez de componente de calendário customizado"
+        ]
+      }
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_vercel_horoscope.py",
+    "/app/test_reports/pytest/iter5.xml"
+  ],
+  "action_items": [
+    "Adicionar data-testid no botão principal do age-gate para cumprir regra de testabilidade e evitar seletores frágeis",
+    "Revisar origem dos warnings de i18n fetch no console para reduzir ruído e possíveis falhas intermitentes"
+  ],
+  "critical_code_review_comments": [
+    "Arquivo /app/backend/tests/test_atlas.py contém credenciais Atlas hardcoded (URI com usuário/senha) e deve ser sanitizado para usar variáveis de ambiente.",
+    "server.py usa @app.on_event startup/shutdown depreciado no FastAPI atual; migrar para lifespan handlers para evitar regressões futuras."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_vercel_horoscope.py",
+    "/app/test_reports/iteration_5.json"
+  ],
+  "success_rate": {
+    "backend": "100%",
+    "frontend": "95%"
+  },
+  "seed_data_creation": "Nenhuma",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "pytest alvo desta rodada: /app/backend/tests/test_vercel_horoscope.py (5/5 green, JUnit em /app/test_reports/pytest/iter5.xml). No preview https://premium-space-2.preview.emergentagent.com o fluxo de horóscopo está funcional (age-gate -> daily modal -> personal SSE). Primeiro script falhou por seletor frágil no age-gate; segundo script passou ao clicar pelo texto do botão.",
+  "rca of the issue": "Não houve regressão funcional de backend/frontend no preview desta rodada. Único bloqueio observado em automação inicial foi falta de data-testid no CTA do age-gate, causando falha de seletor até ajuste por texto."
+}
