@@ -17,7 +17,7 @@ import httpx
 from fastapi import APIRouter, HTTPException, Depends
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+from llm import llm_keys, send_with_fallback
 from rate_limit import rate_limit
 
 logger = logging.getLogger(__name__)
@@ -40,10 +40,9 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
     sanity_dataset = os.environ.get("SANITY_DATASET", "production")
     sanity_api_ver = os.environ.get("SANITY_API_VERSION", "2024-01-01")
     sanity_token = os.environ.get("SANITY_READ_TOKEN")
-    llm_key = os.environ.get("EMERGENT_LLM_KEY")
 
-    if not llm_key:
-        logger.warning("EMERGENT_LLM_KEY missing — translation route disabled")
+    if not llm_keys():
+        logger.warning("No LLM keys configured — translation route disabled")
 
     async def fetch_article(slug: str) -> Optional[Dict[str, Any]]:
         groq = (
@@ -69,7 +68,7 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
     async def translate_payload(
         payload: Dict[str, Any], target: str
     ) -> Dict[str, Any]:
-        if not llm_key:
+        if not llm_keys():
             raise HTTPException(503, "Translation service unavailable")
         target_name = LANG_NAMES[target]
         sys_msg = (
@@ -79,20 +78,13 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
             "natural, and DO NOT translate brand names or proper nouns. "
             "Return ONLY the translated JSON with the exact same structure and keys."
         )
-        chat = LlmChat(
-            api_key=llm_key,
-            session_id=f"translate-{target}",
-            system_message=sys_msg,
-        ).with_model("gemini", "gemini-3-flash-preview")
-
-        msg = UserMessage(
-            text=(
-                "Translate this JSON. Keep keys and structure identical. "
-                "Only translate string VALUES.\n\n"
-                + json.dumps(payload, ensure_ascii=False)
-            )
+        raw = await send_with_fallback(
+            f"translate-{target}",
+            sys_msg,
+            "Translate this JSON. Keep keys and structure identical. "
+            "Only translate string VALUES.\n\n"
+            + json.dumps(payload, ensure_ascii=False),
         )
-        raw = await chat.send_message(msg)
         # The model may wrap in ```json ... ```
         text = (raw or "").strip()
         if text.startswith("```"):

@@ -19,6 +19,12 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 08/Jun/2026 — Chave Gemini própria + Fallback ✅
+- Usuário forneceu chave Gemini própria (GEMINI_API_KEY no backend/.env)
+- Novo helper `/app/backend/llm.py`: `send_with_fallback` / `stream_with_fallback` — chave Gemini do usuário como PRIMÁRIA; se falhar/estourar cota, troca automática para EMERGENT_LLM_KEY
+- Aplicado nos 3 serviços de IA: tradução (i18n), horóscopo diário e leitura pessoal (streaming)
+- Testado via curl: daily + personal + translation OK pela chave primária; fallback validado com chave inválida (trocou para Emergent)
+
 ### 08/Jun/2026 — Texto + Gênero na leitura pessoal + Vercel ✅
 - Subtítulo da leitura pessoal trocado: "Informe seu nome e data de nascimento e nosso astral revela em tempo real o que o céu desenha para você." (6 idiomas)
 - Opção Masculino/Feminino no formulário — backend adapta a linguagem (formas gramaticais) da leitura ao gênero (testado: "Querida Carla")
