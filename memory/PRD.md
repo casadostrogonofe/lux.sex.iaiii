@@ -21,6 +21,12 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 09/Ago/2026 — Rotação MongoDB Atlas validada ✅
+- Nova credencial Atlas validada com `ping`, leitura da coleção `banners` e conexão ao banco `luxsex`
+- Backend local atualizado via `MONGO_URL`/`DB_NAME` sem versionar a URI em código ou testes
+- Fluxos confirmados após a rotação: banners (7 registros), horóscopo diário com cache Atlas e leitura pessoal SSE
+- **Ação externa pendente**: atualizar `MONGO_URL` no Dashboard Vercel e fazer novo deploy; a senha anterior deixou de ser válida
+
 ### 09/Ago/2026 — Correção definitiva do build Vercel + Horóscopo ✅
 - Causa raiz reproduzida com o mesmo resolvedor do Vercel: `uv` recusava o LiteLLM fornecido como dependência URL indireta por `emergentintegrations`, impedindo a criação da função Python; sem função, o fallback React entregava `index.html` em `/api/*`
 - `api/requirements.txt` corrigido para declarar a wheel LiteLLM como requisito URL direto; resolução Python 3.12 validada com 79 pacotes
@@ -126,7 +132,7 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ### P1 — Próximas tarefas
 - 🔴 **Publicar o commit corrigido no Vercel e validar produção**: confirmar `application/json` em `/api/horoscope/daily?sign=aries&lang=pt`
-- 🔴 **Rotacionar a senha do MongoDB Atlas**: uma credencial antiga esteve versionada em teste; atualizar `MONGO_URL` no Vercel após a rotação
+- 🔴 **Atualizar `MONGO_URL` no Vercel** com a credencial Atlas rotacionada e gerar um novo deployment
 - 🟣 **Sanity Studio Setup pelo usuário**: rodar `npm create sanity@latest -- --project 8um1375u`, colar `/app/sanity-schemas/article.js`, liberar CORS no dashboard, publicar primeira matéria
 - 🟣 **Stripe checkout** no Marketplace (chaves de teste já no pod)
 - 🟣 **Studio deploy** opcional (`npx sanity deploy`) para acesso na nuvem

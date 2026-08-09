@@ -10,3 +10,8 @@
 
 ## No user login system
 The site is public (age-gate overlay only, no accounts).
+
+## MongoDB Atlas
+- Credencial rotacionada e validada em 09/Ago/2026.
+- A URI atual fica somente em variáveis de ambiente (`backend/.env` local e `MONGO_URL` no Vercel); o valor não é registrado neste arquivo por segurança.
+- Banco de produção: `luxsex`.
