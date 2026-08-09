@@ -27,7 +27,10 @@ const AgeOverlay = () => {
   if (!mounted || !visible) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-[#050208] overflow-y-auto">
+    <div
+      className="fixed inset-0 z-[9999] bg-[#050208] overflow-y-auto"
+      data-testid="age-gate-overlay"
+    >
       {/* Ambient purple radial behind everything */}
       <div
         className="pointer-events-none absolute inset-0"
@@ -144,7 +147,7 @@ const AgeOverlay = () => {
                   boxShadow:
                     "0 0 32px rgba(155, 48, 255, 0.55), 0 8px 28px rgba(155, 48, 255, 0.35), inset 0 1px 0 rgba(255,255,255,0.15)",
                 }}
-                data-testid="age-confirm-button"
+                data-testid="age-gate-enter-button"
               >
                 <ArrowRight className="w-4 h-4 -rotate-45 group-hover:translate-x-0.5 transition-transform" />
                 {t("nda_overlay.enter_button")}
@@ -153,6 +156,7 @@ const AgeOverlay = () => {
               <button
                 onClick={() => confirm(false)}
                 className="w-full mt-5 py-2.5 text-[#7c7893] hover:text-[#9b30ff] text-sm transition-colors flex items-center justify-center gap-2"
+                data-testid="age-gate-exit-button"
               >
                 <LogOut className="w-3.5 h-3.5" />
                 {t("nda_overlay.exit_button")}

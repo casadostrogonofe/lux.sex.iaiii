@@ -145,7 +145,7 @@ const TimelinePostCard = ({ post, isNew = false }) => {
             <img
               src={post.image}
               alt={post.title}
-              className="absolute inset-0 w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[1.2s]"
+              className="absolute inset-0 w-full h-full object-cover hover:scale-[1.02] transition-transform duration-1200"
             />
           </div>
         </Link>

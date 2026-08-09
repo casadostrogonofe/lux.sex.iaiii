@@ -21,7 +21,7 @@ const AdBanner = ({ variant = "premium", data }) => {
               <img
                 src={data.image}
                 alt={data.headline}
-                className="absolute inset-0 w-full h-full object-cover opacity-80 transition-all duration-[1.5s] group-hover:opacity-100 group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover opacity-80 transition-all duration-1500 group-hover:opacity-100 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
             </div>

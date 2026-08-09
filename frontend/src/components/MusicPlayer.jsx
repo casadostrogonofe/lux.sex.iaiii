@@ -186,7 +186,7 @@ const MusicPlayer = () => {
         height="80"
         scrolling="no"
         frameBorder="no"
-        allow="autoplay"
+        allow="autoplay; encrypted-media"
         src={WIDGET_SRC}
         style={{
           position: "fixed",

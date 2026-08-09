@@ -170,7 +170,7 @@ const FloatingMusicPlayer = () => {
         height="1"
         scrolling="no"
         frameBorder="no"
-        allow="autoplay"
+        allow="autoplay; encrypted-media"
         src={WIDGET_SRC}
         style={{
           position: "fixed",

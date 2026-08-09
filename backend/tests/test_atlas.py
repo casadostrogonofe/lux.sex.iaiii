@@ -9,28 +9,36 @@ import uuid
 from pathlib import Path
 
 import pytest
+import requests
 from dotenv import dotenv_values
 from pymongo import MongoClient
-import requests
 
-ATLAS_URI = "mongodb+srv://hub3pixellab_db_user:9Ikoqj5HXaKEVWZ8@horoscopo.hmts3pj.mongodb.net/?appName=Horoscopo"
-ATLAS_DB = "luxsex"
+
+@pytest.fixture(scope="module")
+def atlas_settings():
+    uri = os.environ.get("ATLAS_TEST_MONGO_URL")
+    db_name = os.environ.get("ATLAS_TEST_DB_NAME")
+    if not uri or not db_name:
+        pytest.skip("Atlas test credentials are not configured")
+    return uri, db_name
 
 
 # ---------------------------------------------------------------------------
 # 1. Atlas connectivity + write/read/delete round-trip
 # ---------------------------------------------------------------------------
-def test_atlas_server_info():
-    client = MongoClient(ATLAS_URI, serverSelectionTimeoutMS=15000)
+def test_atlas_server_info(atlas_settings):
+    atlas_uri, _ = atlas_settings
+    client = MongoClient(atlas_uri, serverSelectionTimeoutMS=15000)
     info = client.server_info()
     assert "version" in info
     print(f"Atlas server version: {info['version']}")
     client.close()
 
 
-def test_atlas_write_read_delete():
-    client = MongoClient(ATLAS_URI, serverSelectionTimeoutMS=15000)
-    coll = client[ATLAS_DB]["test_connectivity"]
+def test_atlas_write_read_delete(atlas_settings):
+    atlas_uri, atlas_db = atlas_settings
+    client = MongoClient(atlas_uri, serverSelectionTimeoutMS=15000)
+    coll = client[atlas_db]["test_connectivity"]
     doc_id = f"TEST_{uuid.uuid4().hex}"
     coll.insert_one({"id": doc_id, "value": 42})
 
@@ -46,7 +54,8 @@ def test_atlas_write_read_delete():
 # ---------------------------------------------------------------------------
 # 2. Vercel entry (/app/api/index.py) imports cleanly against Atlas
 # ---------------------------------------------------------------------------
-def test_vercel_entry_boots_against_atlas():
+def test_vercel_entry_boots_against_atlas(atlas_settings):
+    atlas_uri, atlas_db = atlas_settings
     script = (
         "import os,sys; "
         "sys.path.insert(0, '/app/api'); "
@@ -54,8 +63,8 @@ def test_vercel_entry_boots_against_atlas():
         "print('APP_OK', app.title if hasattr(app,'title') else type(app).__name__)"
     )
     env = os.environ.copy()
-    env["MONGO_URL"] = ATLAS_URI
-    env["DB_NAME"] = ATLAS_DB
+    env["MONGO_URL"] = atlas_uri
+    env["DB_NAME"] = atlas_db
     # Ensure we don't inherit backend/.env local values via python-dotenv side-effects
     result = subprocess.run(
         [sys.executable, "-c", script],
@@ -74,9 +83,11 @@ def test_vercel_entry_boots_against_atlas():
 # 3. Exercise /api/banners against Atlas via uvicorn on a spare port
 # ---------------------------------------------------------------------------
 @pytest.fixture(scope="module")
-def atlas_uvicorn():
+def atlas_uvicorn(atlas_settings):
     import socket
     import time
+
+    atlas_uri, atlas_db = atlas_settings
 
     # find free port
     with socket.socket() as s:
@@ -84,8 +95,8 @@ def atlas_uvicorn():
         port = s.getsockname()[1]
 
     env = os.environ.copy()
-    env["MONGO_URL"] = ATLAS_URI
-    env["DB_NAME"] = ATLAS_DB
+    env["MONGO_URL"] = atlas_uri
+    env["DB_NAME"] = atlas_db
     env["PYTHONPATH"] = "/app/backend"
 
     proc = subprocess.Popen(

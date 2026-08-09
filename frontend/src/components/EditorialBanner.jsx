@@ -63,7 +63,7 @@ const EditorialBanner = ({ section }) => {
               href={s.instagram || "#"}
               target={s.instagram ? "_blank" : undefined}
               rel="noopener noreferrer"
-              className={`absolute inset-0 transition-opacity duration-[1.2s] ${
+              className={`absolute inset-0 transition-opacity duration-1200 ${
                 i === bannerIndex ? "opacity-100" : "opacity-0 pointer-events-none"
               }`}
               data-testid={`banner-slide-${i}`}

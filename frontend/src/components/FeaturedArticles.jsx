@@ -35,7 +35,7 @@ const FeaturedArticles = () => {
               <img
                 src={a.image}
                 alt={a.title}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
               <div className="absolute top-5 left-5">

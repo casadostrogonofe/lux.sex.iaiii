@@ -13,11 +13,23 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 ## 2. Arquitetura
 - **Frontend**: React 19 (CRA) + TailwindCSS + shadcn/ui + React Router 7 + Context API
 - **Backend**: FastAPI + Motor (MongoDB async)
+- **Deploy produção**: Vercel full-stack — CRA em `frontend/build` + FastAPI serverless em `api/index.py`
+- **Banco produção**: MongoDB Atlas via `MONGO_URL`/`DB_NAME` configurados no Dashboard Vercel
 - **CMS**: Sanity (project `8um1375u`, dataset `production`)
 - **Audio**: SoundCloud Widget API (autoplay muted + loop)
 - **Layout persistente** mantém o player e header montados entre rotas
 
 ## 3. Implementado
+
+### 09/Ago/2026 — Correção definitiva do build Vercel + Horóscopo ✅
+- Causa raiz reproduzida com o mesmo resolvedor do Vercel: `uv` recusava o LiteLLM fornecido como dependência URL indireta por `emergentintegrations`, impedindo a criação da função Python; sem função, o fallback React entregava `index.html` em `/api/*`
+- `api/requirements.txt` corrigido para declarar a wheel LiteLLM como requisito URL direto; resolução Python 3.12 validada com 79 pacotes
+- `vercel.json` reforçado: `/api/:path*` é processado antes do fallback SPA, `backend/**` entra explicitamente no bundle e testes/memória são excluídos
+- Python fixado em 3.12; `yarn.lock` incluído para builds frontend determinísticos
+- FastAPI migrou de `on_event` depreciado para `lifespan`; credenciais Atlas removidas dos testes e substituídas por `ATLAS_TEST_MONGO_URL`/`ATLAS_TEST_DB_NAME`
+- Age-gate ganhou seletores estáveis; warnings de Sanity, i18n, SoundCloud e build foram reduzidos; frontend lint/build sem erros
+- Testing agent iteration_5: API diária JSON, leitura pessoal SSE e interface do horóscopo aprovadas no preview; pytest final 5/5 e `uv` OK
+- **Produção atual ainda depende de novo deploy**: `luxsexiaiii.com/api/horoscope/daily` continua servindo HTML do deployment anterior até o commit corrigido ser publicado
 
 ### 08/Jun/2026 — Chave Gemini própria + Fallback ✅
 - Usuário forneceu chave Gemini própria (GEMINI_API_KEY no backend/.env)
@@ -113,6 +125,8 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 ## 4. Backlog priorizado
 
 ### P1 — Próximas tarefas
+- 🔴 **Publicar o commit corrigido no Vercel e validar produção**: confirmar `application/json` em `/api/horoscope/daily?sign=aries&lang=pt`
+- 🔴 **Rotacionar a senha do MongoDB Atlas**: uma credencial antiga esteve versionada em teste; atualizar `MONGO_URL` no Vercel após a rotação
 - 🟣 **Sanity Studio Setup pelo usuário**: rodar `npm create sanity@latest -- --project 8um1375u`, colar `/app/sanity-schemas/article.js`, liberar CORS no dashboard, publicar primeira matéria
 - 🟣 **Stripe checkout** no Marketplace (chaves de teste já no pod)
 - 🟣 **Studio deploy** opcional (`npx sanity deploy`) para acesso na nuvem

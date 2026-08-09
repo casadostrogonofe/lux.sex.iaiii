@@ -53,6 +53,12 @@ const safe = async (promise, fallback) => {
 // =============================================================
 let _cardsTranslationCache = { lang: null, items: {} };
 
+const logTranslationWarning = (...args) => {
+  if (process.env.NODE_ENV === "development") {
+    console.warn(...args);
+  }
+};
+
 const fetchCardTranslations = async (lang) => {
   if (!lang || lang === "pt") return {};
   if (_cardsTranslationCache.lang === lang) return _cardsTranslationCache.items;
@@ -66,7 +72,7 @@ const fetchCardTranslations = async (lang) => {
     _cardsTranslationCache = { lang, items: data.items || {} };
     return _cardsTranslationCache.items;
   } catch (err) {
-    console.warn("[i18n] cards translation failed", err);
+    logTranslationWarning("[i18n] cards translation failed", err);
     return {};
   }
 };
@@ -149,7 +155,7 @@ export const fetchArticleBySlug = async (slug, lang = "pt") => {
       body: tr.body || base.body,
     };
   } catch (err) {
-    console.warn("[i18n] translation failed", err);
+    logTranslationWarning("[i18n] translation failed", err);
     return base;
   }
 };

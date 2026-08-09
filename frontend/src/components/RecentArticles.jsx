@@ -29,7 +29,7 @@ const RecentArticles = () => {
                   <img
                     src={a.image}
                     alt={a.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-1500 group-hover:scale-110"
                   />
                 </div>
                 <div className="flex flex-col justify-center">

@@ -42,7 +42,7 @@ const ShopHero = ({ banner }) => (
                 <img
                   src={banner.image}
                   alt={banner.headline}
-                  className="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-[2s] group-hover:scale-105"
+                  className="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-2000 group-hover:scale-105"
                 />
               ) : (
                 <div className="absolute inset-0 bg-gradient-to-br from-[#0f0c18] to-[#050208]" />
@@ -84,7 +84,7 @@ const StoreCard = ({ store }) => (
       <img
         src={store.cover}
         alt={store.name}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-1500 group-hover:scale-110"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
       {store.badge && (

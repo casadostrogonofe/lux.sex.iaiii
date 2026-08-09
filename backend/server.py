@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field, ConfigDict
 from typing import Any, Dict, List, Optional
 import uuid
 from datetime import datetime, timezone
+from contextlib import asynccontextmanager
 
 
 ROOT_DIR = Path(__file__).parent
@@ -27,7 +28,17 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-app = FastAPI(title="LUX.SEX Lifestyle API")
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    await seed_banners()
+    try:
+        yield
+    finally:
+        client.close()
+
+
+app = FastAPI(title="LUX.SEX Lifestyle API", lifespan=lifespan)
 api_router = APIRouter(prefix="/api")
 
 
@@ -358,7 +369,6 @@ SEED_BANNERS: List[Dict[str, Any]] = [
 ]
 
 
-@app.on_event("startup")
 async def seed_banners() -> None:
     try:
         count = await db.banners.count_documents({})
@@ -402,8 +412,3 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 )
 logger = logging.getLogger(__name__)
-
-
-@app.on_event("shutdown")
-async def shutdown_db_client() -> None:
-    client.close()

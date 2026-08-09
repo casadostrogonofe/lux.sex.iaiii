@@ -33,7 +33,7 @@ const VideoSection = () => {
                 <img
                   src={v.thumbnail}
                   alt={v.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
 
