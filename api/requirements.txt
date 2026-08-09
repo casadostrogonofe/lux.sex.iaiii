@@ -7,3 +7,6 @@ httpx==0.28.1
 pydantic==2.13.4
 emergentintegrations==0.2.0
 litellm @ https://customer-assets.emergentagent.com/internal-asset/library/litellm-1.80.0-py3-none-any.whl
+sentry-sdk[opentelemetry-otlp]==2.66.1
+opentelemetry-instrumentation-fastapi==0.65b0
+opentelemetry-instrumentation-pymongo==0.65b0

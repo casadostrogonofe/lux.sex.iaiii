@@ -31,11 +31,11 @@ const FeaturedArticles = () => {
             href={`#article-${a.id}`}
             className="group block"
           >
-            <div className="relative h-[300px] md:h-[360px] overflow-hidden mb-6 border border-[#1a1526] group-hover:border-[#9b30ff]/50 transition-colors duration-500">
+            <div className="relative h-[300px] md:h-[360px] overflow-hidden mb-6 border border-[#1a1526] group-hover:border-[#9b30ff]/50 transition-colors duration-300">
               <img
                 src={a.image}
                 alt={a.title}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1500 group-hover:scale-110"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
               <div className="absolute top-5 left-5">
@@ -45,7 +45,7 @@ const FeaturedArticles = () => {
               </div>
             </div>
 
-            <h3 className="font-serif text-2xl md:text-[26px] text-[#f5f0ff] leading-[1.25] mb-4 group-hover:text-[#9b30ff] transition-colors duration-500">
+            <h3 className="font-serif text-2xl md:text-[26px] text-[#f5f0ff] leading-[1.25] mb-4 group-hover:text-[#9b30ff] transition-colors duration-300">
               {a.title}
             </h3>
             <p className="text-[#7c7893] text-sm leading-relaxed mb-5 font-light">

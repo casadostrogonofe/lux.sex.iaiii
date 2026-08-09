@@ -84,13 +84,13 @@ const Marketplace = () => {
           {marketplaceProducts.map((p) => (
             <div
               key={p.id}
-              className="group bg-[#0b0812] border border-[#1a1526] hover:border-[#9b30ff]/40 transition-colors duration-500 flex flex-col"
+              className="group bg-[#0b0812] border border-[#1a1526] hover:border-[#9b30ff]/40 transition-colors duration-300 flex flex-col"
             >
               <div className="relative aspect-[4/5] overflow-hidden">
                 <img
                   src={p.image}
                   alt={p.name}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1500 group-hover:scale-105"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 <div className="absolute top-4 left-4 text-[9px] tracking-[0.4em] text-[#9b30ff] bg-black/70 backdrop-blur-sm px-3 py-1.5 uppercase border border-[#9b30ff]/30">
                   {p.category}

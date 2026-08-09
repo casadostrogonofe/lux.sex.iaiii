@@ -57,7 +57,7 @@ const TimelinePostCard = ({ post, isNew = false }) => {
     .toUpperCase();
 
   return (
-    <article className="bg-[#0a0612] border border-[#1f1a35] rounded-2xl overflow-hidden hover:border-[#9b30ff]/35 transition-colors duration-500">
+    <article className="bg-[#0a0612] border border-[#1f1a35] rounded-2xl overflow-hidden hover:border-[#9b30ff]/35 transition-colors duration-300">
       {/* Header — author + time only */}
       <div className="flex items-start gap-4 px-6 pt-6 pb-4">
         {post.editorSlug ? (
@@ -145,7 +145,7 @@ const TimelinePostCard = ({ post, isNew = false }) => {
             <img
               src={post.image}
               alt={post.title}
-              className="absolute inset-0 w-full h-full object-cover hover:scale-[1.02] transition-transform duration-1200"
+              className="absolute inset-0 w-full h-full object-cover hover:scale-[1.02] transition-transform duration-300"
             />
           </div>
         </Link>
@@ -177,7 +177,7 @@ export const TimelineAdCard = ({ banner }) => {
       href={banner.link || "#"}
       target="_blank"
       rel="noopener noreferrer sponsored"
-      className="block bg-gradient-to-br from-[#1a0d2e] to-[#0a0612] border border-[#9b30ff]/25 hover:border-[#9b30ff]/60 rounded-2xl overflow-hidden transition-colors duration-500"
+      className="block bg-gradient-to-br from-[#1a0d2e] to-[#0a0612] border border-[#9b30ff]/25 hover:border-[#9b30ff]/60 rounded-2xl overflow-hidden transition-colors duration-300"
     >
       <div className="grid md:grid-cols-[1fr_1.3fr]">
         {banner.image && (
@@ -185,7 +185,7 @@ export const TimelineAdCard = ({ banner }) => {
             <img
               src={banner.image}
               alt={banner.headline}
-              className="absolute inset-0 w-full h-full object-cover opacity-85 hover:opacity-100 transition-opacity duration-500"
+              className="absolute inset-0 w-full h-full object-cover opacity-85 hover:opacity-100 transition-opacity duration-300"
             />
           </div>
         )}

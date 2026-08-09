@@ -11,9 +11,12 @@ import uuid
 from datetime import datetime, timezone
 from contextlib import asynccontextmanager
 
+from observability import init_observability, install_log_redaction, instrument_fastapi
+
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
+init_observability()
 
 ADMIN_API_KEY = os.environ.get("ADMIN_API_KEY")
 
@@ -54,6 +57,11 @@ class StatusCheck(BaseModel):
 
 class StatusCheckCreate(BaseModel):
     client_name: str
+
+
+class HealthResponse(BaseModel):
+    status: str
+    database: str
 
 
 # Banner slots:
@@ -135,6 +143,16 @@ def _serialize_doc(doc: Dict[str, Any]) -> Dict[str, Any]:
 @api_router.get("/")
 async def root() -> Dict[str, str]:
     return {"message": "LUX.SEX Lifestyle API"}
+
+
+@api_router.get("/health", response_model=HealthResponse)
+async def health() -> HealthResponse:
+    try:
+        await db.command("ping")
+    except Exception as exc:
+        logger.exception("Database health check failed")
+        raise HTTPException(status_code=503, detail="Service unavailable") from exc
+    return HealthResponse(status="ok", database="connected")
 
 
 @api_router.post("/status", response_model=StatusCheck)
@@ -412,3 +430,5 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 )
 logger = logging.getLogger(__name__)
+install_log_redaction()
+instrument_fastapi(app)

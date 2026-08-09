@@ -9,7 +9,6 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { fetchArtists } from "../sanity/people";
-import { menuConfig } from "../mock/mockData";
 import { menuLabel } from "../i18n/menuMap";
 import PartnersSidebar from "../components/PartnersSidebar";
 import Newsletter from "../components/Newsletter";
@@ -111,7 +110,7 @@ const ArtistsPage = () => {
                 {artists.map((a) => (
                   <article
                     key={a.id}
-                    className="group bg-[#0a0612] border border-[#1f1a35] rounded-2xl overflow-hidden hover:border-[#9b30ff]/50 transition-colors duration-500"
+                    className="group bg-[#0a0612] border border-[#1f1a35] rounded-2xl overflow-hidden hover:border-[#9b30ff]/50 transition-colors duration-300"
                     data-testid={`artist-card-${a.slug || a.id}`}
                   >
                     <div className="relative aspect-[4/5] overflow-hidden bg-[#0a0612]">
@@ -119,7 +118,7 @@ const ArtistsPage = () => {
                         <img
                           src={a.photo}
                           alt={a.name}
-                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700"
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-300"
                         />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center text-7xl text-[#9b30ff]/30 font-serif">

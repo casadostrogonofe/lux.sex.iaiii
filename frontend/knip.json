@@ -1,0 +1,29 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": [
+    "src/index.js",
+    "src/pages/**/*.{js,jsx}",
+    "src/components/ui/**/*.{js,jsx}",
+    "craco.config.js",
+    "vitest.config.js",
+    "playwright.config.js",
+    "e2e/**/*.spec.js"
+  ],
+  "project": ["src/**/*.{js,jsx}", "*.js", "e2e/**/*.js"],
+  "ignore": ["src/mock/**", "src/i18n/index.js", "src/i18n/menuMap.js"],
+  "ignoreDependencies": [
+    "@babel/plugin-proposal-private-property-in-object",
+    "@biomejs/biome",
+    "@emergentbase/visual-edits",
+    "autoprefixer",
+    "@eslint/js",
+    "eslint",
+    "eslint-plugin-import",
+    "eslint-plugin-jsx-a11y",
+    "eslint-plugin-react",
+    "eslint-plugin-react-hooks",
+    "globals",
+    "eslint-webpack-plugin",
+    "tailwindcss-animate"
+  ]
+}

@@ -29,17 +29,17 @@ const VideoSection = () => {
               onClick={() => setActive(v)}
               className="group text-left"
             >
-              <div className="relative aspect-[4/5] overflow-hidden border border-[#1a1526] group-hover:border-[#9b30ff]/60 transition-colors duration-500">
+              <div className="relative aspect-[4/5] overflow-hidden border border-[#1a1526] group-hover:border-[#9b30ff]/60 transition-colors duration-300">
                 <img
                   src={v.thumbnail}
                   alt={v.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1500 group-hover:scale-110"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
 
                 {/* Play */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 rounded-full border border-[#9b30ff] bg-black/50 backdrop-blur-md flex items-center justify-center group-hover:bg-[#9b30ff] group-hover:scale-110 transition-all duration-500">
+                  <div className="w-16 h-16 rounded-full border border-[#9b30ff] bg-black/50 backdrop-blur-md flex items-center justify-center group-hover:bg-[#9b30ff] group-hover:scale-110 transition-[background-color,transform] duration-300">
                     <Play className="w-6 h-6 text-[#9b30ff] group-hover:text-black ml-1 fill-current" />
                   </div>
                 </div>

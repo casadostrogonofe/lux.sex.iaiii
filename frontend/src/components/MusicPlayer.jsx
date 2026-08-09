@@ -7,9 +7,11 @@ import { SOUNDCLOUD_URL } from "../mock/mockData";
 //  • Start muted (volume 0) so browsers allow autoplay.
 //  • On user click → setVolume(80), play() and keep retrying play() if widget pauses.
 //  • Bind FINISH event to advance to next track (mod total).
-const WIDGET_SRC = `https://w.soundcloud.com/player/?url=${encodeURIComponent(
-  SOUNDCLOUD_URL
-)}&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&buying=false&sharing=false&download=false&single_active=false`;
+const WIDGET_SRC = SOUNDCLOUD_URL
+  ? `https://w.soundcloud.com/player/?url=${encodeURIComponent(
+      SOUNDCLOUD_URL,
+    )}&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&buying=false&sharing=false&download=false&single_active=false`
+  : "";
 
 const MusicPlayer = () => {
   const iframeRef = useRef(null);
@@ -65,16 +67,6 @@ const MusicPlayer = () => {
         setReady(true);
         widget.setVolume(0);
         widget.skip(0);
-        widget.play();
-        // Kick autoplay retry loop — keeps trying until first user gesture
-        const tryPlay = () => {
-          if (cancelled) return;
-          widget.isPaused((paused) => {
-            if (paused) widget.play();
-          });
-          setTimeout(tryPlay, 3000);
-        };
-        setTimeout(tryPlay, 1000);
         setTimeout(() => updateCurrentTrack(widget), 800);
       });
 
@@ -99,6 +91,17 @@ const MusicPlayer = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const startAfterGesture = () => {
+      const widget = widgetRef.current;
+      if (!widget) return;
+      widget.setVolume(0);
+      widget.play();
+    };
+    window.addEventListener("luxsex:user-gesture", startAfterGesture);
+    return () => window.removeEventListener("luxsex:user-gesture", startAfterGesture);
+  }, []);
+
   const toggleMute = () => {
     const w = widgetRef.current;
     if (!w) return;
@@ -119,6 +122,8 @@ const MusicPlayer = () => {
     }
   };
 
+  if (!WIDGET_SRC) return null;
+
   return (
     <div className="relative flex items-center gap-3" data-testid="music-player">
       {/* Neon "now playing" — visible when unmuted */}
@@ -129,7 +134,7 @@ const MusicPlayer = () => {
           aria-live="polite"
         >
           <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-[#ff2bd6] opacity-75 animate-ping" />
+            <span className="absolute inline-flex h-full w-full rounded-full bg-[#ff2bd6] opacity-45" />
             <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#ff2bd6]" />
           </span>
           <div className="flex flex-col leading-[1.1] overflow-hidden">
@@ -168,7 +173,7 @@ const MusicPlayer = () => {
       >
         {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
         {muted && ready && (
-          <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#9b30ff] animate-pulse shadow-[0_0_6px_#9b30ff]" />
+          <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#9b30ff] shadow-[0_0_6px_#9b30ff]" />
         )}
         {!muted && (
           <Music2

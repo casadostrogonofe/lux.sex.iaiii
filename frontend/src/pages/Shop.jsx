@@ -34,7 +34,7 @@ const ShopHero = ({ banner }) => (
           href={banner.link || "#"}
           target="_blank"
           rel="noopener noreferrer sponsored"
-          className="group block relative overflow-hidden border border-[#1a1526] hover:border-[#9b30ff]/60 transition-colors duration-700 mt-6"
+          className="group block relative overflow-hidden border border-[#1a1526] hover:border-[#9b30ff]/60 transition-colors duration-300 mt-6"
         >
           <div className="grid lg:grid-cols-2">
             <div className="relative h-[260px] md:h-[420px] overflow-hidden bg-black">
@@ -42,7 +42,7 @@ const ShopHero = ({ banner }) => (
                 <img
                   src={banner.image}
                   alt={banner.headline}
-                  className="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-2000 group-hover:scale-105"
+                  className="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-300 group-hover:scale-105"
                 />
               ) : (
                 <div className="absolute inset-0 bg-gradient-to-br from-[#0f0c18] to-[#050208]" />
@@ -60,7 +60,7 @@ const ShopHero = ({ banner }) => (
                 {banner.description}
               </p>
               <div className="inline-flex items-center gap-3 text-[#9b30ff] text-xs tracking-[0.3em] uppercase">
-                <span className="group-hover:tracking-[0.4em] transition-all duration-500">
+                <span className="group-hover:tracking-[0.4em] transition-[letter-spacing] duration-300">
                   {banner.cta}
                 </span>
                 <ExternalLink className="w-4 h-4" />
@@ -78,13 +78,13 @@ const StoreCard = ({ store }) => (
     href={store.link}
     target="_blank"
     rel="noopener noreferrer sponsored"
-    className="group block border border-[#1a1526] hover:border-[#9b30ff]/60 transition-colors duration-500 bg-[#0d0d0e]"
+    className="group block border border-[#1a1526] hover:border-[#9b30ff]/60 transition-colors duration-300 bg-[#0d0d0e]"
   >
     <div className="relative aspect-[4/3] overflow-hidden">
       <img
         src={store.cover}
         alt={store.name}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-1500 group-hover:scale-110"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
       {store.badge && (
@@ -102,7 +102,7 @@ const StoreCard = ({ store }) => (
       <span className="text-[10px] tracking-[0.4em] text-[#9b30ff] uppercase block mb-3">
         {store.tagline}
       </span>
-      <h3 className="font-serif text-2xl text-[#f5f0ff] mb-3 leading-tight group-hover:text-[#9b30ff] transition-colors duration-500">
+      <h3 className="font-serif text-2xl text-[#f5f0ff] mb-3 leading-tight group-hover:text-[#9b30ff] transition-colors duration-300">
         {store.name}
       </h3>
       <p className="text-[#7c7893] text-sm leading-relaxed mb-6 font-light min-h-[42px]">
@@ -113,7 +113,7 @@ const StoreCard = ({ store }) => (
         <span className="flex items-center gap-2 text-[10px] tracking-[0.3em] text-[#5a5470] uppercase">
           <ShieldCheck className="w-3.5 h-3.5 text-[#9b30ff]" /> Parceiro Verificado
         </span>
-        <span className="flex items-center gap-1.5 text-[10px] tracking-[0.3em] text-[#9b30ff] uppercase group-hover:tracking-[0.4em] transition-all duration-500">
+        <span className="flex items-center gap-1.5 text-[10px] tracking-[0.3em] text-[#9b30ff] uppercase group-hover:tracking-[0.4em] transition-[letter-spacing] duration-300">
           Visitar
           <ExternalLink className="w-3.5 h-3.5" />
         </span>
@@ -127,7 +127,7 @@ const InlineAdCard = ({ banner }) => (
     href={banner.link || "#"}
     target="_blank"
     rel="noopener noreferrer sponsored"
-    className="group block border border-[#9b30ff]/25 hover:border-[#9b30ff] transition-colors duration-500 bg-gradient-to-br from-[#0f0c18] to-[#050208] p-8"
+    className="group block border border-[#9b30ff]/25 hover:border-[#9b30ff] transition-colors duration-300 bg-gradient-to-br from-[#0f0c18] to-[#050208] p-8"
   >
     <span className="text-[9px] tracking-[0.5em] text-[#5a5470] uppercase block mb-4">
       Patrocinado · {banner.sponsor}
@@ -138,7 +138,7 @@ const InlineAdCard = ({ banner }) => (
     <p className="text-[#7c7893] text-sm leading-relaxed mb-8 font-light">
       {banner.description}
     </p>
-    <div className="inline-flex items-center gap-2 text-[#9b30ff] text-[10px] tracking-[0.4em] uppercase group-hover:tracking-[0.5em] transition-all duration-500">
+    <div className="inline-flex items-center gap-2 text-[#9b30ff] text-[10px] tracking-[0.4em] uppercase group-hover:tracking-[0.5em] transition-[letter-spacing] duration-300">
       {banner.cta}
       <ExternalLink className="w-3.5 h-3.5" />
     </div>
@@ -268,7 +268,7 @@ const Shop = () => {
           </p>
           <a
             href="mailto:parceiros@lux.sex"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-[#9b30ff] hover:bg-[#b15aff] text-black text-xs tracking-[0.3em] uppercase font-medium transition-colors duration-500"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-[#9b30ff] hover:bg-[#b15aff] text-black text-xs tracking-[0.3em] uppercase font-medium transition-colors duration-300"
           >
             Solicitar Parceria
             <ExternalLink className="w-4 h-4" />

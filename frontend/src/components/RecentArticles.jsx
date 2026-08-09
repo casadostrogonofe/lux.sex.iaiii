@@ -25,18 +25,18 @@ const RecentArticles = () => {
                 href={`#article-${a.id}`}
                 className="group grid md:grid-cols-[280px_1fr] gap-6 md:gap-8 pb-12 border-b border-[#1a1526] last:border-0"
               >
-                <div className="relative h-[200px] md:h-[220px] overflow-hidden border border-[#1a1526] group-hover:border-[#9b30ff]/40 transition-colors duration-500">
+                <div className="relative h-[200px] md:h-[220px] overflow-hidden border border-[#1a1526] group-hover:border-[#9b30ff]/40 transition-colors duration-300">
                   <img
                     src={a.image}
                     alt={a.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-1500 group-hover:scale-110"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                 </div>
                 <div className="flex flex-col justify-center">
                   <span className="text-[10px] tracking-[0.4em] text-[#9b30ff] uppercase mb-3">
                     {a.categoryLabel || a.category}
                   </span>
-                  <h3 className="font-serif text-2xl md:text-[28px] text-[#f5f0ff] leading-[1.2] mb-4 group-hover:text-[#9b30ff] transition-colors duration-500">
+                  <h3 className="font-serif text-2xl md:text-[28px] text-[#f5f0ff] leading-[1.2] mb-4 group-hover:text-[#9b30ff] transition-colors duration-300">
                     {a.title}
                   </h3>
                   <p className="text-[#7c7893] text-sm md:text-[15px] leading-relaxed mb-5 font-light">
@@ -57,7 +57,7 @@ const RecentArticles = () => {
           </div>
 
           <div className="mt-12 flex justify-center">
-            <button className="inline-flex items-center gap-3 px-8 py-4 border border-[#1a1526] hover:border-[#9b30ff] text-[#7c7893] hover:text-[#9b30ff] text-xs tracking-[0.3em] uppercase transition-colors duration-500">
+            <button className="inline-flex items-center gap-3 px-8 py-4 border border-[#1a1526] hover:border-[#9b30ff] text-[#7c7893] hover:text-[#9b30ff] text-xs tracking-[0.3em] uppercase transition-colors duration-300">
               Carregar mais
               <ArrowRight className="w-4 h-4" />
             </button>
@@ -103,7 +103,7 @@ const RecentArticles = () => {
             <p className="text-[#7c7893] text-xs leading-relaxed mb-5 font-light">
               Peças exclusivas sob encomenda. Curadoria fechada.
             </p>
-            <button className="text-[#9b30ff] text-[10px] tracking-[0.4em] uppercase hover:tracking-[0.5em] transition-all duration-500">
+            <button className="text-[#9b30ff] text-[10px] tracking-[0.4em] uppercase hover:tracking-[0.5em] transition-[letter-spacing] duration-300">
               Conhecer →
             </button>
           </div>

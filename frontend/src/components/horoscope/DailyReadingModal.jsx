@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { X, Sparkles, Loader2, Heart, Briefcase, Compass } from "lucide-react";
+import { motion } from "motion/react";
+import { X, Sparkles, Heart, Briefcase, Compass, RefreshCw } from "lucide-react";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -9,9 +10,12 @@ const DailyReadingModal = ({ sign, article, onClose }) => {
   const { t, i18n } = useTranslation();
   const [reading, setReading] = useState(null);
   const [error, setError] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
+    setReading(null);
+    setError(false);
     (async () => {
       try {
         const lang = (i18n.resolvedLanguage || "pt").split("-")[0];
@@ -26,15 +30,23 @@ const DailyReadingModal = ({ sign, article, onClose }) => {
     return () => {
       cancelled = true;
     };
-  }, [sign.id, i18n.resolvedLanguage]);
+  }, [sign.id, i18n.resolvedLanguage, reloadKey]);
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.15 }}
       className="fixed inset-0 z-[90] bg-black/85 backdrop-blur-md flex items-center justify-center p-4"
       onClick={onClose}
       data-testid="daily-reading-modal"
     >
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 6 }}
+        transition={{ duration: 0.22 }}
         className="w-full max-w-xl bg-[#0b0812] border border-[#1f1a35] max-h-[88vh] overflow-y-auto rounded-2xl"
         onClick={(e) => e.stopPropagation()}
       >
@@ -65,13 +77,30 @@ const DailyReadingModal = ({ sign, article, onClose }) => {
 
         <div className="px-7 pb-7">
           {!reading && !error && (
-            <div className="flex flex-col items-center gap-4 py-14" data-testid="daily-reading-loading">
-              <Loader2 className="w-7 h-7 text-[#9b30ff] animate-spin" />
-              <span className="text-[#a89fc4] text-sm font-light">{t("horoscope.ai.consulting")}</span>
+            <div
+              className="space-y-3 py-14"
+              data-testid="daily-reading-loading"
+              role="status"
+              aria-label={t("horoscope.ai.consulting")}
+            >
+              <div className="h-3 w-full bg-[#1b1427]" />
+              <div className="h-3 w-5/6 bg-[#1b1427]" />
+              <div className="h-3 w-2/3 bg-[#1b1427]" />
             </div>
           )}
           {error && (
-            <p className="text-[#a89fc4] text-sm py-10 text-center">{t("horoscope.ai.error")}</p>
+            <div className="py-10 text-center" data-testid="daily-reading-error" role="alert">
+              <p className="text-[#a89fc4] text-sm">{t("horoscope.ai.error")}</p>
+              <button
+                type="button"
+                onClick={() => setReloadKey((value) => value + 1)}
+                className="mt-4 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-[#9b30ff] transition-colors duration-150 hover:text-[#b15aff]"
+                data-testid="daily-reading-retry-button"
+              >
+                <RefreshCw className="h-3 w-3" aria-hidden="true" />
+                {t("horoscope.feed.full")}
+              </button>
+            </div>
           )}
           {reading && (
             <div className="space-y-6" data-testid="daily-reading-content">
@@ -134,8 +163,8 @@ const DailyReadingModal = ({ sign, article, onClose }) => {
             </div>
           )}
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

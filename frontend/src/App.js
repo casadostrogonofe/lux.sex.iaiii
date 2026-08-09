@@ -1,26 +1,29 @@
-import React from "react";
+import React, { lazy } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { MotionConfig } from "motion/react";
 import Layout from "./components/Layout";
-import EditorialHome from "./pages/EditorialHome";
-import BlogPage from "./pages/BlogPage";
-import ArticlePage from "./pages/ArticlePage";
-import SexualidadePage from "./pages/SexualidadePage";
-import HoroscopePage from "./pages/HoroscopePage";
-import ArtistsPage from "./pages/ArtistsPage";
-import EditorProfile from "./pages/EditorProfile";
-import Shop from "./pages/Shop";
-import Marketplace from "./pages/Marketplace";
-import Apostas from "./pages/Apostas";
-import ShopHub from "./pages/ShopHub";
+
+const EditorialHome = lazy(() => import("./pages/EditorialHome"));
+const BlogPage = lazy(() => import("./pages/BlogPage"));
+const ArticlePage = lazy(() => import("./pages/ArticlePage"));
+const SexualidadePage = lazy(() => import("./pages/SexualidadePage"));
+const HoroscopePage = lazy(() => import("./pages/HoroscopePage"));
+const ArtistsPage = lazy(() => import("./pages/ArtistsPage"));
+const EditorProfile = lazy(() => import("./pages/EditorProfile"));
+const Shop = lazy(() => import("./pages/Shop"));
+const Marketplace = lazy(() => import("./pages/Marketplace"));
+const Apostas = lazy(() => import("./pages/Apostas"));
+const ShopHub = lazy(() => import("./pages/ShopHub"));
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-          <Route index element={<EditorialHome />} />
+      <MotionConfig reducedMotion="user">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+            <Route index element={<EditorialHome />} />
 
             {/* Shop hub + sub-pages */}
             <Route path="shop" element={<ShopHub />} />
@@ -44,9 +47,10 @@ function App() {
             <Route path=":section/:sub/:slug" element={<ArticlePage />} />
 
             <Route path="*" element={<Navigate to="/turismo" replace />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </MotionConfig>
     </div>
   );
 }

@@ -71,14 +71,14 @@ const CategoryPage = () => {
         <section className="max-w-[1400px] mx-auto px-6 md:px-10 py-16">
           <a
             href={`#article-${featured.id}`}
-            className="group block relative overflow-hidden border border-[#2b2b2b] hover:border-[#d4af37]/60 transition-colors duration-700"
+            className="group block relative overflow-hidden border border-[#2b2b2b] hover:border-[#d4af37]/60 transition-colors duration-300"
           >
             <div className="grid lg:grid-cols-2">
               <div className="relative h-[320px] md:h-[480px] lg:h-[560px] overflow-hidden">
                 <img
                   src={featured.image}
                   alt={featured.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-2000 group-hover:scale-105"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/60" />
               </div>
@@ -104,10 +104,10 @@ const CategoryPage = () => {
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-[#d4af37] text-sm tracking-[0.3em] uppercase">
-                  <span className="group-hover:tracking-[0.4em] transition-all duration-500">
+                  <span className="group-hover:tracking-[0.4em] transition-[letter-spacing] duration-300">
                     Ler a matéria
                   </span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
                 </div>
               </div>
             </div>
@@ -128,11 +128,11 @@ const CategoryPage = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {rest.map((a) => (
               <a key={a.id} href={`#article-${a.id}`} className="group block">
-                <div className="relative h-[300px] md:h-[340px] overflow-hidden mb-6 border border-[#2b2b2b] group-hover:border-[#d4af37]/50 transition-colors duration-500">
+                <div className="relative h-[300px] md:h-[340px] overflow-hidden mb-6 border border-[#2b2b2b] group-hover:border-[#d4af37]/50 transition-colors duration-300">
                   <img
                     src={a.image}
                     alt={a.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-1500 group-hover:scale-110"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                   <div className="absolute top-5 left-5">
@@ -141,7 +141,7 @@ const CategoryPage = () => {
                     </span>
                   </div>
                 </div>
-                <h3 className="font-serif text-2xl md:text-[26px] text-[#f5f0e6] leading-[1.25] mb-4 group-hover:text-[#d4af37] transition-colors duration-500">
+                <h3 className="font-serif text-2xl md:text-[26px] text-[#f5f0e6] leading-[1.25] mb-4 group-hover:text-[#d4af37] transition-colors duration-300">
                   {a.title}
                 </h3>
                 <p className="text-[#a0998a] text-sm leading-relaxed mb-5 font-light">

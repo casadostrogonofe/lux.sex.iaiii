@@ -30,7 +30,7 @@ const Hero = () => {
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <a
           href="#article"
-          className="group block relative overflow-hidden border border-[#1a1526] hover:border-[#9b30ff]/60 transition-colors duration-700"
+          className="group block relative overflow-hidden border border-[#1a1526] hover:border-[#9b30ff]/60 transition-colors duration-300"
         >
           <div className="grid lg:grid-cols-2">
             {/* Image */}
@@ -38,7 +38,7 @@ const Hero = () => {
               <img
                 src={featuredHero.image}
                 alt={featuredHero.title}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-2000 group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/60" />
             </div>
@@ -68,10 +68,10 @@ const Hero = () => {
               </div>
 
               <div className="flex items-center gap-3 text-[#9b30ff] text-sm tracking-[0.3em] uppercase">
-                <span className="group-hover:tracking-[0.4em] transition-all duration-500">
+                <span className="group-hover:tracking-[0.4em] transition-[letter-spacing] duration-300">
                   Ler a matéria
                 </span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
               </div>
             </div>
           </div>

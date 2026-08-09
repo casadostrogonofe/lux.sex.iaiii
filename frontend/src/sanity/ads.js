@@ -27,7 +27,7 @@ const pickPlaceholder = (seed) => {
 // =============================================================
 // Format metadata (matches Lux.Sex rate card)
 // =============================================================
-export const AD_FORMATS = {
+const AD_FORMATS = {
   skyscraper: { w: 120, h: 600, label: "Arranha-céu" },
   "wide-skyscraper": { w: 160, h: 600, label: "Arranha-céu Largo" },
   banner: { w: 468, h: 60, label: "Banner" },

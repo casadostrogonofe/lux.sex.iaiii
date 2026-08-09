@@ -14,7 +14,5 @@ export const sanityClient = createClient({
   perspective: "published",
 });
 
-export const sanityEnabled = Boolean(projectId);
-
 const builder = createImageUrlBuilder(sanityClient);
 export const urlFor = (source) => builder.image(source);

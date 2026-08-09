@@ -45,7 +45,7 @@ const PartnersSidebar = () => {
               href={p.link}
               target="_blank"
               rel="noopener noreferrer sponsored"
-              className="group block rounded-2xl border border-[#1f1a35] hover:border-[#9b30ff]/50 overflow-hidden transition-colors duration-500 bg-[#0a0612]"
+              className="group block rounded-2xl border border-[#1f1a35] hover:border-[#9b30ff]/50 overflow-hidden transition-colors duration-300 bg-[#0a0612]"
               data-testid={`partner-card-${p.id}`}
             >
               <div
@@ -55,7 +55,7 @@ const PartnersSidebar = () => {
                 <img
                   src={p.logo}
                   alt={p.name}
-                  className="max-h-[80%] max-w-[80%] object-contain transition-transform duration-500 group-hover:scale-105"
+                  className="max-h-[80%] max-w-[80%] object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
               <div className="flex items-center justify-between px-3 lg:px-4 py-2.5 lg:py-3 border-t border-[#1f1a35]">
@@ -73,7 +73,7 @@ const PartnersSidebar = () => {
               href={ad.link}
               target="_blank"
               rel="noopener noreferrer sponsored"
-              className="group block rounded-2xl border border-[#9b30ff]/25 hover:border-[#9b30ff]/60 overflow-hidden transition-colors duration-500 bg-[#0a0612]"
+              className="group block rounded-2xl border border-[#9b30ff]/25 hover:border-[#9b30ff]/60 overflow-hidden transition-colors duration-300 bg-[#0a0612]"
               data-testid={`sidebar-ad-${ad.id}`}
             >
               {ad.image && (

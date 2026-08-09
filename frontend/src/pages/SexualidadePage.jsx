@@ -96,7 +96,7 @@ const SexualidadePage = () => {
                   href={s.instagram || "#"}
                   target={s.instagram ? "_blank" : undefined}
                   rel="noopener noreferrer"
-                  className={`absolute inset-0 transition-opacity duration-1200 ${
+                  className={`absolute inset-0 transition-opacity duration-300 ${
                     i === bannerIndex ? "opacity-100" : "opacity-0 pointer-events-none"
                   }`}
                   data-testid={`banner-slide-${i}`}
@@ -175,7 +175,7 @@ const SexualidadePage = () => {
                   <img
                     src={hero.image}
                     alt={hero.title}
-                    className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                    className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
                   />
                 </div>
               )}
@@ -235,7 +235,7 @@ const SexualidadePage = () => {
                   <Wrapper
                     key={ed.id}
                     {...wrapperProps}
-                    className="group block aspect-[9/16] relative overflow-hidden rounded-2xl border border-[#1f1a35] hover:border-[#9b30ff]/60 transition-colors duration-500"
+                    className="group block aspect-[9/16] relative overflow-hidden rounded-2xl border border-[#1f1a35] hover:border-[#9b30ff]/60 transition-colors duration-300"
                     data-testid={`editor-reel-${ed.slug}`}
                   >
                     {reelId ? (
@@ -252,7 +252,7 @@ const SexualidadePage = () => {
                           <img
                             src={ed.photo}
                             alt={ed.name}
-                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700"
+                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-300"
                           />
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />

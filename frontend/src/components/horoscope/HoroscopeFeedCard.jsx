@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Sparkles, Loader2, RefreshCw } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { Sparkles, RefreshCw } from "lucide-react";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 const SIGN_KEY = "luxsex_zodiac_sign";
@@ -26,6 +27,8 @@ const HoroscopeFeedCard = () => {
   const [signId, setSignId] = useState(() => localStorage.getItem(SIGN_KEY) || "");
   const [reading, setReading] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
   const sign = SIGNS.find((s) => s.id === signId);
 
   useEffect(() => {
@@ -33,6 +36,7 @@ const HoroscopeFeedCard = () => {
     let cancelled = false;
     setLoading(true);
     setReading(null);
+    setError(false);
     (async () => {
       try {
         const lang = (i18n.resolvedLanguage || "pt").split("-")[0];
@@ -41,7 +45,7 @@ const HoroscopeFeedCard = () => {
         const data = await res.json();
         if (!cancelled) setReading(data.reading);
       } catch {
-        // silently keep card compact
+        if (!cancelled) setError(true);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -49,7 +53,7 @@ const HoroscopeFeedCard = () => {
     return () => {
       cancelled = true;
     };
-  }, [signId, i18n.resolvedLanguage]);
+  }, [signId, i18n.resolvedLanguage, reloadKey]);
 
   const pickSign = (id) => {
     localStorage.setItem(SIGN_KEY, id);
@@ -64,7 +68,7 @@ const HoroscopeFeedCard = () => {
 
   return (
     <div
-      className="relative overflow-hidden rounded-2xl border border-[#d4af37]/25 bg-[#0a0612] hover:border-[#d4af37]/50 transition-colors duration-500"
+      className="relative overflow-hidden rounded-2xl border border-[#d4af37]/25 bg-[#0a0612] hover:border-[#d4af37]/50 transition-colors duration-300"
       data-testid="horoscope-feed-card"
     >
       <div
@@ -103,7 +107,7 @@ const HoroscopeFeedCard = () => {
                 <button
                   key={s.id}
                   onClick={() => pickSign(s.id)}
-                  className="group flex flex-col items-center gap-1 py-3 rounded-xl border border-[#1f1a35] hover:border-[#d4af37]/60 hover:-translate-y-0.5 transition-all duration-300"
+                  className="group flex flex-col items-center gap-1 py-3 rounded-xl border border-[#1f1a35] hover:border-[#d4af37]/60 hover:-translate-y-0.5 transition-[transform,border-color] duration-300"
                   data-testid={`feed-sign-${s.id}`}
                 >
                   <span
@@ -133,17 +137,58 @@ const HoroscopeFeedCard = () => {
               <h3 className="font-serif text-2xl md:text-3xl text-[#f5f0ff]">{sign.name}</h3>
             </div>
 
-            {loading && (
-              <div className="flex items-center gap-3 py-4" data-testid="horoscope-feed-loading">
-                <Loader2 className="w-5 h-5 text-[#9b30ff] animate-spin" />
-                <span className="text-[#a89fc4] text-sm font-light">
-                  {t("horoscope.ai.consulting")}
-                </span>
-              </div>
-            )}
+            <AnimatePresence mode="wait">
+              {loading && (
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                  className="space-y-3 py-4"
+                  data-testid="horoscope-feed-loading"
+                  role="status"
+                  aria-label={t("horoscope.ai.consulting")}
+                >
+                  <div className="h-3 w-full bg-[#1b1427]" />
+                  <div className="h-3 w-5/6 bg-[#1b1427]" />
+                  <div className="h-3 w-2/3 bg-[#1b1427]" />
+                </motion.div>
+              )}
 
-            {reading && (
-              <div data-testid="horoscope-feed-reading">
+              {error && !loading && (
+                <motion.div
+                  key="error"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                  className="py-4"
+                  data-testid="horoscope-feed-error"
+                  role="alert"
+                >
+                  <p className="text-sm text-[#a89fc4]">{t("horoscope.ai.error")}</p>
+                  <button
+                    type="button"
+                    onClick={() => setReloadKey((value) => value + 1)}
+                    className="mt-3 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-[#9b30ff] transition-colors duration-150 hover:text-[#b15aff]"
+                    data-testid="horoscope-feed-retry-button"
+                  >
+                    <RefreshCw className="h-3 w-3" aria-hidden="true" />
+                    {t("horoscope.feed.full")}
+                  </button>
+                </motion.div>
+              )}
+
+              {reading && !loading && (
+                <motion.div
+                  key="reading"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.22 }}
+                  data-testid="horoscope-feed-reading"
+                >
                 <p className="text-[#cfc5e8] text-[15px] leading-[1.75] font-light mb-5">
                   {reading.overview}
                 </p>
@@ -159,8 +204,9 @@ const HoroscopeFeedCard = () => {
                     <span className="text-[#d4af37] font-serif text-sm">{reading.lucky_number}</span>
                   </span>
                 </div>
-              </div>
-            )}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             <Link
               to="/bem-estar/horoscopo"

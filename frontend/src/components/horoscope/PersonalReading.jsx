@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { AnimatePresence, motion } from "motion/react";
 import { Sparkles, Loader2 } from "lucide-react";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
@@ -175,22 +176,50 @@ const PersonalReading = () => {
             )}
           </button>
 
-          {error && (
-            <p className="mt-6 text-[#a89fc4] text-sm">{t("horoscope.ai.error")}</p>
+          <AnimatePresence>
+            {error && (
+              <motion.p
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                className="mt-6 text-[#a89fc4] text-sm"
+                data-testid="personal-reading-error"
+                role="alert"
+              >
+                {t("horoscope.ai.error")}
+              </motion.p>
+            )}
+          </AnimatePresence>
+
+          {streaming && (
+            <p
+              className="mt-5 text-[10px] uppercase tracking-[0.2em] text-[#7c7893]"
+              data-testid="personal-reading-progress"
+              role="status"
+              aria-live="polite"
+            >
+              {t("horoscope.ai.generating")}
+              {output.length > 0 ? ` · ${output.length}` : ""}
+            </p>
           )}
 
           {output && (
-            <div
+            <motion.div
               ref={outputRef}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.22 }}
               className="mt-8 pt-8 border-t border-[#1f1a35] max-w-2xl"
               data-testid="personal-reading-output"
+              aria-live="polite"
             >
               {output.split(/\n{2,}/).map((para, i) => (
                 <p key={i} className="text-[#cfc5e8] text-[15px] leading-[1.85] font-light mb-5">
                   {para}
                 </p>
               ))}
-            </div>
+            </motion.div>
           )}
         </div>
       </div>

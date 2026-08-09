@@ -4,8 +4,8 @@
 
 ## Admin API Key (banners CRUD)
 - Header: `X-Admin-Key`
-- Value: `51a2bc8844a60c5679d42b6e52a3f45f1ef17bde77bc3269`
-- Stored in `/app/backend/.env` as `ADMIN_API_KEY`
+- Value: não versionado; ler `ADMIN_API_KEY` do ambiente de teste autorizado.
+- Stored in `/app/backend/.env` as `ADMIN_API_KEY` apenas no ambiente local e no secret manager do deploy.
 - Required for POST/PUT/DELETE `/api/banners`; GET remains public.
 
 ## No user login system

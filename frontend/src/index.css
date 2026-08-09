@@ -49,6 +49,11 @@ code {
     --input: #0f0c18;
     --ring: #9b30ff;
     --radius: 0rem;
+    --motion-fast: 150ms;
+    --motion-standard: 220ms;
+    --motion-slow: 300ms;
+    --motion-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   }
 }
 
@@ -59,5 +64,22 @@ code {
   body {
     background-color: var(--background);
     color: var(--foreground);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 1ms;
+    --motion-standard: 1ms;
+    --motion-slow: 1ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
   }
 }

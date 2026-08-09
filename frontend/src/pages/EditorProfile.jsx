@@ -10,7 +10,6 @@ import {
   Twitter,
 } from "lucide-react";
 import { sanityClient } from "../sanity/client";
-import { menuLabel } from "../i18n/menuMap";
 import TimelinePostCard from "../components/TimelinePostCard";
 import PartnersSidebar from "../components/PartnersSidebar";
 import Newsletter from "../components/Newsletter";

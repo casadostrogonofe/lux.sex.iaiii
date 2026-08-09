@@ -120,7 +120,7 @@ const HomePage = () => {
             ].map(({ icon: Icon, title, text }) => (
               <div
                 key={title}
-                className="relative bg-[#0a0612] border border-[#1f1a35] rounded-3xl p-10 text-center hover:border-[#9b30ff]/40 transition-colors duration-500"
+                className="relative bg-[#0a0612] border border-[#1f1a35] rounded-3xl p-10 text-center hover:border-[#9b30ff]/40 transition-colors duration-300"
               >
                 <div className="w-16 h-16 rounded-full bg-[#9b30ff]/15 border border-[#9b30ff]/40 flex items-center justify-center mx-auto mb-8">
                   <Icon className="w-6 h-6 text-[#9b30ff]" strokeWidth={1.6} />

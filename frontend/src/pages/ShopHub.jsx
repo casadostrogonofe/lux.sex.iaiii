@@ -49,9 +49,9 @@ const ShopHub = () => (
           <Link
             key={href}
             to={href}
-            className="group bg-[#0b0812] border border-[#1a1526] hover:border-[#9b30ff]/50 transition-colors duration-500 p-8 md:p-10 flex flex-col"
+            className="group bg-[#0b0812] border border-[#1a1526] hover:border-[#9b30ff]/50 transition-colors duration-300 p-8 md:p-10 flex flex-col"
           >
-            <div className="w-14 h-14 rounded-full border border-[#9b30ff]/30 flex items-center justify-center mb-8 group-hover:border-[#9b30ff] group-hover:bg-[#9b30ff]/10 transition-all duration-500">
+            <div className="w-14 h-14 rounded-full border border-[#9b30ff]/30 flex items-center justify-center mb-8 group-hover:border-[#9b30ff] group-hover:bg-[#9b30ff]/10 transition-[border-color,background-color] duration-300">
               <Icon className="w-6 h-6 text-[#9b30ff]" strokeWidth={1.5} />
             </div>
             <span className="text-[10px] tracking-[0.4em] text-[#9b30ff] uppercase mb-4">
@@ -63,7 +63,7 @@ const ShopHub = () => (
             <p className="text-[#7c7893] text-sm leading-relaxed mb-8 font-light flex-1">
               {description}
             </p>
-            <div className="flex items-center gap-2 text-[#9b30ff] text-xs tracking-[0.3em] uppercase group-hover:tracking-[0.4em] transition-all duration-500">
+            <div className="flex items-center gap-2 text-[#9b30ff] text-xs tracking-[0.3em] uppercase group-hover:tracking-[0.4em] transition-[letter-spacing] duration-300">
               Explorar
               <ArrowRight className="w-4 h-4" />
             </div>

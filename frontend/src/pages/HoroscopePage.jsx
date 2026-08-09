@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Sparkles, ChevronRight } from "lucide-react";
+import { AnimatePresence } from "motion/react";
 import { fetchArticlesByPath } from "../sanity/articles";
-import { menuConfig } from "../mock/mockData";
 import { menuLabel } from "../i18n/menuMap";
 import PartnersSidebar from "../components/PartnersSidebar";
 import Newsletter from "../components/Newsletter";
@@ -108,12 +108,12 @@ const HoroscopePage = () => {
                     key={s.id}
                     type="button"
                     onClick={() => setSelectedSign(s)}
-                    className="group relative block w-full aspect-square overflow-hidden rounded-2xl border bg-[#0a0612] text-center p-4 md:p-6 transition-all duration-500 border-[#1f1a35] hover:border-[#9b30ff]/60 hover:-translate-y-1 cursor-pointer"
+                    className="group relative block w-full aspect-square overflow-hidden rounded-2xl border bg-[#0a0612] text-center p-4 md:p-6 transition-[transform,border-color] duration-300 border-[#1f1a35] hover:border-[#9b30ff]/60 hover:-translate-y-1 cursor-pointer"
                     data-testid={`horoscope-sign-${s.id}`}
                   >
                     <div
                       aria-hidden
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       style={{
                         background:
                           "radial-gradient(circle at 50% 30%, rgba(155,48,255,0.25), transparent 60%)",
@@ -121,7 +121,7 @@ const HoroscopePage = () => {
                     />
                     <div className="relative h-full flex flex-col items-center justify-center">
                       <span
-                        className="text-5xl md:text-6xl mb-3 transition-transform duration-500 group-hover:scale-110"
+                        className="text-5xl md:text-6xl mb-3 transition-transform duration-300 group-hover:scale-110"
                         style={{
                           color: "#d4af37",
                           textShadow:
@@ -150,13 +150,15 @@ const HoroscopePage = () => {
         </div>
       </section>
 
-      {selectedSign && (
-        <DailyReadingModal
-          sign={selectedSign}
-          article={signArticleMap[selectedSign.id]}
-          onClose={() => setSelectedSign(null)}
-        />
-      )}
+      <AnimatePresence>
+        {selectedSign && (
+          <DailyReadingModal
+            sign={selectedSign}
+            article={signArticleMap[selectedSign.id]}
+            onClose={() => setSelectedSign(null)}
+          />
+        )}
+      </AnimatePresence>
 
       <Newsletter />
     </>

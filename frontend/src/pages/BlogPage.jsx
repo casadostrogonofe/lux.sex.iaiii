@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams, Link, useLocation } from "react-router-dom";
-import { Clock, User, ChevronRight, ArrowRight } from "lucide-react";
+import { Clock, User, ChevronRight } from "lucide-react";
 import PostInteractions from "../components/PostInteractions";
 import TimelinePostCard, { TimelineAdCard } from "../components/TimelinePostCard";
 import AdBanner from "../components/AdBanner";
@@ -154,13 +154,13 @@ const BlogPage = () => {
           {/* Featured */}
           {featured && (
             <section className="max-w-[1400px] mx-auto px-6 md:px-10 py-16">
-              <article className="group block relative overflow-hidden border border-[#1a1526] hover:border-[#9b30ff]/40 transition-colors duration-700">
+              <article className="group block relative overflow-hidden border border-[#1a1526] hover:border-[#9b30ff]/40 transition-colors duration-300">
                 <div className="grid lg:grid-cols-2">
                   <div className="relative h-[320px] md:h-[480px] lg:h-[560px] overflow-hidden">
                     <img
                       src={featured.image}
                       alt={featured.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-2000 group-hover:scale-105"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/60" />
                     {featured.sign && (

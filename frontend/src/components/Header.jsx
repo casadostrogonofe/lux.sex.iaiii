@@ -45,7 +45,7 @@ const Header = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
           scrolled
             ? "bg-[#050208]/90 backdrop-blur-lg border-b border-[#1a1526]"
             : "bg-[#050208]/60 backdrop-blur-md border-b border-transparent"
@@ -56,7 +56,7 @@ const Header = () => {
             <img
               src={LOGO_IAIII}
               alt="Lux.Sex Iaiii"
-              className="h-12 md:h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+              className="h-12 md:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </Link>
 
@@ -148,7 +148,7 @@ const Header = () => {
 
       {/* Drawer menu */}
       <div
-        className={`fixed inset-0 z-[60] bg-[#050208]/97 backdrop-blur-xl transition-opacity duration-500 ${
+        className={`fixed inset-0 z-[60] bg-[#050208]/97 backdrop-blur-xl transition-opacity duration-300 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >

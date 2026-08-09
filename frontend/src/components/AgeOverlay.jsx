@@ -18,6 +18,7 @@ const AgeOverlay = () => {
   const confirm = (yes) => {
     if (yes) {
       localStorage.setItem(STORAGE_KEY, "1");
+      window.dispatchEvent(new Event("luxsex:user-gesture"));
       setVisible(false);
     } else {
       window.location.href = "https://google.com";

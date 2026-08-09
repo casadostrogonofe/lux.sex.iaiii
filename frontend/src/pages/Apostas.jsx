@@ -35,13 +35,13 @@ const Apostas = () => (
         {luxGames.map((g) => (
           <div
             key={g.id}
-            className="group bg-[#0b0812] border border-[#1a1526] hover:border-[#9b30ff]/50 transition-colors duration-500 flex flex-col"
+            className="group bg-[#0b0812] border border-[#1a1526] hover:border-[#9b30ff]/50 transition-colors duration-300 flex flex-col"
           >
             <div className="relative aspect-[4/5] overflow-hidden">
               <img
                 src={g.image}
                 alt={g.name}
-                className="absolute inset-0 w-full h-full object-cover opacity-80 transition-all duration-1500 group-hover:opacity-100 group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover opacity-80 transition-[opacity,transform] duration-300 group-hover:opacity-100 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
               <div className="absolute top-4 left-4 text-[9px] tracking-[0.4em] text-[#9b30ff] bg-black/70 backdrop-blur-sm px-3 py-1.5 uppercase border border-[#9b30ff]/30">

@@ -8,7 +8,6 @@ import PartnersSidebar from "../components/PartnersSidebar";
 import Newsletter from "../components/Newsletter";
 import ArticleVideo from "../components/ArticleVideo";
 import { menuConfig } from "../mock/mockData";
-import { menuLabel } from "../i18n/menuMap";
 import { fetchArticleBySlug } from "../sanity/articles";
 import { urlFor } from "../sanity/client";
 

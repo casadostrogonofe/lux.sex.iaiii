@@ -22,7 +22,7 @@
   "seed_data_creation": "Ephemeral TEST_sec_banner (created + deleted in one class), TEST_bot comment on 'TEST_sec_post_regression' persisted in comments collection.",
   "should_call_test_agent_after_fix": false,
   "should_main_agent_self_test": true,
-  "test_credentials": "X-Admin-Key: 51a2bc8844a60c5679d42b6e52a3f45f1ef17bde77bc3269 (also recorded in /app/memory/test_credentials.md)",
+  "test_credentials": "X-Admin-Key is stored only in backend/.env and the deployment secret manager; no value is versioned.",
   "context_for_next_testing_agent": "Rate limiter is in-memory sliding-window keyed by X-Forwarded-For; between test bursts sleep 61s to drain. Banner Pydantic model requires slot/sponsor/headline/description (NOT title/subtitle). Comment model uses `text` (not `body`). SEC-003 test uses lang=en so astrology terms like 'zodiac', 'sign', 'venus', 'mars' can be asserted; if switching lang=pt, use Portuguese equivalents (signo, astral, zodíaco, vênus).",
   "rca_of_the_issue": "N/A — all security fixes work as designed."
 }

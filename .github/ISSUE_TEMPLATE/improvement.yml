@@ -1,0 +1,30 @@
+name: Melhoria técnica ou de UX
+description: Melhorar comportamento existente sem criar um produto adjacente
+title: "[IMPROVEMENT] "
+labels: ["improvement"]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto e oportunidade
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critérios de aceite
+      placeholder: "- [ ] ..."
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Riscos e regressões
+    validations:
+      required: true
+  - type: textarea
+    id: tests
+    attributes:
+      label: Testes e observabilidade
+    validations:
+      required: true
