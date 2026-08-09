@@ -52,7 +52,11 @@ const Header = () => {
         }`}
       >
         <div className="max-w-[1400px] mx-auto px-4 md:px-10 flex items-center justify-between py-4 md:py-5 gap-3">
-          <Link to="/" className="flex items-center gap-3 group shrink-0">
+          <Link
+            to="/"
+            className="flex items-center gap-3 group shrink-0"
+            data-testid="header-logo-link"
+          >
             <img
               src={LOGO_IAIII}
               alt="Lux.Sex Iaiii"
@@ -62,7 +66,7 @@ const Header = () => {
 
           {/* Desktop nav */}
           <nav className="hidden xl:flex items-center gap-1 flex-1 justify-center">
-            {menuConfig.map((item) => {
+            {menuConfig.map((item, itemIndex) => {
               if (item.external) {
                 return (
                   <a
@@ -71,6 +75,7 @@ const Header = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[11px] tracking-[0.25em] uppercase px-4 py-2 text-[#f5f0ff] hover:text-[#9b30ff] transition-colors duration-300 flex items-center gap-1.5"
+                    data-testid={`header-desktop-link-${itemIndex}`}
                   >
                     {menuLabel(t, item.href, item.label)}
                     <ExternalLink className="w-3 h-3 opacity-60" />
@@ -93,6 +98,7 @@ const Header = () => {
                         ? "text-[#9b30ff]"
                         : "text-[#f5f0ff] hover:text-[#9b30ff]"
                     }`}
+                    data-testid={`header-desktop-link-${itemIndex}`}
                   >
                     {menuLabel(t, item.href, item.label)}
                     {hasChildren && (
@@ -111,7 +117,7 @@ const Header = () => {
                       onMouseLeave={handleLeave}
                     >
                       <div className="min-w-[220px] bg-[#0b0812] border border-[#1a1526] shadow-2xl shadow-black/60 py-2 animate-[fadeIn_0.2s_ease]">
-                        {item.children.map((child) => (
+                        {item.children.map((child, childIndex) => (
                           <Link
                             key={child.href}
                             to={child.href}
@@ -120,6 +126,7 @@ const Header = () => {
                                 ? "text-[#9b30ff] bg-[#110e1a]"
                                 : "text-[#f5f0ff] hover:text-[#9b30ff] hover:bg-[#110e1a]"
                             }`}
+                            data-testid={`header-desktop-submenu-${itemIndex}-${childIndex}`}
                           >
                             {child.label}
                           </Link>
@@ -139,6 +146,7 @@ const Header = () => {
               onClick={() => setOpen(true)}
               className="text-[#f5f0ff] hover:text-[#9b30ff] transition-colors"
               aria-label="Open menu"
+              data-testid="header-menu-open-button"
             >
               <Menu className="w-6 h-6 md:w-7 md:h-7" />
             </button>
@@ -151,6 +159,7 @@ const Header = () => {
         className={`fixed inset-0 z-[60] bg-[#050208]/97 backdrop-blur-xl transition-opacity duration-300 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
+        data-testid="header-mobile-drawer"
       >
         <div className="flex items-center justify-between px-6 md:px-10 py-5 border-b border-[#1a1526]">
           <div className="flex items-center gap-3">
@@ -159,6 +168,8 @@ const Header = () => {
           <button
             onClick={() => setOpen(false)}
             className="text-[#f5f0ff] hover:text-[#9b30ff] transition-colors"
+            aria-label="Fechar menu"
+            data-testid="header-menu-close-button"
           >
             <X className="w-7 h-7" />
           </button>
@@ -175,7 +186,8 @@ const Header = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-serif text-2xl text-[#f5f0ff] hover:text-[#9b30ff] transition-colors duration-300 flex items-center justify-between py-3 border-b border-[#1a1526]"
-                    style={{ animation: open ? `fadeUp 0.4s ${i * 0.05}s both` : "none" }}
+                    style={{ animation: open ? `fadeUp 0.3s ${i * 0.03}s both` : "none" }}
+                    data-testid={`header-mobile-link-${i}`}
                   >
                     <span>{menuLabel(t, item.href, item.label)}</span>
                     <ExternalLink className="w-4 h-4 opacity-60" />
@@ -188,7 +200,7 @@ const Header = () => {
                 <div
                   key={item.label}
                   className="border-b border-[#1a1526]"
-                  style={{ animation: open ? `fadeUp 0.4s ${i * 0.05}s both` : "none" }}
+                  style={{ animation: open ? `fadeUp 0.3s ${i * 0.03}s both` : "none" }}
                 >
                   <div className="flex items-center justify-between py-3">
                     <Link
@@ -199,6 +211,7 @@ const Header = () => {
                           ? "text-[#9b30ff]"
                           : "text-[#f5f0ff] hover:text-[#9b30ff]"
                       }`}
+                      data-testid={`header-mobile-link-${i}`}
                     >
                       {item.label}
                     </Link>
@@ -209,6 +222,7 @@ const Header = () => {
                         }
                         aria-label="Expandir"
                         className="p-2 text-[#7c7893] hover:text-[#9b30ff] transition-colors"
+                        data-testid={`header-mobile-expand-${i}`}
                       >
                         <ChevronDown
                           className={`w-4 h-4 transition-transform duration-300 ${
@@ -220,7 +234,7 @@ const Header = () => {
                   </div>
                   {hasChildren && expanded && (
                     <div className="pb-3 pl-2 flex flex-col gap-1">
-                      {item.children.map((child) => (
+                      {item.children.map((child, childIndex) => (
                         <Link
                           key={child.href}
                           to={child.href}
@@ -230,6 +244,7 @@ const Header = () => {
                               ? "text-[#9b30ff]"
                               : "text-[#7c7893] hover:text-[#f5f0ff]"
                           }`}
+                          data-testid={`header-mobile-submenu-${i}-${childIndex}`}
                         >
                           {menuLabel(t, child.href, child.label)}
                         </Link>

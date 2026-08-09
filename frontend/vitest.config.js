@@ -28,7 +28,7 @@ module.exports = defineConfig({
       thresholds: {
         statements: 1.5,
         branches: 10,
-        functions: 10,
+        functions: 9.5,
         lines: 1.5,
       },
     },

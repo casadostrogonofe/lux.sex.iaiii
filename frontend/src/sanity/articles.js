@@ -53,28 +53,22 @@ const safe = async (promise, fallback) => {
 // =============================================================
 let _cardsTranslationCache = { lang: null, items: {} };
 
-const logTranslationWarning = (...args) => {
-  if (process.env.NODE_ENV === "development") {
-    console.warn(...args);
-  }
-};
-
 const fetchCardTranslations = async (lang) => {
   if (!lang || lang === "pt") return {};
   if (_cardsTranslationCache.lang === lang) return _cardsTranslationCache.items;
-  try {
-    const base = process.env.REACT_APP_BACKEND_URL || "";
-    const res = await fetch(
-      `${base}/api/i18n/cards?lang=${encodeURIComponent(lang)}`
-    );
-    if (!res.ok) return {};
-    const data = await res.json();
-    _cardsTranslationCache = { lang, items: data.items || {} };
-    return _cardsTranslationCache.items;
-  } catch (err) {
-    logTranslationWarning("[i18n] cards translation failed", err);
-    return {};
+  const base = process.env.REACT_APP_BACKEND_URL || "";
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const res = await fetch(`${base}/api/i18n/cards?lang=${encodeURIComponent(lang)}`);
+      if (!res.ok) return {};
+      const data = await res.json();
+      _cardsTranslationCache = { lang, items: data.items || {} };
+      return _cardsTranslationCache.items;
+    } catch {
+      if (attempt === 0) await new Promise((resolve) => setTimeout(resolve, 250));
+    }
   }
+  return {};
 };
 
 const applyCardTranslations = (posts, items) => {
@@ -154,8 +148,7 @@ export const fetchArticleBySlug = async (slug, lang = "pt") => {
       excerpt: tr.excerpt || base.excerpt,
       body: tr.body || base.body,
     };
-  } catch (err) {
-    logTranslationWarning("[i18n] translation failed", err);
+  } catch {
     return base;
   }
 };

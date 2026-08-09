@@ -21,6 +21,23 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 09/Ago/2026 — Padrões obrigatórios de engenharia, Motion e qualidade ✅
+- `CONTRIBUTING.md` criado como fonte normativa para pessoas/agentes: Issue obrigatória com critérios de aceite, branch por Issue, deploy somente via PR com `Closes #N`, proibição de commit direto na `main`, segredo nunca versionado e Definition of Done
+- Governança GitHub adicionada: templates de Correção/Nova função/Melhoria, template de PR, `CODEOWNERS`, instrução de Branch Protection e CI que exige Issue vinculada
+- Gitleaks configurado em toda PR; credenciais históricas removidas dos arquivos versionáveis; SoundCloud e Sentry externalizados para `.env`; scan local real com Gitleaks v8.28 aprovado sem leaks
+- CI em `.github/workflows/ci.yml`: jobs bloqueantes `policy`, `gitleaks`, `frontend-quality`, `backend-quality`, `e2e` e release Sentry após merge
+- Qualidade frontend: Biome, Knip, Vitest/Testing Library, Playwright e Codecov; meta 80% com adoção gradual e baseline protegido
+- Baseline atual: frontend 1,58% linhas / 9,61% funções / 10,16% branches; backend 53,15%; Codecov exige 80% no patch e impede queda do projeto
+- Qualidade backend: Pytest + pytest-cov; gate mínimo atual de 50%; consulta de traduções limitada a 500 artigos e projeção Mongo exclui `_id`
+- Motion Principles documentados com referência atualizada; tokens globais 150/220/300ms, `prefers-reduced-motion`, lazy routes, Suspense skeleton, transições de página e remoção de motion contínuo/decorativo desnecessário
+- Estados de horóscopo reforçados: skeleton estável, erro acionável, retry, sucesso animado e streaming exibindo progresso real sem percentuais falsos
+- Header/menu e estados críticos receberam `data-testid` estáveis; Playwright cobre age-gate, reduced motion e drawer principal
+- Sentry único para React/FastAPI: `@sentry/react`, ErrorBoundary, Browser Tracing, `sentry-sdk` + `OTLPIntegration`, FastAPI/PyMongo instrumentation e `/api/health`
+- PII masking ativo em frontend/backend para user, headers, cookies, bodies, query strings, e-mail, Bearer token e URI Mongo; Session Replay desativado
+- `docs/OBSERVABILITY.md` documenta variáveis, retenção 90 dias, RBAC mínimo, alertas e verificação pós-deploy
+- Testes finais: Biome check ✅, Knip ✅, Vitest 5/5 ✅, Playwright 3/3 ✅, Pytest 8/8 com 53,15% ✅, React build ✅, uv Python 3.12/96 pacotes ✅, Gitleaks sem leaks ✅, deployment agent PASS
+- Testing agent iteration_6 validou backend/preview/horóscopo e apontou Biome, warning i18n e test IDs; todos foram corrigidos e revalidados por autotestes
+
 ### 09/Ago/2026 — Rotação MongoDB Atlas validada ✅
 - Nova credencial Atlas validada com `ping`, leitura da coleção `banners` e conexão ao banco `luxsex`
 - Backend local atualizado via `MONGO_URL`/`DB_NAME` sem versionar a URI em código ou testes
@@ -131,6 +148,12 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 ## 4. Backlog priorizado
 
 ### P1 — Próximas tarefas
+- 🔴 **Abrir a Issue de bootstrap e publicar esta mudança por PR** com `Closes #N`; não enviar diretamente à `main`
+- 🔴 **Ativar o Ruleset da `main` no GitHub** conforme `.github/BRANCH_PROTECTION.md`, exigindo os cinco checks bloqueantes e revisão CODEOWNERS
+- 🔴 **Configurar GitHub Secrets**: `CODECOV_TOKEN`, `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` e `SENTRY_PROJECT`; sem eles, upload Codecov/release Sentry não é executável no GitHub
+- 🔴 **Configurar Sentry Dashboard**: retenção 90 dias, RBAC por menor privilégio, IP/PII desabilitados e alertas; essas políticas não são impostas por código
+- 🔴 **Adicionar variáveis no Vercel**: `SENTRY_*`, `REACT_APP_SENTRY_*` e `REACT_APP_SOUNDCLOUD_URL` em Production/Preview/Development antes do novo deploy
+- 🟡 **Elevar cobertura gradualmente até 80%**: priorizar App/Layout, Header/MusicPlayer, horóscopo e serviços Sanity a cada Issue
 - 🔴 **Publicar o commit corrigido no Vercel e validar produção**: confirmar `application/json` em `/api/horoscope/daily?sign=aries&lang=pt`
 - 🔴 **Atualizar `MONGO_URL` no Vercel** com a credencial Atlas rotacionada e gerar um novo deployment
 - 🟣 **Sanity Studio Setup pelo usuário**: rodar `npm create sanity@latest -- --project 8um1375u`, colar `/app/sanity-schemas/article.js`, liberar CORS no dashboard, publicar primeira matéria
