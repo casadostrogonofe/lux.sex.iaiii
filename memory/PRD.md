@@ -21,6 +21,16 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 11/Ago/2026 — Incidente de tela preta em produção corrigido no código ✅
+- Incidente reproduzido em `luxsexiaiii.com`: HTML respondia 200, mas `#root` permanecia vazio e o console mostrava `Configuração Sanity incompleta.`
+- Causa raiz: `frontend/src/sanity/client.js` passou a exigir env no import, porém `frontend/.env.production` continuava ignorado e não foi incluído no GitHub/Vercel
+- `.gitignore` corrigido: arquivos `.env` com segredos continuam ignorados, mas `frontend/.env.production`, `frontend/.env.example` e `backend/.env.example` são explicitamente versionáveis
+- `frontend/.env.production` recriado somente com flags de build e identificadores públicos Sanity; nenhum token, senha ou URI autenticada foi adicionado
+- `frontend/src/index.js` agora carrega `App` com `React.lazy` + `Suspense` dentro do `Sentry.ErrorBoundary`, evitando root vazio em futura falha de módulo
+- Build production simulado em cópia sem `frontend/.env` local: compilação e montagem do React/age-gate aprovadas
+- Testing agent iteration_8 confirmou RCA, build limpo, root montado, age-gate, Biome e Vitest; domínio de produção permanece no bundle antigo até redeploy
+- Gitleaks v8.28 executado após o agent: 699 KB analisados, zero leaks
+
 ### 11/Ago/2026 — Rádio SoundCloud restaurada e configurável pelo Sanity ✅
 - Causa da regressão: a URL havia sido externalizada para `REACT_APP_SOUNDCLOUD_URL`; ambientes sem essa variável faziam `MusicPlayer` retornar `null` e a rádio sumia do header
 - Criado singleton publicado no Sanity: `_id=siteSettings`, `_type=siteSettings`, campo `soundcloudUrl`; conteúdo atual criado e validado por leitura pública sem expor a URL
@@ -160,6 +170,7 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 ## 4. Backlog priorizado
 
 ### P1 — Próximas tarefas
+- 🔴 **PUBLICAR IMEDIATAMENTE o commit da tela preta e redeploy Vercel**; depois confirmar `#root > *` e ausência de `Configuração Sanity incompleta.` no console de `luxsexiaiii.com`
 - 🔴 **Revogar imediatamente os tokens Sanity Editor temporários** usados no bootstrap; nenhum deles é necessário para a leitura pública do site
 - 🔴 **Publicar o schema no Sanity Studio existente**: copiar `siteSettings.js`, `structure.js`, atualizar `index.js` e rodar `npx sanity deploy`; o documento já existe no dataset
 - 🔴 **Publicar esta correção via Issue + PR** e redeploy Vercel; o singleton Sanity já está publicado, mas o frontend de produção precisa do novo hook/player
