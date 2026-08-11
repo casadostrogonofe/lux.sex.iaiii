@@ -21,6 +21,18 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 11/Ago/2026 — Rádio SoundCloud restaurada e configurável pelo Sanity ✅
+- Causa da regressão: a URL havia sido externalizada para `REACT_APP_SOUNDCLOUD_URL`; ambientes sem essa variável faziam `MusicPlayer` retornar `null` e a rádio sumia do header
+- Criado singleton publicado no Sanity: `_id=siteSettings`, `_type=siteSettings`, campo `soundcloudUrl`; conteúdo atual criado e validado por leitura pública sem expor a URL
+- `useSoundCloudUrl` prioriza Sanity publicado, valida HTTPS/domínios oficiais SoundCloud, usa env como fallback e oferece retry em falha/vazio
+- `MusicPlayer` mantém loading, indisponível e sucesso no layout; URL dinâmica remonta o iframe com `key`, aplica `encodeURIComponent` e preserva mute/unmute, gesto do age-gate e loop
+- Schemas versionados: `sanity-schemas/siteSettings.js`, `structure.js` singleton e registro em `index.js`; `SANITY_SETUP.md` atualizado para troca editorial do link
+- Cliente Sanity agora falha rápido sem `REACT_APP_SANITY_PROJECT_ID`, `REACT_APP_SANITY_DATASET` e `REACT_APP_SANITY_API_VERSION`; defaults hardcoded removidos
+- URL privada histórica removida de `test_result.md`; tokens Editor temporários nunca foram salvos; Gitleaks v8.28 reexecutado sem leaks
+- Testing agent iteration_7 confirmou no preview: rádio e mute visíveis/funcionais, singleton público válido, query/hook/fallback/player corretos, Vitest 9/9, build, Playwright 3/3 e backend 6/6
+- Após os achados do agent: exposição histórica sanitizada, cliente Sanity endurecido, Gitleaks real aprovado e todos os gates reexecutados
+- Cobertura frontend subiu de 1,58% para 5,78% com testes do hook e MusicPlayer
+
 ### 09/Ago/2026 — Padrões obrigatórios de engenharia, Motion e qualidade ✅
 - `CONTRIBUTING.md` criado como fonte normativa para pessoas/agentes: Issue obrigatória com critérios de aceite, branch por Issue, deploy somente via PR com `Closes #N`, proibição de commit direto na `main`, segredo nunca versionado e Definition of Done
 - Governança GitHub adicionada: templates de Correção/Nova função/Melhoria, template de PR, `CODEOWNERS`, instrução de Branch Protection e CI que exige Issue vinculada
@@ -148,6 +160,9 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 ## 4. Backlog priorizado
 
 ### P1 — Próximas tarefas
+- 🔴 **Revogar imediatamente os tokens Sanity Editor temporários** usados no bootstrap; nenhum deles é necessário para a leitura pública do site
+- 🔴 **Publicar o schema no Sanity Studio existente**: copiar `siteSettings.js`, `structure.js`, atualizar `index.js` e rodar `npx sanity deploy`; o documento já existe no dataset
+- 🔴 **Publicar esta correção via Issue + PR** e redeploy Vercel; o singleton Sanity já está publicado, mas o frontend de produção precisa do novo hook/player
 - 🔴 **Abrir a Issue de bootstrap e publicar esta mudança por PR** com `Closes #N`; não enviar diretamente à `main`
 - 🔴 **Ativar o Ruleset da `main` no GitHub** conforme `.github/BRANCH_PROTECTION.md`, exigindo os cinco checks bloqueantes e revisão CODEOWNERS
 - 🔴 **Configurar GitHub Secrets**: `CODECOV_TOKEN`, `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` e `SENTRY_PROJECT`; sem eles, upload Codecov/release Sentry não é executável no GitHub

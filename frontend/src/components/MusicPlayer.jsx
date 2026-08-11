@@ -1,24 +1,29 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Volume2, VolumeX, Music2 } from "lucide-react";
-import { SOUNDCLOUD_URL } from "../mock/mockData";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Volume2, VolumeX, Music2, RefreshCw } from "lucide-react";
+import { useSoundCloudUrl } from "../hooks/useSoundCloudUrl";
 
 // Autoplay + loop entire playlist with minimal UI (single mute button).
 // Strategy:
 //  • Start muted (volume 0) so browsers allow autoplay.
 //  • On user click → setVolume(80), play() and keep retrying play() if widget pauses.
 //  • Bind FINISH event to advance to next track (mod total).
-const WIDGET_SRC = SOUNDCLOUD_URL
-  ? `https://w.soundcloud.com/player/?url=${encodeURIComponent(
-      SOUNDCLOUD_URL,
-    )}&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&buying=false&sharing=false&download=false&single_active=false`
-  : "";
-
 const MusicPlayer = () => {
   const iframeRef = useRef(null);
   const widgetRef = useRef(null);
+  const userGestureRef = useRef(false);
+  const { url, loading, error, retry } = useSoundCloudUrl();
   const [ready, setReady] = useState(false);
   const [muted, setMuted] = useState(true);
   const [trackInfo, setTrackInfo] = useState({ title: "", artist: "" });
+  const widgetSrc = useMemo(
+    () =>
+      url
+        ? `https://w.soundcloud.com/player/?url=${encodeURIComponent(
+            url,
+          )}&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&buying=false&sharing=false&download=false&single_active=false`
+        : "",
+    [url],
+  );
 
   const updateCurrentTrack = (widget) => {
     if (!widget) return;
@@ -49,8 +54,12 @@ const MusicPlayer = () => {
 
   // Wire up the widget once script + iframe are ready
   useEffect(() => {
+    if (!widgetSrc) return undefined;
     let cancelled = false;
     let attempts = 0;
+    setReady(false);
+    setMuted(true);
+    setTrackInfo({ title: "", artist: "" });
     const init = () => {
       if (cancelled) return;
       const SC = window.SC;
@@ -67,6 +76,7 @@ const MusicPlayer = () => {
         setReady(true);
         widget.setVolume(0);
         widget.skip(0);
+        if (userGestureRef.current) widget.play();
         setTimeout(() => updateCurrentTrack(widget), 800);
       });
 
@@ -88,11 +98,13 @@ const MusicPlayer = () => {
     init();
     return () => {
       cancelled = true;
+      widgetRef.current = null;
     };
-  }, []);
+  }, [widgetSrc]);
 
   useEffect(() => {
     const startAfterGesture = () => {
+      userGestureRef.current = true;
       const widget = widgetRef.current;
       if (!widget) return;
       widget.setVolume(0);
@@ -122,10 +134,37 @@ const MusicPlayer = () => {
     }
   };
 
-  if (!WIDGET_SRC) return null;
+  if (loading) {
+    return (
+      <div
+        className="h-9 w-9 border border-[#1f1a35] bg-[#0a0612]"
+        data-testid="music-player-loading"
+        role="status"
+        aria-label="Carregando rádio"
+      />
+    );
+  }
+
+  if (!widgetSrc) {
+    return (
+      <button
+        type="button"
+        onClick={retry}
+        className="relative flex h-9 w-9 items-center justify-center rounded-full border border-[#4a2632] text-[#d4af37] transition-colors duration-150 hover:border-[#d4af37]"
+        aria-label="Rádio indisponível. Tentar novamente"
+        data-testid="music-player-unavailable-retry"
+      >
+        <RefreshCw className="h-4 w-4" aria-hidden="true" />
+      </button>
+    );
+  }
 
   return (
-    <div className="relative flex items-center gap-3" data-testid="music-player">
+    <div
+      className="relative flex items-center gap-3"
+      data-testid="music-player"
+      data-sanity-fallback={error ? "true" : "false"}
+    >
       {/* Neon "now playing" — visible when unmuted */}
       {ready && trackInfo.artist && !muted && (
         <div
@@ -185,6 +224,7 @@ const MusicPlayer = () => {
 
       {/* Hidden iframe — off-screen, kept mounted so audio survives navigation */}
       <iframe
+        key={widgetSrc}
         ref={iframeRef}
         title="Lux Radio"
         width="300"
@@ -192,7 +232,7 @@ const MusicPlayer = () => {
         scrolling="no"
         frameBorder="no"
         allow="autoplay; encrypted-media"
-        src={WIDGET_SRC}
+        src={widgetSrc}
         style={{
           position: "fixed",
           width: 300,

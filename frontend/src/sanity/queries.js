@@ -1,5 +1,11 @@
 // GROQ queries for Lux Novo editorial content
 
+export const SITE_SETTINGS_QUERY = `
+*[_id == "siteSettings" && _type == "siteSettings"][0]{
+  soundcloudUrl
+}
+`;
+
 // All articles, ordered by date desc
 export const ARTICLES_QUERY = `
 *[_type == "article" && defined(publishedAt)] | order(publishedAt desc) [0...50]{

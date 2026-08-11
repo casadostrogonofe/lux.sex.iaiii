@@ -404,7 +404,7 @@ frontend:
     status_history:
       - working: false
         agent: "testing"
-        comment: "Music player component renders in header with 'Lux Radio' label and play button. However, SoundCloud integration returns 404 errors. The private SoundCloud playlist URL (https://soundcloud.com/massivejackmusic/sets/unreleased/s-xH8mqZ5tU1d) is invalid, expired, or not publicly accessible. Player appears but cannot play music. This is an external resource issue, not a code bug. The SoundCloud URL in /app/frontend/src/mock/mockData.js needs to be updated with a valid, publicly accessible playlist URL."
+        comment: "Music player component rendered in the header, but the private SoundCloud resource configured at the time returned 404. The URL has since been moved out of source code and is managed through the Sanity siteSettings singleton with an environment fallback."
 
   - task: "Shop page - Hero and top banner"
     implemented: true

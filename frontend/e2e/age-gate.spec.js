@@ -15,6 +15,7 @@ test("age-gate entra na experiência e mantém conteúdo acessível", async ({ p
   await expect(page.getByTestId("age-gate-overlay")).toBeVisible();
   await page.getByTestId("age-gate-enter-button").click();
   await expect(page.getByTestId("application-main-content")).toBeVisible();
+  await expect(page.getByTestId("music-player")).toBeVisible();
   await expect(page.getByTestId("age-gate-overlay")).toHaveCount(0);
   await page.waitForTimeout(500);
   expect(translationWarnings).toEqual([]);

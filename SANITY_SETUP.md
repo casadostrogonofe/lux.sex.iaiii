@@ -4,6 +4,7 @@ Este painel controla TUDO do site:
 - 📰 **Matérias** (Turismo, Bem Estar, Vida Noturna, Gastronomia)
 - 💎 **Publicidade** (banners em todos os tamanhos)
 - 🤝 **Parceiros** (logos na lateral das matérias)
+- 🎵 **Rádio SoundCloud** (link editável sem alterar código)
 
 ---
 
@@ -26,12 +27,17 @@ cd lux-novo   # ou o nome que você deu
 
 ### 2. Colar os schemas
 
-Abra a pasta `schemaTypes/` no Finder ou editor. Apague o que estiver lá e copie estes 4 arquivos do projeto Lux Novo (estão em `/app/sanity-schemas/`):
+ Abra a pasta `schemaTypes/` no Finder ou editor. Apague o que estiver lá e copie os arquivos do projeto Lux Novo (estão em `/app/sanity-schemas/`):
 
 - `article.js`
 - `ad.js`
 - `partner.js`
+- `artist.js`
+- `editor.js`
+- `siteSettings.js`
 - `index.js`
+
+No `sanity.config.js`, importe também `structure` de `schemaTypes/structure.js` e configure `structureTool({ structure })`. Isso mantém **Configurações do site** como documento único.
 
 ### 3. Liberar CORS
 
@@ -192,9 +198,12 @@ Os 4 primeiros editores (por prioridade) da editoria escolhida aparecem como car
 
 ## 🎵 Som / Playlist
 
-A playlist do SoundCloud é fixa (configurada uma vez no código). O player toca a playlist **inteira em loop** automaticamente. Ao final do último track, volta para o primeiro.
+1. Studio → **Configurações do site**.
+2. Cole a URL HTTPS da faixa, playlist ou perfil no campo **URL da rádio SoundCloud**.
+3. Clique em **Publish**.
+4. Recarregue o site. A rádio usa imediatamente a URL publicada.
 
-> Para trocar a playlist, é uma mudança no código — me chame.
+O player toca a playlist inteira em loop e volta ao primeiro track no final. Se o Sanity estiver indisponível ou o campo ainda estiver vazio, o site usa `REACT_APP_SOUNDCLOUD_URL` como fallback. URLs fora do domínio SoundCloud são rejeitadas.
 
 ---
 
@@ -222,7 +231,7 @@ Convide editores em https://www.sanity.io/manage/project/8um1375u → **Members 
 
 ## 🆘 Suporte
 
-Schemas em `/app/sanity-schemas/` (article, ad, partner, index).
+Schemas em `/app/sanity-schemas/` (article, ad, partner, artist, editor, siteSettings, structure, index).
 Service no frontend em `/app/frontend/src/sanity/` (articles, ads, client, queries).
 
 Qualquer coisa me chame. ✨

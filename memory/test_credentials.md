@@ -15,3 +15,7 @@ The site is public (age-gate overlay only, no accounts).
 - Credencial rotacionada e validada em 09/Ago/2026.
 - A URI atual fica somente em variáveis de ambiente (`backend/.env` local e `MONGO_URL` no Vercel); o valor não é registrado neste arquivo por segurança.
 - Banco de produção: `luxsex`.
+
+## Sanity bootstrap
+- Tokens Editor temporários foram usados somente em memória para criar `siteSettings` e **não estão armazenados no repositório**.
+- Revogar os tokens temporários após esta entrega; o frontend lê o dataset publicado sem token.
