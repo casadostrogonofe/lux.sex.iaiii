@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "cd frontend && yarn install && yarn build",
+  "buildCommand": "cd frontend && yarn install && REACT_APP_SANITY_PROJECT_ID=8um1375u REACT_APP_SANITY_DATASET=production REACT_APP_SANITY_API_VERSION=2024-01-01 yarn build",
   "outputDirectory": "frontend/build",
   "installCommand": "echo 'install handled in buildCommand'",
   "rewrites": [

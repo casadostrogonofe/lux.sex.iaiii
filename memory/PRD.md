@@ -21,6 +21,16 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 11/Ago/2026 — Correção Vercel independente de arquivos `.env` ✅
+- Usuário informou ter sobrescrito arquivos no Sanity Studio externo, mas o erro do site foi isolado e não depende desses arquivos: o bundle Vercel continuava sem as três variáveis públicas Sanity
+- GitHub raw confirmou que `frontend/.env.production` seguia ausente (404), mesmo com regra de re-inclusão; o fluxo Save to GitHub não publicou o arquivo untracked
+- Correção definitiva movida para arquivos JSON rastreados: `vercel.json` raiz e `frontend/vercel.json` injetam project ID, dataset e API version públicas diretamente no ambiente do `yarn build`
+- Nenhum token Sanity ou segredo foi adicionado; `.env` locais permanecem ignorados
+- Build reproduzido em cópia sem `frontend/.env` e sem `frontend/.env.production`: compilou e, servido isoladamente, montou `#root` e age-gate sem erro Sanity
+- Testing agent iteration_9 validou ambos os formatos Vercel (raiz e Root Directory frontend), Biome, Vitest, build e navegador; produção atual permanece no bundle antigo até novo commit/redeploy
+- Gitleaks v8.28 pós-teste: 704 KB analisados, zero leaks
+- Backup dos schemas permanece versionado em `/sanity-schemas`; sobrescrever o Studio externo não apagou os arquivos de recuperação do projeto
+
 ### 11/Ago/2026 — Incidente de tela preta em produção corrigido no código ✅
 - Incidente reproduzido em `luxsexiaiii.com`: HTML respondia 200, mas `#root` permanecia vazio e o console mostrava `Configuração Sanity incompleta.`
 - Causa raiz: `frontend/src/sanity/client.js` passou a exigir env no import, porém `frontend/.env.production` continuava ignorado e não foi incluído no GitHub/Vercel
@@ -170,6 +180,8 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 ## 4. Backlog priorizado
 
 ### P1 — Próximas tarefas
+- 🔴 **Salvar os `vercel.json` corrigidos no GitHub e redeploy sem cache**; só então a produção deixa o ErrorBoundary e volta ao age-gate
+- 🟡 **Restaurar o Studio externo a partir de `/sanity-schemas`** quando necessário; essa restauração é separada do incidente Vercel
 - 🔴 **PUBLICAR IMEDIATAMENTE o commit da tela preta e redeploy Vercel**; depois confirmar `#root > *` e ausência de `Configuração Sanity incompleta.` no console de `luxsexiaiii.com`
 - 🔴 **Revogar imediatamente os tokens Sanity Editor temporários** usados no bootstrap; nenhum deles é necessário para a leitura pública do site
 - 🔴 **Publicar o schema no Sanity Studio existente**: copiar `siteSettings.js`, `structure.js`, atualizar `index.js` e rodar `npx sanity deploy`; o documento já existe no dataset
