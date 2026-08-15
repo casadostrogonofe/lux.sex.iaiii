@@ -18,7 +18,6 @@ const SKIP_PATHS = [
 ];
 
 // Extrai o slug da matéria (último segmento da URL)
-// Ajuste conforme a rota real (ex.: /artigo/:slug, /materia/:slug)
 function extractSlug(pathname) {
   const parts = pathname.split("/").filter(Boolean);
   return parts.length ? parts[parts.length - 1] : null;
@@ -79,31 +78,3 @@ export default async function middleware(request) {
   // Injeta as meta tags no <head>
   const tags = `
     <title>${escapeHtml(title)}</title>
-    <meta name="description" content="${escapeHtml(description)}" />
-    <meta property="og:type" content="article" />
-    <meta property="og:site_name" content="${SITE_NAME}" />
-    <meta property="og:title" content="${escapeHtml(title)}" />
-    <meta property="og:description" content="${escapeHtml(description)}" />
-    <meta property="og:image" content="${image}" />
-    <meta property="og:url" content="${pageUrl}" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${escapeHtml(title)}" />
-    <meta name="twitter:description" content="${escapeHtml(description)}" />
-    <meta name="twitter:image" content="${image}" />
-  `;
-
-  html = html.replace(/<head[^>]*>/, (m) => `${m}${tags}`);
-
-  return new Response(html, {
-    status: htmlRes.status,
-    headers: {
-      "Content-Type": "text/html; charset=utf-8",
-      "Cache-Control": "public, max-age=300, s-maxage=300",
-    },
-  });
-}
-
-// Executa em todas as rotas
-export const config = {
-  matcher: ["/((?!api/).*)"],
-};
