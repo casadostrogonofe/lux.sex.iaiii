@@ -39,7 +39,7 @@ export default {
       title: "Banner editorial",
       type: "image",
       description:
-        "Imagem horizontal 2100×700 (proporção 3:1) — aparece no carrossel do topo da editoria escolhida abaixo.",
+        "Legado: imagem horizontal 2100×350 (proporção 6:1). Para novos banners, prefira o documento Banner editorial.",
       options: { hotspot: true },
     },
     {

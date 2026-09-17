@@ -12,6 +12,7 @@ import { fetchArtists } from "../sanity/people";
 import { menuLabel } from "../i18n/menuMap";
 import PartnersSidebar from "../components/PartnersSidebar";
 import Newsletter from "../components/Newsletter";
+import EditorialBanner from "../components/EditorialBanner";
 
 // Icon-only inline SVG for Spotify (lucide doesn't ship it)
 const SpotifyIcon = (props) => (
@@ -96,6 +97,17 @@ const ArtistsPage = () => {
               : t("artists.subtitle")}
           </p>
         </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-[1340px] px-6 pt-8 lg:px-10">
+        <EditorialBanner
+          section={
+            labelParam
+              ? `vida-noturna/artistas/${labelParam}`
+              : "vida-noturna/artistas"
+          }
+          showEditors={false}
+        />
       </section>
 
       <section className="py-14">

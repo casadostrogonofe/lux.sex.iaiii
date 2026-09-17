@@ -3,7 +3,6 @@
 
 export const MENU_I18N = {
   "/": "menu.home",
-  "https://lux-novo.lux.sex/": "menu.home",
   "/turismo": "menu.tourism",
   "/turismo/moteis": "menu.motels",
   "/turismo/hoteis": "menu.hotels",

@@ -6,7 +6,7 @@ export const LOGO_IAIII = "https://customer-assets.emergentagent.com/job_premium
 // DYNAMIC MENU CONFIG
 // =============================================================
 export const menuConfig = [
-  { label: "Início", href: "https://lux-novo.lux.sex/", external: true },
+  { label: "Lux.Sex", href: "https://lux-novo.lux.sex/", external: true },
   {
     label: "Turismo",
     href: "/turismo",
@@ -175,6 +175,16 @@ export const sectionMeta = {
     title: "Charutos",
     tagline: "O ritual lento",
     description: "Cohibas, dominicanos e o renascimento da charutaria de autor em São Paulo.",
+  },
+  "vida-noturna/musica": {
+    title: "Música",
+    tagline: "A trilha da madrugada",
+    description: "DJs, selos, pistas e artistas que definem o som da noite contemporânea.",
+  },
+  "vida-noturna/artistas": {
+    title: "Artistas",
+    tagline: "Quem move a noite",
+    description: "Perfis, lançamentos e performances dos nomes que ocupam palcos e pistas.",
   },
   gastronomia: {
     title: "Gastronomia",

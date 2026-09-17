@@ -13,7 +13,7 @@ const safe = async (promise, fallback) => {
 };
 
 const EDITORS_BY_SECTION_QUERY = `
-*[_type == "editor" && active == true && ($section in sections || section == $section)] | order(priority desc){
+*[_type == "editor" && active != false && ($section in sections || section == $section)] | order(priority desc){
   _id,
   name,
   "slug": slug.current,

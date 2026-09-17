@@ -9,6 +9,7 @@ import PartnersSidebar from "../components/PartnersSidebar";
 import Newsletter from "../components/Newsletter";
 import DailyReadingModal from "../components/horoscope/DailyReadingModal";
 import PersonalReading from "../components/horoscope/PersonalReading";
+import EditorialBanner from "../components/EditorialBanner";
 
 const SECTION_PATH = "bem-estar/horoscopo";
 
@@ -95,6 +96,10 @@ const HoroscopePage = () => {
             {t("horoscope.subtitle")}
           </p>
         </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-[1340px] px-6 pt-8 lg:px-10">
+        <EditorialBanner section={SECTION_PATH} />
       </section>
 
       {/* ============ 12 SIGN CARDS ============ */}
