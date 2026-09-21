@@ -152,6 +152,21 @@
       "action": "See the match",
       "strengths": "Strengths",
       "challenges": "Challenges"
+    },
+    "greek_eyebrow": "Western astrology",
+    "greek_title1": "Your horoscope",
+    "greek_title2": "today",
+    "greek_subtitle": "Pick your sign and get today's reading from Mestre Agnes.",
+    "chinese_eyebrow": "Chinese astrology",
+    "chinese_title1": "Chinese",
+    "chinese_title2": "zodiac",
+    "chinese_subtitle": "Discover your animal and the energy it rules today.",
+    "chinese_years": "Years",
+    "section": {
+      "overview": "Overview",
+      "love": "Love",
+      "career": "Career",
+      "advice": "Advice"
     }
   },
   "sexuality": {

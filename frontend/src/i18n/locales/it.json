@@ -152,6 +152,21 @@
       "action": "Vedi l'intesa",
       "strengths": "Punti forti",
       "challenges": "Sfide"
+    },
+    "greek_eyebrow": "Astrologia occidentale",
+    "greek_title1": "Il tuo oroscopo",
+    "greek_title2": "di oggi",
+    "greek_subtitle": "Scegli il tuo segno e ricevi la lettura del giorno di Mestre Agnes.",
+    "chinese_eyebrow": "Astrologia cinese",
+    "chinese_title1": "Zodiaco",
+    "chinese_title2": "cinese",
+    "chinese_subtitle": "Scopri il tuo animale e l'energia che governa oggi.",
+    "chinese_years": "Anni",
+    "section": {
+      "overview": "Panoramica",
+      "love": "Amore",
+      "career": "Carriera",
+      "advice": "Consiglio"
     }
   },
   "sexuality": {

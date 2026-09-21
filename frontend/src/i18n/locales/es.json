@@ -152,6 +152,21 @@
       "action": "Ver combinación",
       "strengths": "Fortalezas",
       "challenges": "Desafíos"
+    },
+    "greek_eyebrow": "Astrología occidental",
+    "greek_title1": "Tu horóscopo",
+    "greek_title2": "del día",
+    "greek_subtitle": "Elige tu signo y recibe la lectura del día de Mestre Agnes.",
+    "chinese_eyebrow": "Astrología china",
+    "chinese_title1": "Zodíaco",
+    "chinese_title2": "chino",
+    "chinese_subtitle": "Descubre tu animal y la energía que rige hoy.",
+    "chinese_years": "Años",
+    "section": {
+      "overview": "Panorama",
+      "love": "Amor",
+      "career": "Carrera",
+      "advice": "Consejo"
     }
   },
   "sexuality": {

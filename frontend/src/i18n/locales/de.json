@@ -152,6 +152,21 @@
       "action": "Match ansehen",
       "strengths": "Stärken",
       "challenges": "Herausforderungen"
+    },
+    "greek_eyebrow": "Westliche Astrologie",
+    "greek_title1": "Dein Horoskop",
+    "greek_title2": "des Tages",
+    "greek_subtitle": "Wähle dein Zeichen und erhalte die Tageslesung von Mestre Agnes.",
+    "chinese_eyebrow": "Chinesische Astrologie",
+    "chinese_title1": "Chinesisches",
+    "chinese_title2": "Tierkreiszeichen",
+    "chinese_subtitle": "Entdecke dein Tier und die Energie, die es heute regiert.",
+    "chinese_years": "Jahre",
+    "section": {
+      "overview": "Überblick",
+      "love": "Liebe",
+      "career": "Karriere",
+      "advice": "Rat"
     }
   },
   "sexuality": {

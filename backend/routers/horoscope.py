@@ -225,6 +225,9 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
             logger.warning("Agnes cache read unavailable: %s", exc)
 
         reading: Optional[Dict[str, Any]] = None
+        agnes_essence = ""
+        agnes_number = ""
+        agnes_color = ""
 
         # Western signs -> real daily reading from the Mestre Agnes backend
         if system == "western":
@@ -237,49 +240,70 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
                     data = resp.json()
                 message = (data.get("mensagem") or "").strip()
                 if message:
-                    if lang != "pt":
-                        message = await _translate(
-                            f"agnes-tr-{sign}-{today}-{lang}", message, lang
-                        )
-                    reading = {
-                        "message": message,
-                        "lucky_number": str(data.get("numero_do_dia") or ""),
-                        "lucky_color": data.get("cor_do_dia") or "",
-                    }
+                    agnes_essence = (
+                        await _translate(f"agnes-tr-{sign}-{today}-{lang}", message, lang)
+                        if lang != "pt"
+                        else message
+                    )
+                    agnes_number = str(data.get("numero_do_dia") or "").strip()
+                    agnes_color = data.get("cor_do_dia") or ""
             except Exception as exc:
                 logger.warning("Agnes western fetch failed: %s", exc)
 
-        # Chinese zodiac (or western fallback) -> generated in Agnes' voice
-        if reading is None:
-            if not llm_keys():
-                raise HTTPException(503, "Horoscope service unavailable")
+        # Build the rich reading (essence + sections + lucky numbers) via LLM,
+        # seeded by the real Mestre Agnes message when available.
+        if llm_keys():
             subject = (
                 f"the Chinese zodiac animal {name} ({sign})"
                 if system == "chinese"
                 else f"the zodiac sign {name} ({sign})"
             )
+            seed = (
+                f'Base the reading on this daily message from Mestre Agnes: "{agnes_essence}". '
+                if agnes_essence
+                else ""
+            )
             sys_msg = (
-                "You are Mestre Agnes, a warm, wise Brazilian astrologer. Write today's "
-                f"short daily horoscope in {LANG_NAMES[lang]}. Return ONLY valid JSON, no markdown."
+                "You are Mestre Agnes, a warm, wise Brazilian astrologer. "
+                f"Answer in {LANG_NAMES[lang]}. Return ONLY valid JSON, no markdown."
             )
             prompt_text = (
-                f"Write today's ({today}) horoscope for {subject} in {LANG_NAMES[lang]}. "
+                f"Write today's ({today}) horoscope for {subject}. {seed}"
                 "Return JSON with exactly these keys: "
-                '{"message": "2-3 sentence inspiring daily reading", '
-                '"lucky_color": "one color name", '
-                '"lucky_number": "one number 1-99 as string"}'
+                '{"essence": "1-2 sentence core reading of the day", '
+                '"overview": "1-2 sentences", "love": "1-2 sentences", '
+                '"career": "1-2 sentences", "advice": "1 warm sentence", '
+                '"lucky_numbers": [three integers between 1 and 60], '
+                '"lucky_color": "one color name"}'
             )
             raw = await send_with_fallback(
-                f"agnes-{system}-{sign}-{today}-{lang}", sys_msg, prompt_text
+                f"agnes-rich-{system}-{sign}-{today}-{lang}", sys_msg, prompt_text
             )
-            parsed = _parse_json(raw)
-            if not parsed:
-                raise HTTPException(502, "Could not read the stars right now")
-            reading = {
-                "message": parsed.get("message", ""),
-                "lucky_number": str(parsed.get("lucky_number", "")),
-                "lucky_color": parsed.get("lucky_color", ""),
-            }
+            parsed = _parse_json(raw) or {}
+        else:
+            parsed = {}
+
+        if not parsed and not agnes_essence:
+            raise HTTPException(502, "Could not read the stars right now")
+
+        lucky_numbers: list = []
+        if agnes_number:
+            lucky_numbers.append(agnes_number)
+        for n in parsed.get("lucky_numbers", []) or []:
+            token = str(n).strip()
+            if token and token not in lucky_numbers:
+                lucky_numbers.append(token)
+        lucky_numbers = lucky_numbers[:3]
+
+        reading = {
+            "essence": agnes_essence or parsed.get("essence", ""),
+            "overview": parsed.get("overview", ""),
+            "love": parsed.get("love", ""),
+            "career": parsed.get("career", ""),
+            "advice": parsed.get("advice", ""),
+            "lucky_numbers": lucky_numbers,
+            "lucky_color": agnes_color or parsed.get("lucky_color", ""),
+        }
 
         try:
             await db.agnes_horoscopes.update_one(
