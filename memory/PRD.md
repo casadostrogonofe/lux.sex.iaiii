@@ -30,6 +30,11 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 - `AGNES_API_KEY` já em `backend/.env`; para produção, defina-a também no painel do Vercel.
 - Testing agent iteration_14: ambas as abas + correção de foco — 100% aprovado. Biome/Knip/Vitest verdes.
 
+### 21/Set/2026 (parte 7) — Contador de acessos real no rodapé ✅
+- Backend `routers/stats.py`: `GET /api/stats/visits` (lê) e `POST /api/stats/visits` (incrementa) sobre a coleção `luxsex.site_stats` no Atlas — funciona no Vercel. Registrado em `server.py`.
+- Frontend `VisitorCounter.jsx` no rodapé (`Footer.jsx`): conta 1x por sessão (sessionStorage `luxsex_visited`), exibindo o total real formatado + rótulo `footer.visits` (6 idiomas).
+- Corrigido double-count do React StrictMode (flag de sessão setado sincronamente antes do fetch). Testing agent iteration_16: exatamente 1 POST/nova sessão, 0 no reload — 100% aprovado. Persistência confirmada no Atlas.
+
 ## 3. Implementado
 
 ### 21/Set/2026 (parte 4) — Horóscopo no padrão da página + compartilhar + correção de produção ✅
