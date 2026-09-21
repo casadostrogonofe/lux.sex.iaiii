@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Instagram } from "lucide-react";
 import { LOGO_IAIII } from "../mock/mockData";
+import VisitorCounter from "./VisitorCounter";
 
 const Footer = () => (
   <footer className="bg-black border-t border-[#1a1526] pt-20 pb-10">
@@ -79,6 +80,7 @@ const Footer = () => (
           <span className="w-1 h-1 rounded-full bg-[#5a5470]" />
           <span>Conexão Privada</span>
         </div>
+        <VisitorCounter />
         <div className="flex items-center gap-4 text-[10px] tracking-[0.4em] text-[#5a5470] uppercase">
           <span>ECA Digital</span>
           <span>·</span>

@@ -416,6 +416,10 @@ app.include_router(make_translation_router(db))
 from routers.horoscope import make_router as make_horoscope_router
 app.include_router(make_horoscope_router(db))
 
+# Stats router (real visitor counter)
+from routers.stats import make_router as make_stats_router
+app.include_router(make_stats_router(db))
+
 _cors_origins = [o.strip() for o in os.environ.get('CORS_ORIGINS', '*').split(',')]
 app.add_middleware(
     CORSMiddleware,
