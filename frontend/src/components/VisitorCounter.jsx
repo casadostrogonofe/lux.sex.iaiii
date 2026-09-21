@@ -11,6 +11,9 @@ const VisitorCounter = () => {
   useEffect(() => {
     let cancelled = false;
     const alreadyCounted = sessionStorage.getItem("luxsex_visited") === "1";
+    // Claim the session synchronously so a duplicate effect run (React
+    // StrictMode) reads it as counted and only reads, never double-increments.
+    if (!alreadyCounted) sessionStorage.setItem("luxsex_visited", "1");
     (async () => {
       try {
         const res = await fetch(`${API}/stats/visits`, {
@@ -18,7 +21,6 @@ const VisitorCounter = () => {
         });
         const data = await res.json();
         if (!cancelled) setCount(data.count ?? 0);
-        if (!alreadyCounted) sessionStorage.setItem("luxsex_visited", "1");
       } catch {
         /* counter unavailable */
       }

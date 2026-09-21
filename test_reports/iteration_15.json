@@ -1,0 +1,28 @@
+{
+  "summary": "Testei o VisitorCounter no rodapé. O contador aparece corretamente com data-testid='visitor-counter' e data-testid='visitor-count', exibindo um número real vindo do backend (>=1). Reload na mesma sessão NÃO incrementa (2 GETs, 0 POST). Porém, ao abrir uma NOVA sessão (sessionStorage limpo) o contador incrementa +2 em vez de +1 — o componente dispara 2 POSTs devido ao React StrictMode e ao fato do sessionStorage.setItem ser chamado somente APÓS o await do fetch resolver, permitindo que ambas as invocações concorrentes do useEffect enviem POST antes de qualquer uma marcar o flag.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "VisitorCounter.jsx", "issue": "Nova sessão incrementa +2 em vez de +1. Verificado via monitoramento de rede: 2 POSTs /api/stats/visits são disparados em uma única montagem inicial. Causa raiz: React.StrictMode (index.js) executa o useEffect duas vezes em dev; o guard sessionStorage.setItem('luxsex_visited','1') é aplicado APENAS após o await fetch resolver, então ambas as execuções lêem sessionStorage como null e enviam POST. Em produção (sem StrictMode) isso pode não ocorrer, mas o padrão é frágil e não idempotente. Idealmente a marcação deve ser feita SÍNCRONAMENTE antes do fetch, ou usar uma variável de módulo/useRef como guard.", "selector": "[data-testid='visitor-counter']", "priority": "HIGH"}
+    ],
+    "integration_issues": [
+      {"flow": "Nova sessão -> POST /api/stats/visits", "issue": "Dispara 2 POSTs; total incrementa +2 em vez de +1 conforme requisito", "affected_selectors": ["[data-testid='visitor-count']"]}
+    ],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Corrigir VisitorCounter.jsx para garantir idempotência: mover sessionStorage.setItem('luxsex_visited','1') para ANTES do fetch (síncrono, imediatamente após checar alreadyCounted) OU usar um useRef/variável de módulo como guard contra double-invocation do StrictMode. Exemplo: if (!alreadyCounted) { sessionStorage.setItem('luxsex_visited','1'); } antes do await fetch."
+  ],
+  "critical_code_review_comments": [
+    "VisitorCounter.jsx: race condition entre StrictMode double-effect e o setItem post-fetch resulta em duplo POST. Deve marcar sessionStorage síncronamente antes de disparar a requisição POST.",
+    "Backend stats.py: GET/POST implementados corretamente com upsert atômico via find_one_and_update; retorna count sem _id — OK."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "100%", "frontend": "66%"},
+  "seed_data_creation": "Nenhum. Contador atual no Atlas: ~12 no momento do teste.",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Age gate confirmado via data-testid='age-gate-enter-button'. Contador exibe corretamente. Foco do retest: verificar que uma nova sessão gera exatamente 1 POST (monitorar page.on('request')) e count incrementa +1, não +2. Testes anteriores confirmaram: (a) mesma sessão = 2 GETs apenas, sem incremento; (b) nova sessão atualmente = 2 POSTs, +2 incremento — BUG.",
+  "rca of the issue": "React.StrictMode em /app/frontend/src/index.js executa efeitos duas vezes em dev. Em VisitorCounter.jsx, o guard sessionStorage.setItem('luxsex_visited','1') está DENTRO do bloco async, após 'await fetch'. Ambas as execuções concorrentes do effect leem sessionStorage=null, ambas enviam POST, e só depois marcam o flag. Reprodução: abrir a preview em contexto novo do Playwright, remover sessionStorage.luxsex_visited, recarregar; capturar requests -> 2 POSTs observados. Mitigação: setar sessionStorage síncronamente ANTES do fetch: `if (!alreadyCounted) { sessionStorage.setItem('luxsex_visited','1'); }` seguido do fetch POST; ou usar módulo-level flag: `let __posted=false;` verificado dentro do effect."
+}
