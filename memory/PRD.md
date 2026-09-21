@@ -21,6 +21,16 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 21/Set/2026 (parte 4) — Horóscopo no padrão da página + compartilhar + correção de produção ✅
+- **Layout**: removido o fundo de constelação/estilo navy+dourado; a seção do zodíaco (`ZodiacWidget`) e os pop-ups agora seguem o padrão dark/roxo da página (fundo #0b0812, roxo #9b30ff, dourado #d4af37, font-serif). Cards ilustrados mantidos; header sem imagem de fundo; ZodiacWidget dentro do container com `PartnersSidebar`.
+- **Pop-ups mantêm as seções** (Panorama/Amor/Carreira/Conselho) + essência + números/cor da sorte + selo Agnes + CTA.
+- **Correção de produção ("não abre o resultado")**: no endpoint `/api/horoscope/agnes`, a essência do signo ocidental vem **direto da Agnes** (httpx timeout 18s) e o enriquecimento por IA das seções agora é **time-boxed (asyncio.wait_for 18s) e envolto em try/except** — nunca derruba nem trava a resposta. Resposta medida em ~6-8s (HTTP 200), com cache diário resiliente a Mongo indisponível. Isso resolve o timeout/500 no Vercel.
+- **Compartilhar signo** (novo): `ShareRow` em cada pop-up com botões WhatsApp e "Copiar link", gerando URL `?signo=<id>` (ocidental) ou `?animal=<id>` (chinês). Ao abrir a página com `?signo=aries`, o pop-up do signo abre automaticamente (via `useSearchParams`).
+- Componentes: `ShareRow.jsx` (novo); `ZodiacWidget.jsx`, `AgnesSignDialog.jsx`, `AgnesChineseDialog.jsx`, `HoroscopePage.jsx` reescritos; removido `ZODIAC_BACKGROUND` de `horoscopeData.js`.
+- Testing agent iteration_13: layout sem fundo, pop-ups com seções, compartilhar (WhatsApp+copiar) e deep-link `?signo=` — 100% aprovado. Biome/Knip/Vitest verdes.
+- **Compatibilidade oficial da Agnes**: ainda pendente — o corpo `pessoas` de `POST /api/agnes/compatibilidade` não está no código do frontend Agnes e retorna 500 nas tentativas; aguardando o usuário enviar um exemplo do JSON esperado. Compatibilidade segue por IA.
+
+
 ### 21/Set/2026 (parte 3) — Cards + pop-up do horóscopo no estilo Mestre Agnes ✅
 - Replicado o design do widget de zodíaco do projeto do próprio usuário (repo hub3pixellab/hub3jarvis) dentro da Lux:
   - **Grade de 12 signos ocidentais** com arte ilustrada (imagens cdn.enter.pro), nome (Cinzel) e intervalo de datas; fundo de mapa astral.
