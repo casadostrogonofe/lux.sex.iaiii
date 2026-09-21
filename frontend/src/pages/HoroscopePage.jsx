@@ -8,6 +8,7 @@ import PartnersSidebar from "../components/PartnersSidebar";
 import Newsletter from "../components/Newsletter";
 import AgnesReadingModal from "../components/horoscope/AgnesReadingModal";
 import PersonalReading from "../components/horoscope/PersonalReading";
+import CompatibilityCard from "../components/horoscope/CompatibilityCard";
 import EditorialBanner from "../components/EditorialBanner";
 
 const SECTION_PATH = "bem-estar/horoscopo";
@@ -171,6 +172,8 @@ const HoroscopePage = () => {
               <div className="h-px flex-1 bg-[#1f1a35]" />
             </div>
             <SignGrid items={CHINESE} system="chinese" onSelect={setSelected} />
+
+            <CompatibilityCard />
 
             <PersonalReading />
           </div>

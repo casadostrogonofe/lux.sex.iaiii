@@ -143,7 +143,16 @@
       "members": "Members area"
     },
     "greek_title": "Zodiac signs",
-    "chinese_title": "Chinese zodiac"
+    "chinese_title": "Chinese zodiac",
+    "compat": {
+      "tag": "Sign match",
+      "title": "Love compatibility",
+      "sign1": "First sign",
+      "sign2": "Second sign",
+      "action": "See the match",
+      "strengths": "Strengths",
+      "challenges": "Challenges"
+    }
   },
   "sexuality": {
     "tagline": "Wellness · Sexuality",

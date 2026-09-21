@@ -143,7 +143,16 @@
       "members": "Area membri"
     },
     "greek_title": "Segni zodiacali",
-    "chinese_title": "Zodiaco cinese"
+    "chinese_title": "Zodiaco cinese",
+    "compat": {
+      "tag": "Abbinamento segni",
+      "title": "Compatibilità amorosa",
+      "sign1": "Primo segno",
+      "sign2": "Secondo segno",
+      "action": "Vedi l'intesa",
+      "strengths": "Punti forti",
+      "challenges": "Sfide"
+    }
   },
   "sexuality": {
     "tagline": "Benessere · Sessualità",

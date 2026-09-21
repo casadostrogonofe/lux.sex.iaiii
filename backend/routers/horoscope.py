@@ -216,10 +216,13 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
 
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         cache_key = {"system": system, "sign": sign, "date": today, "lang": lang}
-        cached = await db.agnes_horoscopes.find_one(cache_key, {"_id": 0})
-        if cached and cached.get("reading"):
-            return {**cache_key, "name": name, "reading": cached["reading"],
-                    "source": "Mestre Agnes", "cached": True}
+        try:
+            cached = await db.agnes_horoscopes.find_one(cache_key, {"_id": 0})
+            if cached and cached.get("reading"):
+                return {**cache_key, "name": name, "reading": cached["reading"],
+                        "source": "Mestre Agnes", "cached": True}
+        except Exception as exc:
+            logger.warning("Agnes cache read unavailable: %s", exc)
 
         reading: Optional[Dict[str, Any]] = None
 
@@ -278,13 +281,83 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
                 "lucky_color": parsed.get("lucky_color", ""),
             }
 
-        await db.agnes_horoscopes.update_one(
-            cache_key,
-            {"$set": {**cache_key, "reading": reading,
-                      "created_at": datetime.now(timezone.utc).isoformat()}},
-            upsert=True,
-        )
+        try:
+            await db.agnes_horoscopes.update_one(
+                cache_key,
+                {"$set": {**cache_key, "reading": reading,
+                          "created_at": datetime.now(timezone.utc).isoformat()}},
+                upsert=True,
+            )
+        except Exception as exc:
+            logger.warning("Agnes cache write unavailable: %s", exc)
         return {**cache_key, "name": name, "reading": reading,
                 "source": "Mestre Agnes", "cached": False}
+
+    @router.get("/compat", dependencies=[Depends(rate_limit("horoscope-compat", 60, 60))])
+    async def compat_reading(
+        sign1: str = "", sign2: str = "", lang: str = "pt"
+    ) -> Dict[str, Any]:
+        sign1 = (sign1 or "").lower()
+        sign2 = (sign2 or "").lower()
+        lang = (lang or "pt").lower()
+        if lang not in LANG_NAMES:
+            lang = "pt"
+        if sign1 not in SIGNS or sign2 not in SIGNS:
+            raise HTTPException(400, "Unknown sign")
+        name1, name2 = SIGNS[sign1], SIGNS[sign2]
+        pair = "-".join(sorted([sign1, sign2]))
+        cache_key = {"pair": pair, "lang": lang}
+
+        try:
+            cached = await db.compat_readings.find_one(cache_key, {"_id": 0})
+            if cached and cached.get("reading"):
+                return {"sign1": sign1, "sign2": sign2, "name1": name1,
+                        "name2": name2, "reading": cached["reading"],
+                        "source": "Mestre Agnes", "cached": True}
+        except Exception as exc:
+            logger.warning("Compat cache read unavailable: %s", exc)
+
+        if not llm_keys():
+            raise HTTPException(503, "Compatibility service unavailable")
+        sys_msg = (
+            "You are Mestre Agnes, a warm, wise Brazilian astrologer specialised in love "
+            f"compatibility. Answer in {LANG_NAMES[lang]}. Return ONLY valid JSON, no markdown."
+        )
+        prompt_text = (
+            f"Analyse the romantic compatibility between {name1} and {name2}. "
+            "Return JSON with exactly these keys: "
+            '{"score": integer 0-100, '
+            '"summary": "2 sentence overview", '
+            '"strengths": "1-2 sentences on what works", '
+            '"challenges": "1-2 sentences on what to watch", '
+            '"advice": "1 warm sentence of guidance"}'
+        )
+        raw = await send_with_fallback(f"compat-{pair}-{lang}", sys_msg, prompt_text)
+        parsed = _parse_json(raw)
+        if not parsed:
+            raise HTTPException(502, "Could not read the stars right now")
+        try:
+            score = int(parsed.get("score", 0))
+        except (TypeError, ValueError):
+            score = 0
+        reading = {
+            "score": max(0, min(100, score)),
+            "summary": parsed.get("summary", ""),
+            "strengths": parsed.get("strengths", ""),
+            "challenges": parsed.get("challenges", ""),
+            "advice": parsed.get("advice", ""),
+        }
+
+        try:
+            await db.compat_readings.update_one(
+                cache_key,
+                {"$set": {**cache_key, "reading": reading,
+                          "created_at": datetime.now(timezone.utc).isoformat()}},
+                upsert=True,
+            )
+        except Exception as exc:
+            logger.warning("Compat cache write unavailable: %s", exc)
+        return {"sign1": sign1, "sign2": sign2, "name1": name1, "name2": name2,
+                "reading": reading, "source": "Mestre Agnes", "cached": False}
 
     return router

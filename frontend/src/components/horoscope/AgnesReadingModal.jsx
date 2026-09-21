@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { motion } from "motion/react";
 import { X, Sparkles, RefreshCw, ExternalLink } from "lucide-react";
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const API = `${process.env.REACT_APP_BACKEND_URL || ""}/api`;
 const AGNES_SITE = "https://frontend-nu-opal-d1fi47s48v.vercel.app";
 const AGNES_LOGO = "/agnes-logo.jpeg";
 

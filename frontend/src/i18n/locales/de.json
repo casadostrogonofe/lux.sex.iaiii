@@ -143,7 +143,16 @@
       "members": "Mitgliederbereich"
     },
     "greek_title": "Sternzeichen",
-    "chinese_title": "Chinesisches Tierkreiszeichen"
+    "chinese_title": "Chinesisches Tierkreiszeichen",
+    "compat": {
+      "tag": "Zeichen-Match",
+      "title": "Liebeskompatibilität",
+      "sign1": "Erstes Zeichen",
+      "sign2": "Zweites Zeichen",
+      "action": "Match ansehen",
+      "strengths": "Stärken",
+      "challenges": "Herausforderungen"
+    }
   },
   "sexuality": {
     "tagline": "Wellness · Sexualität",
