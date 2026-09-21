@@ -21,6 +21,21 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 21/Set/2026 (parte 2) — Correção de produção do horóscopo + Compatibilidade amorosa ✅
+- **FIX P0 (produção Vercel)**: o horóscopo não retornava em produção. Causas tratadas no código:
+  - Base de API tornada relativa: `process.env.REACT_APP_BACKEND_URL || ""` em AgnesReadingModal, PersonalReading, HoroscopeFeedCard, CompatibilityCard, PostInteractions e api/banners.js → em produção same-domain o fetch usa `/api/...` (rewrite do vercel.json → `/api/index`), independente de a env estar setada no build do Vercel.
+  - Endpoints `/api/horoscope/agnes` e `/api/horoscope/compat` agora são **resilientes ao Mongo indisponível** (leitura/escrita de cache em try/except) — retornam a leitura mesmo se o Atlas de produção estiver fora.
+- **Compatibilidade amorosa** (novo): endpoint `GET /api/horoscope/compat?sign1=&sign2=&lang=` (IA na voz do Mestre Agnes, cache em `db.compat_readings`) + componente `CompatibilityCard.jsx` na HoroscopePage (dois selects + score % com barra, resumo, pontos fortes, desafios, conselho, selo Agnes). i18n em 6 idiomas.
+- Testing agent iteration_11: horóscopo (Áries/Dragão) + card de compatibilidade — 100% aprovado. Biome/Knip/Vitest verdes.
+
+### ⚠️ Pendências que dependem de você
+- **Chave de API da Mestra Agnes**: a compatibilidade oficial (`POST /api/agnes/compatibilidade`) exige `x-api-key`. Enquanto não houver, o card usa IA. Envie a chave para trocar pela API real.
+- **Horóscopo chinês "real"**: a API pública da Agnes NÃO tem endpoint chinês (só os 12 signos ocidentais). O chinês continua gerado por IA na voz da Agnes até a Agnes publicar um endpoint.
+- **Banners no Sanity**: só tenho token de LEITURA; para subir documentos preciso de um token de ESCRITA do Sanity (ou você sobe no Studio; schema `editorialBanner` pronto).
+- **Plataforma de Festas**: aguardando escolha do provedor de pagamento (recomendado Stripe).
+- **MongoDB de produção**: o cluster Atlas `horoscopo.hmts3pj` do `.env` antigo está com DNS morto. Confirme que a env `MONGO_URL` no painel do Vercel aponta para um cluster Atlas válido, senão likes/comentários e cache de horóscopo não persistem em produção.
+
+
 ### 21/Set/2026 — Horóscopo Mestre Agnes (grego + chinês) + Menu + Parceiros + Matérias de topo ✅
 - **Horóscopo Agnes**: novo endpoint backend `GET /api/horoscope/agnes?system=western|chinese&sign=&lang=`
   - `western` (12 signos "gregos"): busca o horóscopo diário REAL da API pública Mestra Agnes (`https://agnes-backend.onrender.com/api/agnes/horoscopo?signo=`), traduz para o idioma quando ≠ pt (Gemini), cache diário em `db.agnes_horoscopes`
