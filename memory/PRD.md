@@ -19,6 +19,10 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 - **Audio**: SoundCloud Widget API (autoplay muted + loop)
 - **Layout persistente** mantém o player e header montados entre rotas
 
+### 21/Set/2026 (parte 5) — MongoDB apontado para o novo Atlas ✅
+- `backend/.env` `MONGO_URL` agora aponta para o novo cluster Atlas `agnes.zmkehho.mongodb.net` (DB_NAME mantido = `luxsex`). Testado: conexão OK, horóscopo grava/lê o cache em `luxsex.agnes_horoscopes`, leitura em cache ~0.9s. O cluster antigo `horoscopo.hmts3pj` (DNS morto) foi abandonado.
+- ⚠️ Em produção (Vercel), defina a MESMA `MONGO_URL` no painel de variáveis do Vercel para o horóscopo/curtidas persistirem lá também.
+
 ## 3. Implementado
 
 ### 21/Set/2026 (parte 4) — Horóscopo no padrão da página + compartilhar + correção de produção ✅
