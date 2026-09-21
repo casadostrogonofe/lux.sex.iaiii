@@ -151,7 +151,16 @@
       "sign2": "Zweites Zeichen",
       "action": "Match ansehen",
       "strengths": "Stärken",
-      "challenges": "Herausforderungen"
+      "challenges": "Herausforderungen",
+      "person": "Person",
+      "name": "Name",
+      "birthdate": "Geburtsdatum",
+      "birthtime": "Uhrzeit",
+      "city": "Stadt",
+      "mode_sign": "Nach Zeichen",
+      "mode_birth": "Vollständige Synastrie",
+      "action_full": "Synastrie ansehen",
+      "official_badge": "Offizielle Synastrie · Mestre Agnes"
     },
     "greek_eyebrow": "Westliche Astrologie",
     "greek_title1": "Dein Horoskop",
