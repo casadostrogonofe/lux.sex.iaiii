@@ -33,7 +33,13 @@
     "flavor": "Sapore",
     "sex_shop": "Sex Shop",
     "marketplace": "Marketplace",
-    "bets": "Scommesse"
+    "bets": "Scommesse",
+    "places": "Luoghi",
+    "restaurants": "Ristoranti",
+    "bars": "Bar",
+    "sports": "Sport",
+    "parties": "Feste",
+    "drinks": "Drink"
   },
   "common": {
     "read_more": "Leggi articolo",
@@ -128,7 +134,16 @@
       "pick": "Qual è il tuo segno?",
       "change": "Cambia segno",
       "full": "Vedi l'oroscopo completo"
-    }
+    },
+    "agnes": {
+      "updated_by": "Aggiornato da Mestre Agnes",
+      "daily_tag": "Lettura del giorno",
+      "full_consult": "Consulto completo con il Maestro",
+      "login": "Accedi / Crea account",
+      "members": "Area membri"
+    },
+    "greek_title": "Segni zodiacali",
+    "chinese_title": "Zodiaco cinese"
   },
   "sexuality": {
     "tagline": "Benessere · Sessualità",

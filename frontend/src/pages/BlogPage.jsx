@@ -67,6 +67,9 @@ const BlogPage = () => {
   const subItems = parentItem?.children || [];
   const featured = posts.find((p) => p.featured) || posts[0];
   const rest = posts.filter((p) => p.id !== featured?.id);
+  const featuredHref = featured
+    ? `/${featured.path}/${featured.slug || featured.id}`
+    : "#";
   const isAdult = meta.adult;
 
   return (
@@ -156,7 +159,11 @@ const BlogPage = () => {
             <section className="max-w-[1400px] mx-auto px-6 md:px-10 py-16">
               <article className="group block relative overflow-hidden border border-[#1a1526] hover:border-[#9b30ff]/40 transition-colors duration-300">
                 <div className="grid lg:grid-cols-2">
-                  <div className="relative h-[320px] md:h-[480px] lg:h-[560px] overflow-hidden">
+                  <Link
+                    to={featuredHref}
+                    className="relative h-[320px] md:h-[480px] lg:h-[560px] overflow-hidden block"
+                    data-testid="featured-article-image-link"
+                  >
                     <img
                       src={featured.image}
                       alt={featured.title}
@@ -168,14 +175,16 @@ const BlogPage = () => {
                         {featured.sign}
                       </div>
                     )}
-                  </div>
+                  </Link>
                   <div className="relative bg-[#0b0812] p-8 md:p-14 lg:p-16 flex flex-col justify-center">
                     <span className="text-[10px] md:text-xs tracking-[0.4em] text-[#9b30ff] uppercase mb-6">
                       Em destaque
                     </span>
-                    <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-[#f5f0ff] leading-[1.15] mb-6">
-                      {featured.title}
-                    </h2>
+                    <Link to={featuredHref} data-testid="featured-article-title-link">
+                      <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-[#f5f0ff] leading-[1.15] mb-6 hover:text-[#9b30ff] transition-colors">
+                        {featured.title}
+                      </h2>
+                    </Link>
                     <p className="text-[#7c7893] text-base md:text-lg leading-relaxed mb-8 font-light">
                       {featured.excerpt}
                     </p>
@@ -190,7 +199,20 @@ const BlogPage = () => {
                         <Clock className="w-3.5 h-3.5" /> {featured.readTime}
                       </span>
                     </div>
-                    <PostInteractions postId={featured.id} postTitle={featured.title} />
+                    <div className="flex items-center justify-between gap-4">
+                      <PostInteractions
+                        postId={featured.id}
+                        postTitle={featured.title}
+                        postUrl={`${window.location.origin}${featuredHref}`}
+                      />
+                      <Link
+                        to={featuredHref}
+                        className="text-[10px] tracking-[0.3em] uppercase px-3 py-2 text-[#9b30ff] hover:text-[#b15aff] transition-colors whitespace-nowrap"
+                        data-testid="featured-article-read-more"
+                      >
+                        {t("common.read_more")} →
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </article>
