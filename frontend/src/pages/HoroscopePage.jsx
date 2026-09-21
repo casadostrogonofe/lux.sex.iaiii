@@ -11,7 +11,6 @@ import CompatibilityCard from "../components/horoscope/CompatibilityCard";
 import EditorialBanner from "../components/EditorialBanner";
 
 const SECTION_PATH = "bem-estar/horoscopo";
-const AGNES_BG = "/agnes-horoscopo-bg.png";
 const AGNES_LOGO = "/agnes-logo.jpeg";
 
 const HoroscopePage = () => {
@@ -26,15 +25,10 @@ const HoroscopePage = () => {
       <section className="relative pt-32 pb-16 border-b border-[#1a1526] overflow-hidden">
         <div
           aria-hidden
-          className="absolute inset-0 bg-cover bg-center opacity-40"
-          style={{ backgroundImage: `url(${AGNES_BG})` }}
-        />
-        <div
-          aria-hidden
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse at 30% 20%, rgba(155,48,255,0.28) 0%, transparent 55%), radial-gradient(ellipse at 70% 80%, rgba(212,175,55,0.16) 0%, transparent 60%), rgba(5,2,8,0.72)",
+              "radial-gradient(ellipse at 30% 20%, rgba(155,48,255,0.22) 0%, transparent 55%), radial-gradient(ellipse at 70% 80%, rgba(212,175,55,0.12) 0%, transparent 60%)",
           }}
         />
         <div className="relative max-w-[1340px] mx-auto px-6 lg:px-10">
@@ -51,7 +45,7 @@ const HoroscopePage = () => {
               {t("horoscope.tagline")}
             </span>
           </div>
-          <h1 className="font-['Cinzel'] text-[#f5f0ff] text-5xl md:text-7xl lg:text-[80px] leading-[1.05] mb-6">
+          <h1 className="font-serif text-[#f5f0ff] text-5xl md:text-7xl lg:text-[80px] leading-[1.05] mb-6">
             {t("horoscope.title")}
           </h1>
           <p className="text-[#a89fc4] text-lg max-w-2xl leading-[1.7] font-light mb-6">
@@ -73,17 +67,12 @@ const HoroscopePage = () => {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-[1340px] px-6 pt-8 lg:px-10">
-        <EditorialBanner section={SECTION_PATH} />
-      </section>
-
-      {/* ============ ZODIAC WIDGET (cards + pop-ups no estilo Mestre Agnes) ============ */}
-      <ZodiacWidget />
-
-      {/* ============ COMPATIBILIDADE + LEITURA PESSOAL + PARCEIROS ============ */}
-      <section className="py-16">
-        <div className="max-w-[1340px] mx-auto px-4 md:px-6 lg:px-10 flex flex-col lg:flex-row gap-10 lg:justify-center">
-          <div className="flex-1 lg:max-w-[900px]">
+      {/* ============ CONTEÚDO ============ */}
+      <section className="py-12">
+        <div className="max-w-[1340px] mx-auto px-4 md:px-6 lg:px-10 flex flex-col lg:flex-row gap-10">
+          <div className="flex-1 min-w-0">
+            <EditorialBanner section={SECTION_PATH} />
+            <ZodiacWidget />
             <CompatibilityCard />
             <PersonalReading />
           </div>

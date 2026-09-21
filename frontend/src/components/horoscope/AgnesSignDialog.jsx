@@ -8,16 +8,15 @@ import {
   DialogDescription,
 } from "../ui/dialog";
 import { AGNES_LOGO, AGNES_PLANS, fetchAgnesReading } from "./horoscopeData";
+import ShareRow from "./ShareRow";
 
 const Section = ({ id, label, text }) =>
   text ? (
     <div className="flex flex-col gap-1.5" data-testid={`sign-section-${id}`}>
-      <span className="font-['Jost'] text-[10px] uppercase tracking-[0.3em] text-[#d4af37]/85">
+      <span className="text-[10px] uppercase tracking-[0.3em] text-[#9b30ff]">
         {label}
       </span>
-      <p className="font-['Jost'] text-sm font-light leading-relaxed tracking-wide text-[#f4ecdd]/75">
-        {text}
-      </p>
+      <p className="text-sm font-light leading-relaxed text-[#cfc5e8]">{text}</p>
     </div>
   ) : null;
 
@@ -45,82 +44,77 @@ const AgnesSignDialog = ({ sign, onClose }) => {
     };
   }, [sign, i18n.resolvedLanguage]);
 
+  const shareUrl = sign
+    ? `${window.location.origin}/bem-estar/horoscopo?signo=${sign.id}`
+    : "";
+
   return (
     <Dialog open={sign !== null} onOpenChange={(o) => !o && onClose()}>
       <DialogContent
-        className="max-h-[90vh] w-[calc(100%-2rem)] max-w-3xl overflow-y-auto border-[#d4af37]/30 bg-[#0b0a1a] p-0 text-[#f4ecdd]"
+        className="max-h-[90vh] w-[calc(100%-2rem)] max-w-3xl overflow-y-auto border-[#1f1a35] bg-[#0b0812] p-0 text-[#f5f0ff]"
         data-testid="sign-horoscope-dialog"
       >
         {sign && (
-          <div className="grid grid-cols-1 md:grid-cols-[minmax(0,280px)_minmax(0,1fr)]">
+          <div className="grid grid-cols-1 md:grid-cols-[minmax(0,260px)_minmax(0,1fr)]">
             <div className="relative hidden md:block">
-              <img
-                src={sign.img}
-                alt={sign.name}
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0b0a1a]/70" />
+              <img src={sign.img} alt={sign.name} className="h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0b0812]/80" />
             </div>
 
             <div className="flex flex-col gap-5 p-6 md:p-8">
               <div>
-                <p className="font-['Jost'] text-[10px] uppercase tracking-[0.4em] text-[#d4af37]/85">
+                <p className="text-[10px] uppercase tracking-[0.4em] text-[#d4af37]">
                   {t("horoscope.agnes.daily_tag", "Leitura do dia")}
                 </p>
-                <DialogTitle className="mt-2 font-['Cinzel'] text-3xl text-[#f4ecdd]">
+                <DialogTitle className="mt-2 font-serif text-3xl text-[#f5f0ff]">
                   {sign.name}
                 </DialogTitle>
-                <DialogDescription className="sr-only">
-                  {t("horoscope.agnes.daily_tag", "Leitura do dia")} — {sign.name}
-                </DialogDescription>
-                <p className="mt-1 font-['Jost'] text-[11px] uppercase tracking-[0.3em] text-[#f4ecdd]/50">
+                <DialogDescription className="mt-1 text-[11px] uppercase tracking-[0.3em] text-[#7c7893]">
                   {sign.range}
-                </p>
+                </DialogDescription>
               </div>
 
               {!reading && !error && (
                 <div className="flex flex-col gap-3 py-6" data-testid="sign-loading">
-                  <div className="h-3 w-full bg-[#1b1636]" />
-                  <div className="h-3 w-5/6 bg-[#1b1636]" />
-                  <div className="h-3 w-2/3 bg-[#1b1636]" />
+                  <div className="h-3 w-full bg-[#1b1427]" />
+                  <div className="h-3 w-5/6 bg-[#1b1427]" />
+                  <div className="h-3 w-2/3 bg-[#1b1427]" />
                 </div>
               )}
 
               {error && (
-                <p className="py-6 font-['Jost'] text-sm text-[#f4ecdd]/60" role="alert">
+                <p className="py-6 text-sm text-[#a89fc4]" role="alert">
                   {t("horoscope.ai.error")}
                 </p>
               )}
 
               {reading && (
                 <>
-                  <div className="flex flex-col gap-3 border-t border-[#d4af37]/15 pt-5">
-                    <p className="font-['Jost'] text-sm leading-relaxed tracking-wide text-[#f4ecdd]/85">
+                  <div className="flex flex-col gap-4 border-t border-[#1f1a35] pt-5">
+                    <p className="text-sm leading-relaxed text-[#e6dffb]">
                       {reading.essence}
                     </p>
-                    <div className="mt-2 flex flex-col gap-4">
-                      <Section id="overview" label={t("horoscope.section.overview", "Panorama")} text={reading.overview} />
-                      <Section id="love" label={t("horoscope.section.love", "Amor")} text={reading.love} />
-                      <Section id="career" label={t("horoscope.section.career", "Carreira")} text={reading.career} />
-                      <Section id="advice" label={t("horoscope.section.advice", "Conselho")} text={reading.advice} />
-                    </div>
+                    <Section id="overview" label={t("horoscope.section.overview", "Panorama")} text={reading.overview} />
+                    <Section id="love" label={t("horoscope.section.love", "Amor")} text={reading.love} />
+                    <Section id="career" label={t("horoscope.section.career", "Carreira")} text={reading.career} />
+                    <Section id="advice" label={t("horoscope.section.advice", "Conselho")} text={reading.advice} />
                   </div>
 
                   {(reading.lucky_numbers?.length > 0 || reading.lucky_color) && (
-                    <div className="flex flex-wrap items-center gap-3 border-t border-[#d4af37]/15 pt-5">
-                      <span className="font-['Jost'] text-[10px] uppercase tracking-[0.3em] text-[#f4ecdd]/50">
+                    <div className="flex flex-wrap items-center gap-3 border-t border-[#1f1a35] pt-5">
+                      <span className="text-[10px] uppercase tracking-[0.3em] text-[#7c7893]">
                         {t("horoscope.ai.lucky_number", "Números da sorte")}
                       </span>
                       {(reading.lucky_numbers || []).map((n, i) => (
                         <span
                           key={i}
-                          className="flex h-8 min-w-8 items-center justify-center rounded-full border border-[#d4af37]/40 bg-[#2a1a5e]/40 px-2 font-['Cinzel'] text-sm text-[#d4af37]"
+                          className="flex h-8 min-w-8 items-center justify-center rounded-full border border-[#d4af37]/40 bg-[#12091f] px-2 font-serif text-sm text-[#d4af37]"
                         >
                           {n}
                         </span>
                       ))}
                       {reading.lucky_color && (
-                        <span className="ml-2 font-['Jost'] text-xs tracking-wide text-[#f4ecdd]/70">
+                        <span className="text-xs text-[#a89fc4]">
                           {t("horoscope.ai.lucky_color", "Cor")}: {reading.lucky_color}
                         </span>
                       )}
@@ -129,13 +123,17 @@ const AgnesSignDialog = ({ sign, onClose }) => {
                 </>
               )}
 
-              <div className="mt-auto flex items-center gap-3 border-t border-[#d4af37]/15 pt-5">
+              <div className="border-t border-[#1f1a35] pt-5">
+                <ShareRow shareUrl={shareUrl} shareText={`${sign.name} — ${t("horoscope.agnes.daily_tag", "Leitura do dia")} · Mestre Agnes`} />
+              </div>
+
+              <div className="flex items-center gap-3">
                 <img
                   src={AGNES_LOGO}
                   alt="Mestre Agnes"
-                  className="h-8 w-8 rounded-full object-cover border border-[#d4af37]/40"
+                  className="h-8 w-8 rounded-full border border-[#d4af37]/40 object-cover"
                 />
-                <span className="font-['Jost'] text-[10px] uppercase tracking-[0.25em] text-[#f4ecdd]/50">
+                <span className="text-[10px] uppercase tracking-[0.25em] text-[#7c7893]">
                   {t("horoscope.agnes.updated_by", "Atualizado por Mestre Agnes")}
                 </span>
               </div>
@@ -145,11 +143,11 @@ const AgnesSignDialog = ({ sign, onClose }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={onClose}
-                className="group inline-flex items-center justify-center gap-3 rounded-full bg-[#d4af37] px-7 py-3.5 font-['Jost'] text-[11px] uppercase tracking-[0.3em] text-[#0b0a1a] transition-colors hover:bg-[#e8c96a]"
+                className="group inline-flex items-center justify-center gap-3 rounded-full bg-[#9b30ff] px-7 py-3.5 text-[11px] uppercase tracking-[0.3em] text-white transition-colors hover:bg-[#8420e8]"
                 data-testid="sign-cta"
               >
                 {t("horoscope.agnes.full_consult", "Consulta completa com o Mestre")}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
             </div>
           </div>

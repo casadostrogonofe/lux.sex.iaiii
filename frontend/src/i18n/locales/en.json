@@ -167,6 +167,11 @@
       "love": "Love",
       "career": "Career",
       "advice": "Advice"
+    },
+    "share": {
+      "label": "Share",
+      "copy": "Copy link",
+      "copied": "Copied!"
     }
   },
   "sexuality": {

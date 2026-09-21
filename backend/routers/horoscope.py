@@ -6,6 +6,7 @@ Routes:
 """
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
 import os
@@ -232,7 +233,7 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
         # Western signs -> real daily reading from the Mestre Agnes backend
         if system == "western":
             try:
-                async with httpx.AsyncClient(timeout=30) as client:
+                async with httpx.AsyncClient(timeout=18) as client:
                     resp = await client.get(
                         f"{AGNES_BASE}/api/agnes/horoscopo", params={"signo": sign}
                     )
@@ -250,8 +251,9 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
             except Exception as exc:
                 logger.warning("Agnes western fetch failed: %s", exc)
 
-        # Build the rich reading (essence + sections + lucky numbers) via LLM,
-        # seeded by the real Mestre Agnes message when available.
+        # Enrich with sections via LLM, but time-boxed so it never blocks the
+        # response (essence for western always comes straight from Mestre Agnes).
+        parsed: Dict[str, Any] = {}
         if llm_keys():
             subject = (
                 f"the Chinese zodiac animal {name} ({sign})"
@@ -276,12 +278,17 @@ def make_router(db: AsyncIOMotorDatabase) -> APIRouter:
                 '"lucky_numbers": [three integers between 1 and 60], '
                 '"lucky_color": "one color name"}'
             )
-            raw = await send_with_fallback(
-                f"agnes-rich-{system}-{sign}-{today}-{lang}", sys_msg, prompt_text
-            )
-            parsed = _parse_json(raw) or {}
-        else:
-            parsed = {}
+            try:
+                raw = await asyncio.wait_for(
+                    send_with_fallback(
+                        f"agnes-rich-{system}-{sign}-{today}-{lang}", sys_msg, prompt_text
+                    ),
+                    timeout=18,
+                )
+                parsed = _parse_json(raw) or {}
+            except Exception as exc:
+                logger.warning("Agnes enrichment skipped: %s", exc)
+                parsed = {}
 
         if not parsed and not agnes_essence:
             raise HTTPException(502, "Could not read the stars right now")

@@ -5,7 +5,6 @@ const CDN =
 const AGNES_SITE = "https://frontend-nu-opal-d1fi47s48v.vercel.app";
 export const AGNES_PLANS = `${AGNES_SITE}/#pagamento`;
 export const AGNES_LOGO = "/agnes-logo.jpeg";
-export const ZODIAC_BACKGROUND = `${CDN}/1c2020dd.png`;
 
 export const WESTERN_SIGNS = [
   { id: "aries", name: "Áries", range: "21.03 – 19.04", img: `${CDN}/e1dd0fc9.png` },
