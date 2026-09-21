@@ -21,6 +21,27 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 21/Set/2026 — Horóscopo Mestre Agnes (grego + chinês) + Menu + Parceiros + Matérias de topo ✅
+- **Horóscopo Agnes**: novo endpoint backend `GET /api/horoscope/agnes?system=western|chinese&sign=&lang=`
+  - `western` (12 signos "gregos"): busca o horóscopo diário REAL da API pública Mestra Agnes (`https://agnes-backend.onrender.com/api/agnes/horoscopo?signo=`), traduz para o idioma quando ≠ pt (Gemini), cache diário em `db.agnes_horoscopes`
+  - `chinese` (12 animais): a Agnes não tem endpoint chinês → gerado em "voz da Agnes" via Gemini (send_with_fallback), cache diário
+  - Fallback: se a Agnes cair, o western também usa Gemini
+- **HoroscopePage** reescrita: duas grades ("Signos do zodíaco" 12 ocidentais + "Zodíaco chinês" 12 animais), fundo de constelação (`/agnes-horoscopo-bg.png`), selo "Atualizado por Mestre Agnes" com logo
+- **AgnesReadingModal** novo (substitui DailyReadingModal, que foi removido): mostra mensagem do dia + cor/número da sorte + rodapé "Atualizado por Mestre Agnes" + CTA consulta completa
+- **PersonalReading** ("Sua leitura de destino"): imagem do mago (`/agnes-wizard.jpeg`) + botões "Entrar / Criar conta" (abre `https://frontend-nu-opal-d1fi47s48v.vercel.app/auth` em nova aba) e "Área de membros" (`/dashboard`)
+- **Menu reestruturado** (mockData.menuConfig + menuMap + 6 locales):
+  - Turismo: Lugares, Motéis, Hotéis, Pousadas, Restaurantes, Bares
+  - Bem Estar: Esportes, Beleza, Cultura, Saúde, Horóscopo, Sexualidade, Contos Eróticos
+  - Vida Noturna: Locais, Festas, Charutos, Música, Artistas (Zetta)
+  - Gastronomia: Culinária, Arte, Vinhos, Drinks
+  - Rotas novas caem no BlogPage genérico automaticamente
+- **Parceiros**: Spicy Club substituído por **Mestre Agnes** (logo circular dourado `/agnes-logo.jpeg`, link para o site Agnes)
+- **Matérias de topo (artigo em destaque da BlogPage)**: agora imagem + título são `<Link>` para `/section/sub/slug` e o compartilhamento (PostInteractions) recebe `postUrl` correto — abrem e compartilham como os demais cards
+- Imagens salvas em `/app/frontend/public/`: `agnes-logo.jpeg`, `agnes-wizard.jpeg`, `agnes-horoscopo-bg.png`
+- **Correção de ambiente (preview)**: `backend/.env` MONGO_URL apontava para um cluster Atlas com DNS morto (`horoscopo.hmts3pj.mongodb.net`) → apontado para o Mongo local do preview. Produção (Vercel) usa a própria env, não afetada. ⚠️ O cluster Atlas do .env antigo NÃO existe mais.
+- Gates verdes: Biome ✅, Knip ✅ (DailyReadingModal órfão removido), Vitest 11/11 ✅. Testing agent iteration_10: 7/7 cenários de frontend aprovados (100%)
+
+
 ### 11/Ago/2026 — Correção Vercel independente de arquivos `.env` ✅
 - Usuário informou ter sobrescrito arquivos no Sanity Studio externo, mas o erro do site foi isolado e não depende desses arquivos: o bundle Vercel continuava sem as três variáveis públicas Sanity
 - GitHub raw confirmou que `frontend/.env.production` seguia ausente (404), mesmo com regra de re-inclusão; o fluxo Save to GitHub não publicou o arquivo untracked
