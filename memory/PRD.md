@@ -23,6 +23,13 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 - `backend/.env` `MONGO_URL` agora aponta para o novo cluster Atlas `agnes.zmkehho.mongodb.net` (DB_NAME mantido = `luxsex`). Testado: conexão OK, horóscopo grava/lê o cache em `luxsex.agnes_horoscopes`, leitura em cache ~0.9s. O cluster antigo `horoscopo.hmts3pj` (DNS morto) foi abandonado.
 - ⚠️ Em produção (Vercel), defina a MESMA `MONGO_URL` no painel de variáveis do Vercel para o horóscopo/curtidas persistirem lá também.
 
+### 21/Set/2026 (parte 6) — Compatibilidade oficial da Agnes (com fallback) ✅
+- Novo endpoint `POST /api/horoscope/compat/full` recebe `{pessoas:[{nome,data_nascimento,hora_nascimento,cidade,uf,pais}], foco_analise, lang}`, chama a **API real da Agnes** (`POST /api/agnes/compatibilidade` com `x-api-key`) e, se ela não retornar 200, faz **fallback de IA** (sinastria na voz do Mestre Agnes, inferindo os signos pelas datas). Retorna `official:true` (Agnes) ou `official:false` (IA).
+- `CompatibilityCard` ganhou duas abas: **"Por signo"** (rápida) e **"Sinastria completa"** (dados de nascimento de 2 pessoas). Bug de perda de foco corrigido (PersonFields movido para fora do componente). i18n em 6 idiomas.
+- ⚠️ A rota real da Agnes está retornando **500** porque os serviços dela (ollama/LLM) estão **offline** (`/services/status`). Enquanto isso, o app usa o fallback de IA automaticamente; quando a Agnes voltar, passa a `official:true` sem mudança de código.
+- `AGNES_API_KEY` já em `backend/.env`; para produção, defina-a também no painel do Vercel.
+- Testing agent iteration_14: ambas as abas + correção de foco — 100% aprovado. Biome/Knip/Vitest verdes.
+
 ## 3. Implementado
 
 ### 21/Set/2026 (parte 4) — Horóscopo no padrão da página + compartilhar + correção de produção ✅
