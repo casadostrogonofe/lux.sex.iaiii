@@ -5,12 +5,13 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  DialogDescription,
 } from "../ui/dialog";
 import { AGNES_LOGO, AGNES_PLANS, fetchAgnesReading } from "./horoscopeData";
 
-const Section = ({ label, text }) =>
+const Section = ({ id, label, text }) =>
   text ? (
-    <div className="flex flex-col gap-1.5" data-testid={`sign-section-${label}`}>
+    <div className="flex flex-col gap-1.5" data-testid={`sign-section-${id}`}>
       <span className="font-['Jost'] text-[10px] uppercase tracking-[0.3em] text-[#d4af37]/85">
         {label}
       </span>
@@ -69,6 +70,9 @@ const AgnesSignDialog = ({ sign, onClose }) => {
                 <DialogTitle className="mt-2 font-['Cinzel'] text-3xl text-[#f4ecdd]">
                   {sign.name}
                 </DialogTitle>
+                <DialogDescription className="sr-only">
+                  {t("horoscope.agnes.daily_tag", "Leitura do dia")} — {sign.name}
+                </DialogDescription>
                 <p className="mt-1 font-['Jost'] text-[11px] uppercase tracking-[0.3em] text-[#f4ecdd]/50">
                   {sign.range}
                 </p>
@@ -95,10 +99,10 @@ const AgnesSignDialog = ({ sign, onClose }) => {
                       {reading.essence}
                     </p>
                     <div className="mt-2 flex flex-col gap-4">
-                      <Section label={t("horoscope.section.overview", "Panorama")} text={reading.overview} />
-                      <Section label={t("horoscope.section.love", "Amor")} text={reading.love} />
-                      <Section label={t("horoscope.section.career", "Carreira")} text={reading.career} />
-                      <Section label={t("horoscope.section.advice", "Conselho")} text={reading.advice} />
+                      <Section id="overview" label={t("horoscope.section.overview", "Panorama")} text={reading.overview} />
+                      <Section id="love" label={t("horoscope.section.love", "Amor")} text={reading.love} />
+                      <Section id="career" label={t("horoscope.section.career", "Carreira")} text={reading.career} />
+                      <Section id="advice" label={t("horoscope.section.advice", "Conselho")} text={reading.advice} />
                     </div>
                   </div>
 

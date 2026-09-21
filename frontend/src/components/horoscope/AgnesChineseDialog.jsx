@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  DialogDescription,
 } from "../ui/dialog";
 import { AGNES_LOGO, fetchAgnesReading } from "./horoscopeData";
 
@@ -62,6 +63,9 @@ const AgnesChineseDialog = ({ animal, onClose }) => {
                 <DialogTitle className="mt-2 font-['Cinzel'] text-3xl text-[#f4ecdd]">
                   {animal.name}
                 </DialogTitle>
+                <DialogDescription className="sr-only">
+                  {t("horoscope.agnes.daily_tag", "Leitura do dia")} — {animal.name}
+                </DialogDescription>
               </div>
             </div>
 

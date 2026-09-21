@@ -21,6 +21,19 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 
 ## 3. Implementado
 
+### 21/Set/2026 (parte 3) — Cards + pop-up do horóscopo no estilo Mestre Agnes ✅
+- Replicado o design do widget de zodíaco do projeto do próprio usuário (repo hub3pixellab/hub3jarvis) dentro da Lux:
+  - **Grade de 12 signos ocidentais** com arte ilustrada (imagens cdn.enter.pro), nome (Cinzel) e intervalo de datas; fundo de mapa astral.
+  - **Grade de 12 animais do zodíaco chinês** com glifo chinês, nome e anos.
+  - **Pop-up ocidental** (`AgnesSignDialog`) em duas colunas: arte à esquerda; à direita "Leitura do dia", nome, datas, essência + seções Panorama/Amor/Carreira/Conselho, números da sorte, selo "Atualizado por Mestre Agnes" e CTA de consulta.
+  - **Pop-up chinês** (`AgnesChineseDialog`): glifo + nome + anos (chips) + leitura do dia + selo Agnes.
+  - Fontes **Cinzel + Jost** adicionadas; usa o `Dialog` (radix) do Lux; a11y com DialogDescription.
+- **Backend `/api/horoscope/agnes` enriquecido**: agora retorna `reading` rico `{essence, overview, love, career, advice, lucky_numbers[], lucky_color}`. Ocidental usa a **essência real da Agnes** + enriquecimento por IA; chinês 100% IA na voz da Agnes. Cache em `db.agnes_horoscopes` (formato novo; cache antigo foi limpo).
+- Componentes: `ZodiacWidget.jsx`, `AgnesSignDialog.jsx`, `AgnesChineseDialog.jsx`, `horoscopeData.js`. Removido `AgnesReadingModal.jsx`. HoroscopePage reescrita para compor ZodiacWidget + CompatibilityCard + PersonalReading + PartnersSidebar.
+- **AGNES_API_KEY** (`agnes-secreta-2026`) salva em `backend/.env`. Obs.: a compatibilidade oficial da Agnes (`POST /api/agnes/compatibilidade`) ainda retorna 500 com a chave (schema do corpo não documentado) → compatibilidade permanece por IA; trocar quando o schema estiver claro.
+- Testing agent iteration_12: novo design (cards + pop-ups ocidental e chinês) + compatibilidade + leitura pessoal — 100% aprovado. Biome/Knip/Vitest verdes.
+
+
 ### 21/Set/2026 (parte 2) — Correção de produção do horóscopo + Compatibilidade amorosa ✅
 - **FIX P0 (produção Vercel)**: o horóscopo não retornava em produção. Causas tratadas no código:
   - Base de API tornada relativa: `process.env.REACT_APP_BACKEND_URL || ""` em AgnesReadingModal, PersonalReading, HoroscopeFeedCard, CompatibilityCard, PostInteractions e api/banners.js → em produção same-domain o fetch usa `/api/...` (rewrite do vercel.json → `/api/index`), independente de a env estar setada no build do Vercel.
