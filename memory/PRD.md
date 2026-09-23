@@ -35,6 +35,12 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 - Frontend `VisitorCounter.jsx` no rodapé (`Footer.jsx`): conta 1x por sessão (sessionStorage `luxsex_visited`), exibindo o total real formatado + rótulo `footer.visits` (6 idiomas).
 - Corrigido double-count do React StrictMode (flag de sessão setado sincronamente antes do fetch). Testing agent iteration_16: exatamente 1 POST/nova sessão, 0 no reload — 100% aprovado. Persistência confirmada no Atlas.
 
+### 21/Set/2026 (parte 8) — Enxugar horóscopo + token Sanity (bloqueado)
+- Removido o card "Combinação dos signos" (CompatibilityCard) da página de horóscopo (componente deletado; endpoints backend `/compat` e `/compat/full` mantidos, inertes).
+- "Sua leitura do destino" (PersonalReading) agora mostra APENAS os botões **Entrar / Criar conta** e **Área de membros** (o formulário/leitura por IA foi removido — passa a ser acessado no site da Agnes).
+- CI verde (Biome/Knip/Vitest 11/11), página 200.
+- ⚠️ **Banner Sanity — bloqueado**: o token de escrita fornecido é válido, mas o usuário dele (`g-G7UR50uQObDN`) **não é membro do projeto `8um1375u`** (projeto de onde o site Lux lê): erro `projectUserNotFoundError`. Preciso de um token gerado DENTRO do projeto `8um1375u` (Manage → API → Tokens → permissão Editor/Write) ou do projectId correto se o conteúdo Lux mudou de projeto. Lembrete: o carrossel já mostra "Anuncie aqui" automaticamente quando não há banner.
+
 ## 3. Implementado
 
 ### 21/Set/2026 (parte 4) — Horóscopo no padrão da página + compartilhar + correção de produção ✅

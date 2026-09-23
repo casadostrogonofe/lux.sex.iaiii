@@ -7,7 +7,6 @@ import PartnersSidebar from "../components/PartnersSidebar";
 import Newsletter from "../components/Newsletter";
 import ZodiacWidget from "../components/horoscope/ZodiacWidget";
 import PersonalReading from "../components/horoscope/PersonalReading";
-import CompatibilityCard from "../components/horoscope/CompatibilityCard";
 import EditorialBanner from "../components/EditorialBanner";
 
 const SECTION_PATH = "bem-estar/horoscopo";
@@ -73,7 +72,6 @@ const HoroscopePage = () => {
           <div className="flex-1 min-w-0">
             <EditorialBanner section={SECTION_PATH} />
             <ZodiacWidget />
-            <CompatibilityCard />
             <PersonalReading />
           </div>
           <PartnersSidebar />
