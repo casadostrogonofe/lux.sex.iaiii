@@ -1,0 +1,29 @@
+{
+  "summary": "Frontend testing of CompatibilityCard on /bem-estar/horoscopo. Age gate works. Both tabs ('Por signo' and 'Sinastria completa') render with all expected data-testids. Sign-mode returns AI reading with score. FULL sinastria (POST /api/horoscope/compat/full) returns a result with score, summary and Mestre Agnes badge. FOCUS REGRESSION verified: typing 'Maria da Silva' char-by-char in compat-p1-nome kept focus on the same input and produced the full value — PersonFields extraction outside the component fixed the bug. Submit button correctly disabled until both birth dates are filled.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "CompatibilityCard.jsx: solid. PersonFields correctly declared at module scope (fix for focus loss). Consider adding min/max on date inputs to prevent unrealistic dates (future dates are currently accepted).",
+    "Result payload uses `official` flag; when false the badge text falls back to 'Atualizado por Mestre Agnes' — good UX. In EN i18n verify the key 'horoscope.agnes.updated_by' still contains 'Agnes' branding (badge visual OK in screenshot)."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a", "frontend": "100%"},
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Compat flow validated end-to-end. Key testids: compatibility-card, compat-mode-sign, compat-mode-birth, compat-sign1/2, compat-analyse-btn, compat-p{1,2}-{nome,data,hora,cidade,uf}, compat-full-btn, compat-result, compat-score, compat-error, compat-official-text. When Agnes API is offline the response returns official:false and renders reading.summary/strengths/challenges/advice; when official:true it renders compat-official-text.",
+  "test_evidence": {
+    "sign_mode_score": "92%",
+    "focus_regression": "PASS — value='Maria da Silva', activeElement stayed on compat-p1-nome",
+    "button_disabled_before_dates": true,
+    "button_disabled_after_dates": false,
+    "full_sinastria_score": "88%",
+    "full_result_rendered": true
+  }
+}

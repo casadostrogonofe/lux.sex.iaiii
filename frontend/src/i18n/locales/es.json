@@ -33,7 +33,13 @@
     "flavor": "Sabor",
     "sex_shop": "Sex Shop",
     "marketplace": "Marketplace",
-    "bets": "Apuestas"
+    "bets": "Apuestas",
+    "places": "Lugares",
+    "restaurants": "Restaurantes",
+    "bars": "Bares",
+    "sports": "Deportes",
+    "parties": "Fiestas",
+    "drinks": "Drinks"
   },
   "common": {
     "read_more": "Leer artículo",
@@ -69,7 +75,8 @@
     "rights": "Todos los derechos reservados",
     "terms": "Términos",
     "privacy": "Privacidad",
-    "contact": "Contacto"
+    "contact": "Contacto",
+    "visits": "accesos"
   },
   "cookies": {
     "title": "Cookies esenciales",
@@ -128,6 +135,53 @@
       "pick": "¿Cuál es tu signo?",
       "change": "Cambiar signo",
       "full": "Ver horóscopo completo"
+    },
+    "agnes": {
+      "updated_by": "Actualizado por Mestre Agnes",
+      "daily_tag": "Lectura del día",
+      "full_consult": "Consulta completa con el Maestro",
+      "login": "Entrar / Crear cuenta",
+      "members": "Área de miembros"
+    },
+    "greek_title": "Signos del zodíaco",
+    "chinese_title": "Zodíaco chino",
+    "compat": {
+      "tag": "Combinación de signos",
+      "title": "Compatibilidad amorosa",
+      "sign1": "Primer signo",
+      "sign2": "Segundo signo",
+      "action": "Ver combinación",
+      "strengths": "Fortalezas",
+      "challenges": "Desafíos",
+      "person": "Persona",
+      "name": "Nombre",
+      "birthdate": "Fecha de nacimiento",
+      "birthtime": "Hora",
+      "city": "Ciudad",
+      "mode_sign": "Por signo",
+      "mode_birth": "Sinastría completa",
+      "action_full": "Ver sinastría",
+      "official_badge": "Sinastría oficial · Mestre Agnes"
+    },
+    "greek_eyebrow": "Astrología occidental",
+    "greek_title1": "Tu horóscopo",
+    "greek_title2": "del día",
+    "greek_subtitle": "Elige tu signo y recibe la lectura del día de Mestre Agnes.",
+    "chinese_eyebrow": "Astrología china",
+    "chinese_title1": "Zodíaco",
+    "chinese_title2": "chino",
+    "chinese_subtitle": "Descubre tu animal y la energía que rige hoy.",
+    "chinese_years": "Años",
+    "section": {
+      "overview": "Panorama",
+      "love": "Amor",
+      "career": "Carrera",
+      "advice": "Consejo"
+    },
+    "share": {
+      "label": "Compartir",
+      "copy": "Copiar enlace",
+      "copied": "¡Copiado!"
     }
   },
   "sexuality": {

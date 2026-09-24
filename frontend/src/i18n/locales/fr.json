@@ -33,7 +33,13 @@
     "flavor": "Saveur",
     "sex_shop": "Sex Shop",
     "marketplace": "Marketplace",
-    "bets": "Paris"
+    "bets": "Paris",
+    "places": "Lieux",
+    "restaurants": "Restaurants",
+    "bars": "Bars",
+    "sports": "Sports",
+    "parties": "Fêtes",
+    "drinks": "Drinks"
   },
   "common": {
     "read_more": "Lire l'article",
@@ -69,7 +75,8 @@
     "rights": "Tous droits réservés",
     "terms": "Conditions",
     "privacy": "Confidentialité",
-    "contact": "Contact"
+    "contact": "Contact",
+    "visits": "visites"
   },
   "cookies": {
     "title": "Cookies essentiels",
@@ -128,6 +135,53 @@
       "pick": "Quel est votre signe ?",
       "change": "Changer de signe",
       "full": "Voir l'horoscope complet"
+    },
+    "agnes": {
+      "updated_by": "Mis à jour par Mestre Agnes",
+      "daily_tag": "Lecture du jour",
+      "full_consult": "Consultation complète avec le Maître",
+      "login": "Se connecter / Créer un compte",
+      "members": "Espace membres"
+    },
+    "greek_title": "Signes du zodiaque",
+    "chinese_title": "Zodiaque chinois",
+    "compat": {
+      "tag": "Accord des signes",
+      "title": "Compatibilité amoureuse",
+      "sign1": "Premier signe",
+      "sign2": "Deuxième signe",
+      "action": "Voir l'accord",
+      "strengths": "Points forts",
+      "challenges": "Défis",
+      "person": "Personne",
+      "name": "Nom",
+      "birthdate": "Date de naissance",
+      "birthtime": "Heure",
+      "city": "Ville",
+      "mode_sign": "Par signe",
+      "mode_birth": "Synastrie complète",
+      "action_full": "Voir la synastrie",
+      "official_badge": "Synastrie officielle · Mestre Agnes"
+    },
+    "greek_eyebrow": "Astrologie occidentale",
+    "greek_title1": "Votre horoscope",
+    "greek_title2": "du jour",
+    "greek_subtitle": "Choisissez votre signe et recevez la lecture du jour de Mestre Agnes.",
+    "chinese_eyebrow": "Astrologie chinoise",
+    "chinese_title1": "Zodiaque",
+    "chinese_title2": "chinois",
+    "chinese_subtitle": "Découvrez votre animal et l'énergie qu'il régit aujourd'hui.",
+    "chinese_years": "Années",
+    "section": {
+      "overview": "Aperçu",
+      "love": "Amour",
+      "career": "Carrière",
+      "advice": "Conseil"
+    },
+    "share": {
+      "label": "Partager",
+      "copy": "Copier le lien",
+      "copied": "Copié !"
     }
   },
   "sexuality": {

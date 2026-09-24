@@ -33,7 +33,13 @@
     "flavor": "Geschmack",
     "sex_shop": "Sex Shop",
     "marketplace": "Marketplace",
-    "bets": "Wetten"
+    "bets": "Wetten",
+    "places": "Orte",
+    "restaurants": "Restaurants",
+    "bars": "Bars",
+    "sports": "Sport",
+    "parties": "Partys",
+    "drinks": "Drinks"
   },
   "common": {
     "read_more": "Beitrag lesen",
@@ -69,7 +75,8 @@
     "rights": "Alle Rechte vorbehalten",
     "terms": "AGB",
     "privacy": "Datenschutz",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "visits": "Zugriffe"
   },
   "cookies": {
     "title": "Essentielle Cookies",
@@ -128,6 +135,53 @@
       "pick": "Was ist Ihr Sternzeichen?",
       "change": "Zeichen ändern",
       "full": "Zum vollständigen Horoskop"
+    },
+    "agnes": {
+      "updated_by": "Aktualisiert von Mestre Agnes",
+      "daily_tag": "Tageslesung",
+      "full_consult": "Vollständige Beratung mit dem Meister",
+      "login": "Anmelden / Konto erstellen",
+      "members": "Mitgliederbereich"
+    },
+    "greek_title": "Sternzeichen",
+    "chinese_title": "Chinesisches Tierkreiszeichen",
+    "compat": {
+      "tag": "Zeichen-Match",
+      "title": "Liebeskompatibilität",
+      "sign1": "Erstes Zeichen",
+      "sign2": "Zweites Zeichen",
+      "action": "Match ansehen",
+      "strengths": "Stärken",
+      "challenges": "Herausforderungen",
+      "person": "Person",
+      "name": "Name",
+      "birthdate": "Geburtsdatum",
+      "birthtime": "Uhrzeit",
+      "city": "Stadt",
+      "mode_sign": "Nach Zeichen",
+      "mode_birth": "Vollständige Synastrie",
+      "action_full": "Synastrie ansehen",
+      "official_badge": "Offizielle Synastrie · Mestre Agnes"
+    },
+    "greek_eyebrow": "Westliche Astrologie",
+    "greek_title1": "Dein Horoskop",
+    "greek_title2": "des Tages",
+    "greek_subtitle": "Wähle dein Zeichen und erhalte die Tageslesung von Mestre Agnes.",
+    "chinese_eyebrow": "Chinesische Astrologie",
+    "chinese_title1": "Chinesisches",
+    "chinese_title2": "Tierkreiszeichen",
+    "chinese_subtitle": "Entdecke dein Tier und die Energie, die es heute regiert.",
+    "chinese_years": "Jahre",
+    "section": {
+      "overview": "Überblick",
+      "love": "Liebe",
+      "career": "Karriere",
+      "advice": "Rat"
+    },
+    "share": {
+      "label": "Teilen",
+      "copy": "Link kopieren",
+      "copied": "Kopiert!"
     }
   },
   "sexuality": {

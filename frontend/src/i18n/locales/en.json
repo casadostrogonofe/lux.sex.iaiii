@@ -33,7 +33,13 @@
     "flavor": "Flavor",
     "sex_shop": "Sex Shop",
     "marketplace": "Marketplace",
-    "bets": "Bets"
+    "bets": "Bets",
+    "places": "Places",
+    "restaurants": "Restaurants",
+    "bars": "Bars",
+    "sports": "Sports",
+    "parties": "Parties",
+    "drinks": "Drinks"
   },
   "common": {
     "read_more": "Read story",
@@ -69,7 +75,8 @@
     "rights": "All rights reserved",
     "terms": "Terms",
     "privacy": "Privacy",
-    "contact": "Contact"
+    "contact": "Contact",
+    "visits": "visits"
   },
   "cookies": {
     "title": "Essential cookies",
@@ -128,6 +135,53 @@
       "pick": "What's your sign?",
       "change": "Change sign",
       "full": "See full horoscope"
+    },
+    "agnes": {
+      "updated_by": "Updated by Mestre Agnes",
+      "daily_tag": "Today's reading",
+      "full_consult": "Full consultation with the Master",
+      "login": "Sign in / Create account",
+      "members": "Members area"
+    },
+    "greek_title": "Zodiac signs",
+    "chinese_title": "Chinese zodiac",
+    "compat": {
+      "tag": "Sign match",
+      "title": "Love compatibility",
+      "sign1": "First sign",
+      "sign2": "Second sign",
+      "action": "See the match",
+      "strengths": "Strengths",
+      "challenges": "Challenges",
+      "person": "Person",
+      "name": "Name",
+      "birthdate": "Birth date",
+      "birthtime": "Time",
+      "city": "City",
+      "mode_sign": "By sign",
+      "mode_birth": "Full synastry",
+      "action_full": "See synastry",
+      "official_badge": "Official synastry · Mestre Agnes"
+    },
+    "greek_eyebrow": "Western astrology",
+    "greek_title1": "Your horoscope",
+    "greek_title2": "today",
+    "greek_subtitle": "Pick your sign and get today's reading from Mestre Agnes.",
+    "chinese_eyebrow": "Chinese astrology",
+    "chinese_title1": "Chinese",
+    "chinese_title2": "zodiac",
+    "chinese_subtitle": "Discover your animal and the energy it rules today.",
+    "chinese_years": "Years",
+    "section": {
+      "overview": "Overview",
+      "love": "Love",
+      "career": "Career",
+      "advice": "Advice"
+    },
+    "share": {
+      "label": "Share",
+      "copy": "Copy link",
+      "copied": "Copied!"
     }
   },
   "sexuality": {

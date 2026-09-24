@@ -19,7 +19,88 @@ Réplica pixel-perfect de `https://lux-novo.lux.sex/` como ecossistema "Lifestyl
 - **Audio**: SoundCloud Widget API (autoplay muted + loop)
 - **Layout persistente** mantém o player e header montados entre rotas
 
+### 21/Set/2026 (parte 5) — MongoDB apontado para o novo Atlas ✅
+- `backend/.env` `MONGO_URL` agora aponta para o novo cluster Atlas `agnes.zmkehho.mongodb.net` (DB_NAME mantido = `luxsex`). Testado: conexão OK, horóscopo grava/lê o cache em `luxsex.agnes_horoscopes`, leitura em cache ~0.9s. O cluster antigo `horoscopo.hmts3pj` (DNS morto) foi abandonado.
+- ⚠️ Em produção (Vercel), defina a MESMA `MONGO_URL` no painel de variáveis do Vercel para o horóscopo/curtidas persistirem lá também.
+
+### 21/Set/2026 (parte 6) — Compatibilidade oficial da Agnes (com fallback) ✅
+- Novo endpoint `POST /api/horoscope/compat/full` recebe `{pessoas:[{nome,data_nascimento,hora_nascimento,cidade,uf,pais}], foco_analise, lang}`, chama a **API real da Agnes** (`POST /api/agnes/compatibilidade` com `x-api-key`) e, se ela não retornar 200, faz **fallback de IA** (sinastria na voz do Mestre Agnes, inferindo os signos pelas datas). Retorna `official:true` (Agnes) ou `official:false` (IA).
+- `CompatibilityCard` ganhou duas abas: **"Por signo"** (rápida) e **"Sinastria completa"** (dados de nascimento de 2 pessoas). Bug de perda de foco corrigido (PersonFields movido para fora do componente). i18n em 6 idiomas.
+- ⚠️ A rota real da Agnes está retornando **500** porque os serviços dela (ollama/LLM) estão **offline** (`/services/status`). Enquanto isso, o app usa o fallback de IA automaticamente; quando a Agnes voltar, passa a `official:true` sem mudança de código.
+- `AGNES_API_KEY` já em `backend/.env`; para produção, defina-a também no painel do Vercel.
+- Testing agent iteration_14: ambas as abas + correção de foco — 100% aprovado. Biome/Knip/Vitest verdes.
+
+### 21/Set/2026 (parte 7) — Contador de acessos real no rodapé ✅
+- Backend `routers/stats.py`: `GET /api/stats/visits` (lê) e `POST /api/stats/visits` (incrementa) sobre a coleção `luxsex.site_stats` no Atlas — funciona no Vercel. Registrado em `server.py`.
+- Frontend `VisitorCounter.jsx` no rodapé (`Footer.jsx`): conta 1x por sessão (sessionStorage `luxsex_visited`), exibindo o total real formatado + rótulo `footer.visits` (6 idiomas).
+- Corrigido double-count do React StrictMode (flag de sessão setado sincronamente antes do fetch). Testing agent iteration_16: exatamente 1 POST/nova sessão, 0 no reload — 100% aprovado. Persistência confirmada no Atlas.
+
+### 21/Set/2026 (parte 8) — Enxugar horóscopo + token Sanity (bloqueado)
+- Removido o card "Combinação dos signos" (CompatibilityCard) da página de horóscopo (componente deletado; endpoints backend `/compat` e `/compat/full` mantidos, inertes).
+- "Sua leitura do destino" (PersonalReading) agora mostra APENAS os botões **Entrar / Criar conta** e **Área de membros** (o formulário/leitura por IA foi removido — passa a ser acessado no site da Agnes).
+- CI verde (Biome/Knip/Vitest 11/11), página 200.
+- ⚠️ **Banner Sanity — bloqueado**: o token de escrita fornecido é válido, mas o usuário dele (`g-G7UR50uQObDN`) **não é membro do projeto `8um1375u`** (projeto de onde o site Lux lê): erro `projectUserNotFoundError`. Preciso de um token gerado DENTRO do projeto `8um1375u` (Manage → API → Tokens → permissão Editor/Write) ou do projectId correto se o conteúdo Lux mudou de projeto. Lembrete: o carrossel já mostra "Anuncie aqui" automaticamente quando não há banner.
+
 ## 3. Implementado
+
+### 21/Set/2026 (parte 4) — Horóscopo no padrão da página + compartilhar + correção de produção ✅
+- **Layout**: removido o fundo de constelação/estilo navy+dourado; a seção do zodíaco (`ZodiacWidget`) e os pop-ups agora seguem o padrão dark/roxo da página (fundo #0b0812, roxo #9b30ff, dourado #d4af37, font-serif). Cards ilustrados mantidos; header sem imagem de fundo; ZodiacWidget dentro do container com `PartnersSidebar`.
+- **Pop-ups mantêm as seções** (Panorama/Amor/Carreira/Conselho) + essência + números/cor da sorte + selo Agnes + CTA.
+- **Correção de produção ("não abre o resultado")**: no endpoint `/api/horoscope/agnes`, a essência do signo ocidental vem **direto da Agnes** (httpx timeout 18s) e o enriquecimento por IA das seções agora é **time-boxed (asyncio.wait_for 18s) e envolto em try/except** — nunca derruba nem trava a resposta. Resposta medida em ~6-8s (HTTP 200), com cache diário resiliente a Mongo indisponível. Isso resolve o timeout/500 no Vercel.
+- **Compartilhar signo** (novo): `ShareRow` em cada pop-up com botões WhatsApp e "Copiar link", gerando URL `?signo=<id>` (ocidental) ou `?animal=<id>` (chinês). Ao abrir a página com `?signo=aries`, o pop-up do signo abre automaticamente (via `useSearchParams`).
+- Componentes: `ShareRow.jsx` (novo); `ZodiacWidget.jsx`, `AgnesSignDialog.jsx`, `AgnesChineseDialog.jsx`, `HoroscopePage.jsx` reescritos; removido `ZODIAC_BACKGROUND` de `horoscopeData.js`.
+- Testing agent iteration_13: layout sem fundo, pop-ups com seções, compartilhar (WhatsApp+copiar) e deep-link `?signo=` — 100% aprovado. Biome/Knip/Vitest verdes.
+- **Compatibilidade oficial da Agnes**: ainda pendente — o corpo `pessoas` de `POST /api/agnes/compatibilidade` não está no código do frontend Agnes e retorna 500 nas tentativas; aguardando o usuário enviar um exemplo do JSON esperado. Compatibilidade segue por IA.
+
+
+### 21/Set/2026 (parte 3) — Cards + pop-up do horóscopo no estilo Mestre Agnes ✅
+- Replicado o design do widget de zodíaco do projeto do próprio usuário (repo hub3pixellab/hub3jarvis) dentro da Lux:
+  - **Grade de 12 signos ocidentais** com arte ilustrada (imagens cdn.enter.pro), nome (Cinzel) e intervalo de datas; fundo de mapa astral.
+  - **Grade de 12 animais do zodíaco chinês** com glifo chinês, nome e anos.
+  - **Pop-up ocidental** (`AgnesSignDialog`) em duas colunas: arte à esquerda; à direita "Leitura do dia", nome, datas, essência + seções Panorama/Amor/Carreira/Conselho, números da sorte, selo "Atualizado por Mestre Agnes" e CTA de consulta.
+  - **Pop-up chinês** (`AgnesChineseDialog`): glifo + nome + anos (chips) + leitura do dia + selo Agnes.
+  - Fontes **Cinzel + Jost** adicionadas; usa o `Dialog` (radix) do Lux; a11y com DialogDescription.
+- **Backend `/api/horoscope/agnes` enriquecido**: agora retorna `reading` rico `{essence, overview, love, career, advice, lucky_numbers[], lucky_color}`. Ocidental usa a **essência real da Agnes** + enriquecimento por IA; chinês 100% IA na voz da Agnes. Cache em `db.agnes_horoscopes` (formato novo; cache antigo foi limpo).
+- Componentes: `ZodiacWidget.jsx`, `AgnesSignDialog.jsx`, `AgnesChineseDialog.jsx`, `horoscopeData.js`. Removido `AgnesReadingModal.jsx`. HoroscopePage reescrita para compor ZodiacWidget + CompatibilityCard + PersonalReading + PartnersSidebar.
+- **AGNES_API_KEY** (`agnes-secreta-2026`) salva em `backend/.env`. Obs.: a compatibilidade oficial da Agnes (`POST /api/agnes/compatibilidade`) ainda retorna 500 com a chave (schema do corpo não documentado) → compatibilidade permanece por IA; trocar quando o schema estiver claro.
+- Testing agent iteration_12: novo design (cards + pop-ups ocidental e chinês) + compatibilidade + leitura pessoal — 100% aprovado. Biome/Knip/Vitest verdes.
+
+
+### 21/Set/2026 (parte 2) — Correção de produção do horóscopo + Compatibilidade amorosa ✅
+- **FIX P0 (produção Vercel)**: o horóscopo não retornava em produção. Causas tratadas no código:
+  - Base de API tornada relativa: `process.env.REACT_APP_BACKEND_URL || ""` em AgnesReadingModal, PersonalReading, HoroscopeFeedCard, CompatibilityCard, PostInteractions e api/banners.js → em produção same-domain o fetch usa `/api/...` (rewrite do vercel.json → `/api/index`), independente de a env estar setada no build do Vercel.
+  - Endpoints `/api/horoscope/agnes` e `/api/horoscope/compat` agora são **resilientes ao Mongo indisponível** (leitura/escrita de cache em try/except) — retornam a leitura mesmo se o Atlas de produção estiver fora.
+- **Compatibilidade amorosa** (novo): endpoint `GET /api/horoscope/compat?sign1=&sign2=&lang=` (IA na voz do Mestre Agnes, cache em `db.compat_readings`) + componente `CompatibilityCard.jsx` na HoroscopePage (dois selects + score % com barra, resumo, pontos fortes, desafios, conselho, selo Agnes). i18n em 6 idiomas.
+- Testing agent iteration_11: horóscopo (Áries/Dragão) + card de compatibilidade — 100% aprovado. Biome/Knip/Vitest verdes.
+
+### ⚠️ Pendências que dependem de você
+- **Chave de API da Mestra Agnes**: a compatibilidade oficial (`POST /api/agnes/compatibilidade`) exige `x-api-key`. Enquanto não houver, o card usa IA. Envie a chave para trocar pela API real.
+- **Horóscopo chinês "real"**: a API pública da Agnes NÃO tem endpoint chinês (só os 12 signos ocidentais). O chinês continua gerado por IA na voz da Agnes até a Agnes publicar um endpoint.
+- **Banners no Sanity**: só tenho token de LEITURA; para subir documentos preciso de um token de ESCRITA do Sanity (ou você sobe no Studio; schema `editorialBanner` pronto).
+- **Plataforma de Festas**: aguardando escolha do provedor de pagamento (recomendado Stripe).
+- **MongoDB de produção**: o cluster Atlas `horoscopo.hmts3pj` do `.env` antigo está com DNS morto. Confirme que a env `MONGO_URL` no painel do Vercel aponta para um cluster Atlas válido, senão likes/comentários e cache de horóscopo não persistem em produção.
+
+
+### 21/Set/2026 — Horóscopo Mestre Agnes (grego + chinês) + Menu + Parceiros + Matérias de topo ✅
+- **Horóscopo Agnes**: novo endpoint backend `GET /api/horoscope/agnes?system=western|chinese&sign=&lang=`
+  - `western` (12 signos "gregos"): busca o horóscopo diário REAL da API pública Mestra Agnes (`https://agnes-backend.onrender.com/api/agnes/horoscopo?signo=`), traduz para o idioma quando ≠ pt (Gemini), cache diário em `db.agnes_horoscopes`
+  - `chinese` (12 animais): a Agnes não tem endpoint chinês → gerado em "voz da Agnes" via Gemini (send_with_fallback), cache diário
+  - Fallback: se a Agnes cair, o western também usa Gemini
+- **HoroscopePage** reescrita: duas grades ("Signos do zodíaco" 12 ocidentais + "Zodíaco chinês" 12 animais), fundo de constelação (`/agnes-horoscopo-bg.png`), selo "Atualizado por Mestre Agnes" com logo
+- **AgnesReadingModal** novo (substitui DailyReadingModal, que foi removido): mostra mensagem do dia + cor/número da sorte + rodapé "Atualizado por Mestre Agnes" + CTA consulta completa
+- **PersonalReading** ("Sua leitura de destino"): imagem do mago (`/agnes-wizard.jpeg`) + botões "Entrar / Criar conta" (abre `https://frontend-nu-opal-d1fi47s48v.vercel.app/auth` em nova aba) e "Área de membros" (`/dashboard`)
+- **Menu reestruturado** (mockData.menuConfig + menuMap + 6 locales):
+  - Turismo: Lugares, Motéis, Hotéis, Pousadas, Restaurantes, Bares
+  - Bem Estar: Esportes, Beleza, Cultura, Saúde, Horóscopo, Sexualidade, Contos Eróticos
+  - Vida Noturna: Locais, Festas, Charutos, Música, Artistas (Zetta)
+  - Gastronomia: Culinária, Arte, Vinhos, Drinks
+  - Rotas novas caem no BlogPage genérico automaticamente
+- **Parceiros**: Spicy Club substituído por **Mestre Agnes** (logo circular dourado `/agnes-logo.jpeg`, link para o site Agnes)
+- **Matérias de topo (artigo em destaque da BlogPage)**: agora imagem + título são `<Link>` para `/section/sub/slug` e o compartilhamento (PostInteractions) recebe `postUrl` correto — abrem e compartilham como os demais cards
+- Imagens salvas em `/app/frontend/public/`: `agnes-logo.jpeg`, `agnes-wizard.jpeg`, `agnes-horoscopo-bg.png`
+- **Correção de ambiente (preview)**: `backend/.env` MONGO_URL apontava para um cluster Atlas com DNS morto (`horoscopo.hmts3pj.mongodb.net`) → apontado para o Mongo local do preview. Produção (Vercel) usa a própria env, não afetada. ⚠️ O cluster Atlas do .env antigo NÃO existe mais.
+- Gates verdes: Biome ✅, Knip ✅ (DailyReadingModal órfão removido), Vitest 11/11 ✅. Testing agent iteration_10: 7/7 cenários de frontend aprovados (100%)
+
 
 ### 11/Ago/2026 — Correção Vercel independente de arquivos `.env` ✅
 - Usuário informou ter sobrescrito arquivos no Sanity Studio externo, mas o erro do site foi isolado e não depende desses arquivos: o bundle Vercel continuava sem as três variáveis públicas Sanity

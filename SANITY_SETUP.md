@@ -35,6 +35,7 @@ cd lux-novo   # ou o nome que você deu
 - `artist.js`
 - `editor.js`
 - `siteSettings.js`
+- `editorialBanner.js`
 - `index.js`
 
 No `sanity.config.js`, importe também `structure` de `schemaTypes/structure.js` e configure `structureTool({ structure })`. Isso mantém **Configurações do site** como documento único.
@@ -205,6 +206,16 @@ Os 4 primeiros editores (por prioridade) da editoria escolhida aparecem como car
 
 O player toca a playlist inteira em loop e volta ao primeiro track no final. Se o Sanity estiver indisponível ou o campo ainda estiver vazio, o site usa `REACT_APP_SOUNDCLOUD_URL` como fallback. URLs fora do domínio SoundCloud são rejeitadas.
 
+## 🖼️ Banners editoriais 2100×350
+
+1. Studio → **Banner editorial** → Create.
+2. Envie uma imagem **2100×350 (6:1)**.
+3. Preencha nome interno e texto alternativo; título, linha superior e link são opcionais.
+4. Em **Editorias e submenus**, marque todos os espaços desejados.
+5. Mantenha **Ativo** habilitado e clique em **Publish**.
+
+Todas as páginas principais e submenus de Turismo, Bem Estar, Vida Noturna e Gastronomia mantêm o espaço 6:1 reservado. Enquanto não existir banner publicado para a rota, o site mostra **Anuncie aqui**. Banners antigos salvos em Editor/Colunista continuam compatíveis, mas novos materiais devem usar o documento **Banner editorial**.
+
 ---
 
 ## ❓ Perguntas frequentes
@@ -231,7 +242,7 @@ Convide editores em https://www.sanity.io/manage/project/8um1375u → **Members 
 
 ## 🆘 Suporte
 
-Schemas em `/app/sanity-schemas/` (article, ad, partner, artist, editor, siteSettings, structure, index).
+Schemas em `/app/sanity-schemas/` (article, ad, partner, artist, editor, editorialBanner, siteSettings, structure, index).
 Service no frontend em `/app/frontend/src/sanity/` (articles, ads, client, queries).
 
 Qualquer coisa me chame. ✨

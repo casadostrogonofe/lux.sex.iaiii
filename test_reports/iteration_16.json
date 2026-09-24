@@ -1,0 +1,24 @@
+{
+  "summary": "Retested VisitorCounter double-count bug from iteration_15. The synchronous sessionStorage flag fix works: React StrictMode no longer causes 2 POSTs. Network monitoring on live preview URL confirms exactly 1 POST on fresh session, 0 POST on same-session reload, 1 POST on new session, and the counter increments by exactly +1 per new session.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Footer visitor counter", "issues": ["Label renders as 'visits' (EN) instead of 'acessos' (PT) because i18n.resolvedLanguage defaults to EN on the preview URL. The translation key 'footer.visits' with fallback 'acessos' works, but the active language is EN. Not a bug in counter logic — just i18n default."]}
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "VisitorCounter.jsx correctly claims the session synchronously before the async fetch, defeating StrictMode double-invocation. Implementation is clean.",
+    "Backend stats.py properly uses find_one_and_update with upsert + projection excluding _id. No issues."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "n/a", "frontend": "100%" },
+  "seed_data_creation": "None. Live counter incremented from 12 -> 15 during testing (2 client-driven increments + 1 external increment between reloads).",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Preview URL /api/stats/visits is public and receives external traffic. Do NOT assert absolute counter equality between reloads on the same session — external traffic can bump it. Instead assert on the number of POST requests observed from the browser (0 for same-session, 1 for fresh/new-session). This is exactly how the fix was validated.",
+  "rca of the issue": "Original bug (iteration_15): useEffect fired twice under React StrictMode and both invocations reached fetch() before sessionStorage was set, causing 2 POSTs and count +2. Fix: sessionStorage.setItem('luxsex_visited','1') is now executed SYNCHRONOUSLY in the effect body before the async IIFE starts. The second StrictMode invocation reads alreadyCounted=true and issues a GET instead of a POST. Verified in production preview: fresh=1 POST, same-session reload=0 POST, new-session reload=1 POST, delta=+1."
+}

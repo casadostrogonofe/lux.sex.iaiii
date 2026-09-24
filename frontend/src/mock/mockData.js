@@ -6,20 +6,24 @@ export const LOGO_IAIII = "https://customer-assets.emergentagent.com/job_premium
 // DYNAMIC MENU CONFIG
 // =============================================================
 export const menuConfig = [
-  { label: "Início", href: "https://lux-novo.lux.sex/", external: true },
+  { label: "Lux.Sex", href: "https://lux-novo.lux.sex/", external: true },
   {
     label: "Turismo",
     href: "/turismo",
     children: [
+      { label: "Lugares", href: "/turismo/lugares" },
       { label: "Motéis", href: "/turismo/moteis" },
       { label: "Hotéis", href: "/turismo/hoteis" },
       { label: "Pousadas", href: "/turismo/pousadas" },
+      { label: "Restaurantes", href: "/turismo/restaurantes" },
+      { label: "Bares", href: "/turismo/bares" },
     ],
   },
   {
     label: "Bem Estar",
     href: "/bem-estar",
     children: [
+      { label: "Esportes", href: "/bem-estar/esportes" },
       { label: "Beleza", href: "/bem-estar/beleza" },
       { label: "Cultura", href: "/bem-estar/cultura" },
       { label: "Saúde", href: "/bem-estar/saude" },
@@ -33,7 +37,7 @@ export const menuConfig = [
     href: "/vida-noturna",
     children: [
       { label: "Locais", href: "/vida-noturna/locais" },
-      { label: "Vinhos", href: "/vida-noturna/vinhos" },
+      { label: "Festas", href: "/vida-noturna/festas" },
       { label: "Charutos", href: "/vida-noturna/charutos" },
       { label: "Música", href: "/vida-noturna/musica" },
       {
@@ -51,7 +55,8 @@ export const menuConfig = [
     children: [
       { label: "Culinária", href: "/gastronomia/culinaria" },
       { label: "Arte", href: "/gastronomia/arte" },
-      { label: "Sabor", href: "/gastronomia/sabor" },
+      { label: "Vinhos", href: "/gastronomia/vinhos" },
+      { label: "Drinks", href: "/gastronomia/drinks" },
     ],
   },
   {
@@ -91,10 +96,10 @@ export const articleSidebarPartners = [
     bg: "#ffffff",
   },
   {
-    id: "spicy-club",
-    name: "Spicy Club",
-    logo: "https://customer-assets.emergentagent.com/job_premium-space-2/artifacts/c1t5dads_SPICY.jpg",
-    link: "https://www.spicyclub.com.br/",
+    id: "mestre-agnes",
+    name: "Mestre Agnes",
+    logo: "/agnes-logo.jpeg",
+    link: "https://frontend-nu-opal-d1fi47s48v.vercel.app/",
     bg: "#000000",
   },
   {
@@ -175,6 +180,16 @@ export const sectionMeta = {
     title: "Charutos",
     tagline: "O ritual lento",
     description: "Cohibas, dominicanos e o renascimento da charutaria de autor em São Paulo.",
+  },
+  "vida-noturna/musica": {
+    title: "Música",
+    tagline: "A trilha da madrugada",
+    description: "DJs, selos, pistas e artistas que definem o som da noite contemporânea.",
+  },
+  "vida-noturna/artistas": {
+    title: "Artistas",
+    tagline: "Quem move a noite",
+    description: "Perfis, lançamentos e performances dos nomes que ocupam palcos e pistas.",
   },
   gastronomia: {
     title: "Gastronomia",

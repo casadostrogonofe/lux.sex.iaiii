@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Heart, MessageCircle, Share2, Send, Loader2, X, Link2, Check, MoreHorizontal } from "lucide-react";
 import { FaWhatsapp, FaInstagram, FaXTwitter, FaFacebookF, FaTelegram } from "react-icons/fa6";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "";
 const API = `${BACKEND_URL}/api`;
 
 const LIKED_KEY = "luxsex_liked_posts";

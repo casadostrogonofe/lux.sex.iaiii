@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Instagram, Play, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { Instagram, Play, ArrowRight, ChevronRight } from "lucide-react";
 import { fetchEditorsBySection } from "../sanity/people";
 import { fetchArticlesByPath } from "../sanity/articles";
 import { menuConfig, fallbackEditors } from "../mock/mockData";
@@ -9,6 +9,7 @@ import { menuLabel } from "../i18n/menuMap";
 import TimelinePostCard from "../components/TimelinePostCard";
 import PartnersSidebar from "../components/PartnersSidebar";
 import Newsletter from "../components/Newsletter";
+import EditorialBanner from "../components/EditorialBanner";
 
 const SECTION_PATH = "bem-estar/sexualidade";
 
@@ -23,7 +24,6 @@ const SexualidadePage = () => {
   const { t, i18n } = useTranslation();
   const [editors, setEditors] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [bannerIndex, setBannerIndex] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -36,19 +36,6 @@ const SexualidadePage = () => {
       setPosts(articles);
     })();
   }, [i18n.resolvedLanguage]);
-
-  // Build banners list: from editors that have a banner, fallback to ads
-  const bannerSlides = editors.filter((e) => e.banner);
-
-  // Auto-rotate banner every 6s
-  useEffect(() => {
-    if (bannerSlides.length <= 1) return;
-    const id = setInterval(
-      () => setBannerIndex((i) => (i + 1) % bannerSlides.length),
-      6000
-    );
-    return () => clearInterval(id);
-  }, [bannerSlides.length]);
 
   // Pick the most recent posts per editor (by author name match) for the 4 "reels"
   const reelEditors = editors.slice(0, 4);
@@ -88,76 +75,7 @@ const SexualidadePage = () => {
             <span className="text-[#9b30ff]">{subLabel}</span>
           </div>
 
-          {bannerSlides.length > 0 ? (
-            <div className="relative aspect-[21/8] md:aspect-[21/7] w-full overflow-hidden rounded-2xl border border-[#1f1a35] bg-[#0a0612]">
-              {bannerSlides.map((s, i) => (
-                <a
-                  key={s.id}
-                  href={s.instagram || "#"}
-                  target={s.instagram ? "_blank" : undefined}
-                  rel="noopener noreferrer"
-                  className={`absolute inset-0 transition-opacity duration-300 ${
-                    i === bannerIndex ? "opacity-100" : "opacity-0 pointer-events-none"
-                  }`}
-                  data-testid={`banner-slide-${i}`}
-                >
-                  <img
-                    src={s.banner}
-                    alt={s.name}
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#050208]/80 via-transparent to-transparent" />
-                  <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 max-w-md">
-                    <span className="text-[9px] tracking-[0.4em] text-[#d4af37] uppercase block mb-3">
-                      {s.role}
-                    </span>
-                    <h2 className="font-serif text-[#f5f0ff] text-3xl md:text-5xl leading-[1.05]">
-                      {s.name}
-                    </h2>
-                  </div>
-                </a>
-              ))}
-
-              {bannerSlides.length > 1 && (
-                <>
-                  <button
-                    onClick={() =>
-                      setBannerIndex(
-                        (i) => (i - 1 + bannerSlides.length) % bannerSlides.length
-                      )
-                    }
-                    className="absolute left-3 md:left-5 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full bg-black/40 backdrop-blur text-white hover:bg-[#9b30ff]/80 transition-colors"
-                    aria-label="Anterior"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() =>
-                      setBannerIndex((i) => (i + 1) % bannerSlides.length)
-                    }
-                    className="absolute right-3 md:right-5 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full bg-black/40 backdrop-blur text-white hover:bg-[#9b30ff]/80 transition-colors"
-                    aria-label="Próximo"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
-                    {bannerSlides.map((_, i) => (
-                      <span
-                        key={i}
-                        className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                          i === bannerIndex ? "bg-[#9b30ff]" : "bg-white/30"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
-          ) : (
-            <div className="aspect-[21/8] w-full flex items-center justify-center border border-[#1f1a35] rounded-2xl text-[#5a5470] text-sm">
-              {t("sexuality.empty_banner")}
-            </div>
-          )}
+          <EditorialBanner section={SECTION_PATH} showEditors={false} />
         </div>
       </section>
 
