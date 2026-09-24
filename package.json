@@ -1,0 +1,11 @@
+{
+  "name": "luxsex-sanity",
+  "private": true,
+  "scripts": {
+    "build": "sanity build",
+    "deploy": "sanity deploy"
+  },
+  "dependencies": {
+    "sanity": "^6.3.0"
+  }
+}
